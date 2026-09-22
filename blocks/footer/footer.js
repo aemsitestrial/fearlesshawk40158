@@ -2,8 +2,8 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
-  // Check if content exists directly in DOM (e.g., when editing /footer directly)
-  const hasAuthoredContent = block.children.length > 0 && block.querySelector('img, p, div');
+  // Ignore the empty wrapper created by the automatic footer loader.
+  const hasAuthoredContent = block.textContent.trim() || block.querySelector('a, img, picture');
 
   if (!hasAuthoredContent) {
     const footerMeta = getMetadata('footer');
