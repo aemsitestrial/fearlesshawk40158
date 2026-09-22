@@ -27,14 +27,25 @@ export default async function decorate(block) {
     block.append(wrapper);
   }
 
-  // Handle Accordion JS variation if present
+  // Constrain authored image element sizes dynamically
+  const img = block.querySelector('img');
+  if (img) {
+    img.style.maxWidth = '140px';
+    img.style.height = 'auto';
+  }
+
+  // Bind interactive accordion headers for Accordion variation
   if (block.classList.contains('accordion')) {
-    const headers = block.querySelectorAll('h3, h4, p');
+    const headers = block.querySelectorAll('h3, h4');
     headers.forEach((header) => {
       if (!header.classList.contains('accordion-header')) {
         header.classList.add('accordion-header');
         header.addEventListener('click', () => {
           header.classList.toggle('is-expanded');
+          const nextEl = header.nextElementSibling;
+          if (nextEl) {
+            nextEl.style.display = nextEl.style.display === 'none' ? 'block' : 'none';
+          }
         });
       }
     });

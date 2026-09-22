@@ -1,130 +1,187 @@
-/* Base Footer Container */
+/* ==========================================================================
+   GLOBAL FOOTER STYLES & RESET
+   ========================================================================== */
+
 .footer.block {
-  background-color: var(--background-color, #f8f9fa);
-  color: var(--text-color, #333);
-  padding: 40px 24px;
+  --footer-bg: #f8fafc;
+  --footer-text: #334155;
+  --footer-heading: #0f172a;
+  --footer-border: #e2e8f0;
+  --footer-accent: #2563eb;
+
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  border-top: 1px solid var(--footer-border);
+  padding: 48px 24px 32px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Constrain oversized authored images */
-.footer.block img {
-  max-width: 160px;
-  height: auto;
-  display: block;
-}
-
-/* ==========================================================================
-   VARIATION 1: Multi-Column Layout (.multi-column)
-   ========================================================================== */
-.footer.block.multi-column .footer-content,
-.footer.block.multi-column {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
-}
-
-/* ==========================================================================
-   VARIATION 2: Minimal Single-Row Layout (.minimal)
-   ========================================================================== */
-.footer.block.minimal {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-}
-
-.footer.block.minimal img {
-  max-width: 100px;
-  margin: 0;
-}
-
-/* ==========================================================================
-   VARIATION 3: Centered Brand Focus (.centered)
-   ========================================================================== */
-.footer.block.centered {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.footer.block.centered img {
+.footer.block .footer-content {
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* ==========================================================================
-   VARIATION 4: Accordion Mobile Layout (.accordion)
-   ========================================================================== */
-.footer.block.accordion {
-  border-left: 4px solid #06c;
-  padding-left: 20px;
+/* Authored Logo Formatting */
+.footer.block img {
+  max-width: 140px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease;
 }
 
+.footer.block img:hover {
+  transform: scale(1.03);
+}
+
+/* Typography & Headings */
+.footer.block h1,
+.footer.block h2,
+.footer.block h3,
+.footer.block h4 {
+  color: var(--footer-heading);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.footer.block p,
+.footer.block div {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+  opacity: 0.9;
+}
+
+.footer.block a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer.block a:hover {
+  color: var(--footer-accent);
+}
+
+/* ==========================================================================
+   VARIATIONS & LAYOUTS
+   ========================================================================== */
+
+/* VARIATION 1: Centered Brand Focus (.centered & .centered-brand-focus) */
+.footer.block.centered,
+.footer.block.centered-brand-focus {
+  text-align: center;
+}
+
+.footer.block.centered .footer-content,
+.footer.block.centered-brand-focus .footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer.block.centered img,
+.footer.block.centered-brand-focus img {
+  margin: 0 auto 12px;
+}
+
+.footer.block.centered p,
+.footer.block.centered-brand-focus p {
+  max-width: 500px;
+}
+
+/* VARIATION 2: Multi-Column Grid (.multi-column) */
+.footer.block.multi-column .footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+/* VARIATION 3: Minimal Single-Row (.minimal) */
+.footer.block.minimal {
+  padding: 24px;
+}
+
+.footer.block.minimal .footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer.block.minimal img {
+  max-width: 110px;
+  margin: 0;
+}
+
+/* VARIATION 4: Accordion Mobile (.accordion) */
 .footer.block.accordion .accordion-header {
   cursor: pointer;
-  position: relative;
-  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--footer-border);
 }
 
 .footer.block.accordion .accordion-header::after {
-  content: ' ▾';
-  font-size: 12px;
+  content: '+';
+  font-size: 16px;
+  font-weight: 400;
+  transition: transform 0.2s ease;
 }
 
-/* ==========================================================================
-   VARIATION 5: Newsletter Split Layout (.newsletter-split)
-   ========================================================================== */
-.footer.block.newsletter-split {
+.footer.block.accordion .accordion-header.is-expanded::after {
+  content: '−';
+}
+
+/* VARIATION 5: Newsletter Split (.newsletter-split) */
+.footer.block.newsletter-split .footer-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 32px;
-  align-items: start;
+  gap: 48px;
 }
 
-@media (width <= 767px) {
-  .footer.block.newsletter-split {
+@media (width <= 768px) {
+  .footer.block.newsletter-split .footer-content {
     grid-template-columns: 1fr;
   }
 }
 
 /* ==========================================================================
-   COLOR THEMES
+   THEMES
    ========================================================================== */
 
 /* Dark Theme (.dark) */
 .footer.block.dark {
-  background-color: #121212 !important;
-  color: #fff !important;
-}
-
-.footer.block.dark p,
-.footer.block.dark div,
-.footer.block.dark h1,
-.footer.block.dark h2,
-.footer.block.dark h3,
-.footer.block.dark h4,
-.footer.block.dark a {
-  color: #fff !important;
+  --footer-bg: #0f172a;
+  --footer-text: #94a3b8;
+  --footer-heading: #f8fafc;
+  --footer-border: #1e293b;
+  --footer-accent: #38bdf8;
 }
 
 /* Light Theme (.light) */
 .footer.block.light {
-  background-color: #fff !important;
-  color: #222 !important;
+  --footer-bg: #fff;
+  --footer-text: #475569;
+  --footer-heading: #0f172a;
+  --footer-border: #f1f5f9;
+  --footer-accent: #2563eb;
 }
 
 /* Brand Accent Theme (.brand-accent) */
 .footer.block.brand-accent {
-  background-color: var(--link-color, #06c) !important;
-  color: #fff !important;
-}
-
-.footer.block.brand-accent p,
-.footer.block.brand-accent div,
-.footer.block.brand-accent a {
-  color: #fff !important;
+  --footer-bg: #1e40af;
+  --footer-text: #dbeafe;
+  --footer-heading: #fff;
+  --footer-border: #2563eb;
+  --footer-accent: #93c5fd;
 }
