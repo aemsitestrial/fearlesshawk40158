@@ -1,269 +1,137 @@
-import {
-  createOptimizedPicture,
-  decorateIcons,
-} from '../../scripts/aem.js';
-import { fetchPlaceholders } from '../../scripts/placeholders.js';
-
-const searchParams = new URLSearchParams(window.location.search);
-
-function findNextHeading(el) {
-  let preceedingEl = el.parentElement.previousElement || el.parentElement.parentElement;
-  let h = 'H2';
-  while (preceedingEl) {
-    const lastHeading = [...preceedingEl.querySelectorAll('h1, h2, h3, h4, h5, h6')].pop();
-    if (lastHeading) {
-      const level = parseInt(lastHeading.nodeName[1], 10);
-      h = level < 6 ? `H${level + 1}` : 'H6';
-      preceedingEl = false;
-    } else {
-      preceedingEl = preceedingEl.previousElement || preceedingEl.parentElement;
-    }
-  }
-  return h;
-}
-
-function highlightTextElements(terms, elements) {
-  elements.forEach((element) => {
-    if (!element || !element.textContent) return;
-
-    const matches = [];
-    const { textContent } = element;
-    terms.forEach((term) => {
-      let start = 0;
-      let offset = textContent.toLowerCase().indexOf(term.toLowerCase(), start);
-      while (offset >= 0) {
-        matches.push({ offset, term: textContent.substring(offset, offset + term.length) });
-        start = offset + term.length;
-        offset = textContent.toLowerCase().indexOf(term.toLowerCase(), start);
-      }
-    });
-
-    if (!matches.length) {
-      return;
-    }
-
-    matches.sort((a, b) => a.offset - b.offset);
-    let currentIndex = 0;
-    const fragment = matches.reduce((acc, { offset, term }) => {
-      if (offset < currentIndex) return acc;
-      const textBefore = textContent.substring(currentIndex, offset);
-      if (textBefore) {
-        acc.appendChild(document.createTextNode(textBefore));
-      }
-      const markedTerm = document.createElement('mark');
-      markedTerm.textContent = term;
-      acc.appendChild(markedTerm);
-      currentIndex = offset + term.length;
-      return acc;
-    }, document.createDocumentFragment());
-    const textAfter = textContent.substring(currentIndex);
-    if (textAfter) {
-      fragment.appendChild(document.createTextNode(textAfter));
-    }
-    element.innerHTML = '';
-    element.appendChild(fragment);
+/**
+ * Executes a search against the JSON query index.
+ * @param {string} query
+ * @param {Array} indexData
+ * @returns {Array} Matched results
+ */
+function filterIndex(query, indexData) {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  return indexData.filter((item) => {
+    const title = (item.title || '').toLowerCase();
+    const description = (item.description || '').toLowerCase();
+    const path = (item.path || '').toLowerCase();
+    const keywords = (item.keywords || '').toLowerCase();
+    return title.includes(q) || description.includes(q) || path.includes(q) || keywords.includes(q);
   });
 }
 
-export async function fetchData(source) {
-  const response = await fetch(source);
-  if (!response.ok) {
-    // eslint-disable-next-line no-console
-    console.error('error loading API response', response);
-    return null;
+/**
+ * Renders result items in HTML format.
+ * @param {Array} results
+ * @returns {string} HTML string
+ */
+function renderResults(results) {
+  if (results.length === 0) {
+    return '<p class="search-no-results">No results found.</p>';
   }
 
-  const json = await response.json();
-  if (!json) {
-    // eslint-disable-next-line no-console
-    console.error('empty API response', source);
-    return null;
-  }
+  const items = results.slice(0, 10).map((res) => {
+    const title = res.title || res.path;
+    const desc = res.description ? `<p class="search-result-description">${res.description}</p>` : '';
+    return `<li class="search-result-item"><a href="${res.path}" class="search-result-link"><span class="search-result-title">${title}</span>${desc}</a></li>`;
+  }).join('');
 
-  return json.data;
+  return `<ul class="search-results-list">${items}</ul>`;
 }
 
-function renderResult(result, searchTerms, titleTag) {
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.href = result.path;
-  if (result.image) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'search-result-image';
-    const pic = createOptimizedPicture(result.image, '', false, [{ width: '375' }]);
-    wrapper.append(pic);
-    a.append(wrapper);
-  }
-  if (result.title) {
-    const title = document.createElement(titleTag);
-    title.className = 'search-result-title';
-    const link = document.createElement('a');
-    link.href = result.path;
-    link.textContent = result.title;
-    highlightTextElements(searchTerms, [link]);
-    title.append(link);
-    a.append(title);
-  }
-  if (result.description) {
-    const description = document.createElement('p');
-    description.textContent = result.description;
-    highlightTextElements(searchTerms, [description]);
-    a.append(description);
-  }
-  li.append(a);
-  return li;
-}
-
-function clearSearchResults(block) {
-  const searchResults = block.querySelector('.search-results');
-  searchResults.innerHTML = '';
-}
-
-function clearSearch(block) {
-  clearSearchResults(block);
-  if (window.history.replaceState) {
-    const url = new URL(window.location.href);
-    url.search = '';
-    searchParams.delete('q');
-    window.history.replaceState({}, '', url.toString());
-  }
-}
-
-async function renderResults(block, config, filteredData, searchTerms) {
-  clearSearchResults(block);
-  const searchResults = block.querySelector('.search-results');
-  const headingTag = searchResults.dataset.h;
-
-  if (filteredData.length) {
-    searchResults.classList.remove('no-results');
-    filteredData.forEach((result) => {
-      const li = renderResult(result, searchTerms, headingTag);
-      searchResults.append(li);
-    });
-  } else {
-    const noResultsMessage = document.createElement('li');
-    searchResults.classList.add('no-results');
-    noResultsMessage.textContent = config.placeholders.searchNoResults || 'No results found.';
-    searchResults.append(noResultsMessage);
-  }
-}
-
-function compareFound(hit1, hit2) {
-  return hit1.minIdx - hit2.minIdx;
-}
-
-function filterData(searchTerms, data) {
-  const foundInHeader = [];
-  const foundInMeta = [];
-
-  data.forEach((result) => {
-    let minIdx = -1;
-
-    searchTerms.forEach((term) => {
-      const idx = (result.header || result.title).toLowerCase().indexOf(term);
-      if (idx < 0) return;
-      if (minIdx < idx) minIdx = idx;
-    });
-
-    if (minIdx >= 0) {
-      foundInHeader.push({ minIdx, result });
-      return;
-    }
-
-    const metaContents = `${result.title} ${result.description} ${result.path.split('/').pop()}`.toLowerCase();
-    searchTerms.forEach((term) => {
-      const idx = metaContents.indexOf(term);
-      if (idx < 0) return;
-      if (minIdx < idx) minIdx = idx;
-    });
-
-    if (minIdx >= 0) {
-      foundInMeta.push({ minIdx, result });
-    }
-  });
-
-  return [
-    ...foundInHeader.sort(compareFound),
-    ...foundInMeta.sort(compareFound),
-  ].map((item) => item.result);
-}
-
-async function handleSearch(e, block, config) {
-  const searchValue = e.target.value;
-  searchParams.set('q', searchValue);
-  if (window.history.replaceState) {
-    const url = new URL(window.location.href);
-    url.search = searchParams.toString();
-    window.history.replaceState({}, '', url.toString());
-  }
-
-  if (searchValue.length < 3) {
-    clearSearch(block);
-    return;
-  }
-  const searchTerms = searchValue.toLowerCase().split(/\s+/).filter((term) => !!term);
-
-  const data = await fetchData(config.source);
-  const filteredData = filterData(searchTerms, data);
-  await renderResults(block, config, filteredData, searchTerms);
-}
-
-function searchResultsContainer(block) {
-  const results = document.createElement('ul');
-  results.className = 'search-results';
-  results.dataset.h = findNextHeading(block);
-  return results;
-}
-
-function searchInput(block, config) {
-  const input = document.createElement('input');
-  input.setAttribute('type', 'search');
-  input.className = 'search-input';
-
-  const searchPlaceholder = config.placeholders.searchPlaceholder || 'Search...';
-  input.placeholder = searchPlaceholder;
-  input.setAttribute('aria-label', searchPlaceholder);
-
-  input.addEventListener('input', (e) => {
-    handleSearch(e, block, config);
-  });
-
-  input.addEventListener('keyup', (e) => { if (e.code === 'Escape') { clearSearch(block); } });
-
-  return input;
-}
-
-function searchIcon() {
-  const icon = document.createElement('span');
-  icon.classList.add('icon', 'icon-search');
-  return icon;
-}
-
-function searchBox(block, config) {
-  const box = document.createElement('div');
-  box.classList.add('search-box');
-  box.append(
-    searchIcon(),
-    searchInput(block, config),
-  );
-
-  return box;
-}
-
+/**
+ * Main decorator function for the Search block.
+ * @param {Element} block
+ */
 export default async function decorate(block) {
-  const placeholders = await fetchPlaceholders();
-  const source = block.querySelector('a[href]')?.href || `${window.hlx.codeBasePath}/query-index.json`;
-  block.innerHTML = '';
-  block.append(
-    searchBox(block, { source, placeholders }),
-    searchResultsContainer(block),
-  );
+  // Extract values from DOM populated by Edge Delivery Services
+  const indexCell = block.querySelector(':scope > div:nth-child(1) > div');
+  const indexUrl = indexCell ? indexCell.textContent.trim() : '/query-index.json';
 
-  if (searchParams.get('q')) {
-    const input = block.querySelector('input');
-    input.value = searchParams.get('q');
-    input.dispatchEvent(new Event('input'));
+  // Clear existing raw markup
+  block.innerHTML = '';
+
+  // Create UI elements
+  const container = document.createElement('div');
+  container.className = 'search-input-wrapper';
+
+  const input = document.createElement('input');
+  input.type = 'search';
+  input.placeholder = 'Search...';
+  input.className = 'search-input';
+  input.setAttribute('aria-label', 'Search input');
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'search-button';
+  button.innerHTML = '<span class="search-icon">&#128269;</span>';
+  button.setAttribute('aria-label', 'Search');
+
+  const resultsWrapper = document.createElement('div');
+  resultsWrapper.className = 'search-results';
+
+  container.appendChild(input);
+  container.appendChild(button);
+  block.appendChild(container);
+  block.appendChild(resultsWrapper);
+
+  // Modal variation structure adjustments
+  if (block.classList.contains('modal-search')) {
+    const backdrop = document.createElement('div');
+    backdrop.className = 'search-modal-backdrop';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'search-modal-close';
+    closeBtn.innerHTML = '&#10005;';
+    closeBtn.setAttribute('aria-label', 'Close modal search');
+
+    container.prepend(closeBtn);
+    block.appendChild(backdrop);
+
+    const toggleModal = (show) => {
+      block.classList.toggle('is-active', show);
+      if (show) input.focus();
+    };
+
+    closeBtn.addEventListener('click', () => toggleModal(false));
+    backdrop.addEventListener('click', () => toggleModal(false));
   }
 
-  decorateIcons(block);
+  // State management for index fetching
+  let indexData = null;
+  const fetchIndex = async () => {
+    if (!indexData) {
+      try {
+        const resp = await fetch(indexUrl);
+        if (resp.ok) {
+          const json = await resp.json();
+          indexData = json.data || json;
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to load search index:', err);
+      }
+    }
+  };
+
+  // Perform search handler
+  const handleSearch = async () => {
+    await fetchIndex();
+    if (!indexData) return;
+    const query = input.value;
+    const matches = filterIndex(query, indexData);
+    resultsWrapper.innerHTML = renderResults(matches);
+  };
+
+  // Event Listeners
+  input.addEventListener('focus', fetchIndex);
+  input.addEventListener('input', () => {
+    if (input.value.length >= 2 || input.value.length === 0) {
+      handleSearch();
+    }
+  });
+
+  button.addEventListener('click', handleSearch);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch();
+    }
+  });
 }
