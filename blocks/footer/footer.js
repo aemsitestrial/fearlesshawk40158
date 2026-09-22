@@ -1,50 +1,41 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-/**
- * Decorates interactive Accordion behavior for mobile screens
- */
-function initAccordion(footer) {
-  const headings = footer.querySelectorAll('.footer-column h4, .footer-column h3');
-  headings.forEach((heading) => {
-    heading.addEventListener('click', () => {
-      const col = heading.closest('.footer-column');
-      col.classList.toggle('is-expanded');
-    });
-  });
-}
-
-/**
- * loads and decorates the footer
- * @param {Element} block The footer block element
- */
 export default async function decorate(block) {
-  // load footer as fragment
-  const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  // 1. Check if direct Universal Editor authored content exists
+  const hasAuthoredContent = block.children.length > 0 && block.querySelector('img, p, div');
 
-  // decorate footer DOM
-  block.textContent = '';
-  const footer = document.createElement('div');
-  footer.className = 'footer-content';
+  if (!hasAuthoredContent) {
+    // 2. Fallback to fragment loading if not authored directly
+    const footerMeta = getMetadata('footer');
+    const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+    const fragment = await loadFragment(footerPath);
 
-  // Preserve fragment DOM structure & authoring instrumentation attributes
-  while (fragment.firstElementChild) {
-    const child = fragment.firstElementChild;
-    footer.append(child);
+    block.textContent = '';
+    const footer = document.createElement('div');
+    footer.className = 'footer-content';
+
+    while (fragment.firstElementChild) {
+      footer.append(fragment.firstElementChild);
+    }
+    block.append(footer);
+  } else if (!block.querySelector('.footer-content')) {
+    // Combine 'else' and 'if' into 'else if' to satisfy 'no-lonely-if'
+    const wrapper = document.createElement('div');
+    wrapper.className = 'footer-content';
+    while (block.firstChild) {
+      wrapper.append(block.firstChild);
+    }
+    block.append(wrapper);
   }
 
-  // Identify column containers for layout variations
-  const columns = footer.querySelectorAll(':scope > div > div');
-  columns.forEach((col, idx) => {
-    col.classList.add('footer-column', `footer-col-${idx + 1}`);
-  });
-
-  // Enable JS logic if 'accordion' variation class is applied
+  // Handle Accordion JS variation
   if (block.classList.contains('accordion')) {
-    initAccordion(footer);
+    const headings = block.querySelectorAll('h3, h4');
+    headings.forEach((heading) => {
+      heading.addEventListener('click', () => {
+        heading.parentElement.classList.toggle('is-expanded');
+      });
+    });
   }
-
-  block.append(footer);
 }

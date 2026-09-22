@@ -1,134 +1,45 @@
-/* Base Footer Styling */
-footer {
+/* Base Footer Styles */
+.footer-wrapper,
+footer .footer {
   background-color: var(--background-color, #f8f9fa);
   color: var(--text-color, #333);
-  font-size: var(--body-font-size-xs, 14px);
-  border-top: 1px solid #e0e0e0;
+  padding: 40px 24px;
 }
 
-footer .footer-content > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+/* Match option value: "centered" OR "centered-brand-focus" */
+footer .footer.centered,
+footer .footer.centered-brand-focus,
+.footer-block.centered-brand-focus {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-footer p {
-  margin: 0 0 8px;
+footer .footer.centered img,
+footer .footer.centered-brand-focus img {
+  max-width: 150px;
+  margin: 0 auto 16px;
+  display: block;
 }
 
-/* ==========================================================================
-   VARIATION 1: Multi-Column Layout (Default Grid)
-   ========================================================================== */
-footer.multi-column .footer-content > div {
+/* Match option value: "multi-column" */
+footer .footer.multi-column {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 32px;
 }
 
-/* ==========================================================================
-   VARIATION 2: Minimal Single-Row Layout
-   ========================================================================== */
-footer.minimal .footer-content > div {
+/* Match option value: "minimal" */
+footer .footer.minimal {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
 }
 
-footer.minimal ul {
-  display: flex;
-  list-style: none;
-  gap: 16px;
-  padding: 0;
-  margin: 0;
-}
-
-/* ==========================================================================
-   VARIATION 3: Centered Brand Focus
-   ========================================================================== */
-footer.centered {
-  text-align: center;
-}
-
-footer.centered .footer-content > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-footer.centered ul {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  list-style: none;
-  padding: 0;
-}
-
-/* ==========================================================================
-   VARIATION 4: Accordion Mobile Layout
-   ========================================================================== */
-@media (width <= 767px) {
-  footer.accordion .footer-column h4,
-  footer.accordion .footer-column h3 {
-    cursor: pointer;
-    position: relative;
-    padding-right: 20px;
-  }
-
-  footer.accordion .footer-column h4::after {
-    content: '+';
-    position: absolute;
-    right: 0;
-  }
-
-  footer.accordion .footer-column.is-expanded h4::after {
-    content: '-';
-  }
-
-  footer.accordion .footer-column ul {
-    display: none;
-  }
-
-  footer.accordion .footer-column.is-expanded ul {
-    display: block;
-  }
-}
-
-/* ==========================================================================
-   VARIATION 5: Newsletter Split Layout
-   ========================================================================== */
-footer.newsletter-split .footer-content > div {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 40px;
-}
-
-@media (width <= 899px) {
-  footer.newsletter-split .footer-content > div {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ==========================================================================
-   THEMES (Dark, Light, Brand Accent)
-   ========================================================================== */
-footer.dark {
+/* Dark Theme */
+footer .footer.dark {
   background-color: #1a1a1a;
   color: #fff;
-}
-
-footer.dark a {
-  color: #88c0d0;
-}
-
-footer.brand-accent {
-  background-color: var(--link-color, #06c);
-  color: #fff;
-}
-
-footer.brand-accent a {
-  color: #fff;
-  text-decoration: underline;
 }
