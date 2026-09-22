@@ -2,29 +2,50 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
-  // Check if content exists directly in the DOM (e.g. while editing /footer in Universal Editor)
+  // Check if content exists directly in DOM (e.g., when editing /footer directly)
   const hasAuthoredContent = block.children.length > 0 && block.querySelector('img, p, div');
 
   if (!hasAuthoredContent) {
-    // 1. Fetch the published global fragment for all other pages
     const footerMeta = getMetadata('footer');
-    let footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+    let footerPath = footerMeta
+      ? new URL(footerMeta, window.location).pathname
+      : '/footer';
+
     if (footerPath.endsWith('.html')) {
       footerPath = footerPath.slice(0, -5);
     }
 
-    const fragment = await loadFragment(footerPath);
+    // Attempt standard fragment load
+    let fragment = await loadFragment(footerPath);
+
+    // Fallback retry if fragment is empty inside Universal Editor canvas
+    if ((!fragment || !fragment.firstElementChild) && window.location.origin) {
+      const fullUrl = `${window.location.origin}${footerPath}.plain.html`;
+      try {
+        const resp = await fetch(fullUrl);
+        if (resp.ok) {
+          const html = await resp.text();
+          const dp = new DOMParser();
+          const doc = dp.parseFromString(html, 'text/html');
+          fragment = doc.body;
+        }
+      } catch (e) {
+        // Fallback silent handle
+      }
+    }
 
     block.textContent = '';
     const footer = document.createElement('div');
     footer.className = 'footer-content';
 
-    while (fragment && fragment.firstElementChild) {
-      footer.append(fragment.firstElementChild);
+    if (fragment && fragment.firstElementChild) {
+      while (fragment.firstElementChild) {
+        footer.append(fragment.firstElementChild);
+      }
     }
+
     block.append(footer);
   } else if (!block.querySelector('.footer-content')) {
-    // 2. Wrap authored content on the /footer page
     const wrapper = document.createElement('div');
     wrapper.className = 'footer-content';
     while (block.firstChild) {
@@ -33,7 +54,7 @@ export default async function decorate(block) {
     block.append(wrapper);
   }
 
-  // Constrain logo image sizing
+  // Constrain logo sizing
   const img = block.querySelector('img');
   if (img) {
     img.style.maxWidth = '100px';
