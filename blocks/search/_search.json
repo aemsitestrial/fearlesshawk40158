@@ -60,14 +60,6 @@
                   "value": "minimal"
                 },
                 {
-                  "name": "Expanded (Input + Filter Pills)",
-                  "value": "expanded"
-                },
-                {
-                  "name": "Overlay / Modal",
-                  "value": "modal-search"
-                },
-                {
                   "name": "Hero Banner Search",
                   "value": "hero-search"
                 }
