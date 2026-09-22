@@ -322,7 +322,7 @@
           "id": "footer",
           "plugins": {
             "da": {
-              "rows": 6,
+              "rows": 3,
               "columns": 1,
               "fields": [
                 {
@@ -334,20 +334,8 @@
                   "selector": "div:nth-child(2)>div>picture>img[src]"
                 },
                 {
-                  "name": "description",
-                  "selector": "div:nth-child(3)>div"
-                },
-                {
-                  "name": "hqInfo",
-                  "selector": "div:nth-child(4)>div"
-                },
-                {
-                  "name": "complianceInfo",
-                  "selector": "div:nth-child(5)>div"
-                },
-                {
                   "name": "copyright",
-                  "selector": "div:nth-child(6)>div"
+                  "selector": "div:nth-child(3)>div"
                 }
               ]
             },
@@ -358,8 +346,7 @@
                   "name": "Footer",
                   "model": "footer",
                   "classes": [
-                    "dark",
-                    "multi-column"
+                    "dark"
                   ]
                 }
               }
