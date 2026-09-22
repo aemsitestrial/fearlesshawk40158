@@ -2,11 +2,10 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
-  // 1. Check if direct Universal Editor authored content exists
+  // Check if direct Universal Editor authored content exists
   const hasAuthoredContent = block.children.length > 0 && block.querySelector('img, p, div');
 
   if (!hasAuthoredContent) {
-    // 2. Fallback to fragment loading if not authored directly
     const footerMeta = getMetadata('footer');
     const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
     const fragment = await loadFragment(footerPath);
@@ -20,7 +19,6 @@ export default async function decorate(block) {
     }
     block.append(footer);
   } else if (!block.querySelector('.footer-content')) {
-    // Combine 'else' and 'if' into 'else if' to satisfy 'no-lonely-if'
     const wrapper = document.createElement('div');
     wrapper.className = 'footer-content';
     while (block.firstChild) {
@@ -29,13 +27,16 @@ export default async function decorate(block) {
     block.append(wrapper);
   }
 
-  // Handle Accordion JS variation
+  // Handle Accordion JS variation if present
   if (block.classList.contains('accordion')) {
-    const headings = block.querySelectorAll('h3, h4');
-    headings.forEach((heading) => {
-      heading.addEventListener('click', () => {
-        heading.parentElement.classList.toggle('is-expanded');
-      });
+    const headers = block.querySelectorAll('h3, h4, p');
+    headers.forEach((header) => {
+      if (!header.classList.contains('accordion-header')) {
+        header.classList.add('accordion-header');
+        header.addEventListener('click', () => {
+          header.classList.toggle('is-expanded');
+        });
+      }
     });
   }
 }

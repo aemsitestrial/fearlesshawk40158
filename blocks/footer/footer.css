@@ -1,45 +1,130 @@
-/* Base Footer Styles */
-.footer-wrapper,
-footer .footer {
+/* Base Footer Container */
+.footer.block {
   background-color: var(--background-color, #f8f9fa);
   color: var(--text-color, #333);
   padding: 40px 24px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-/* Match option value: "centered" OR "centered-brand-focus" */
-footer .footer.centered,
-footer .footer.centered-brand-focus,
-.footer-block.centered-brand-focus {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-footer .footer.centered img,
-footer .footer.centered-brand-focus img {
-  max-width: 150px;
-  margin: 0 auto 16px;
+/* Constrain oversized authored images */
+.footer.block img {
+  max-width: 160px;
+  height: auto;
   display: block;
 }
 
-/* Match option value: "multi-column" */
-footer .footer.multi-column {
+/* ==========================================================================
+   VARIATION 1: Multi-Column Layout (.multi-column)
+   ========================================================================== */
+.footer.block.multi-column .footer-content,
+.footer.block.multi-column {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 32px;
 }
 
-/* Match option value: "minimal" */
-footer .footer.minimal {
+/* ==========================================================================
+   VARIATION 2: Minimal Single-Row Layout (.minimal)
+   ========================================================================== */
+.footer.block.minimal {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 24px;
 }
 
-/* Dark Theme */
-footer .footer.dark {
-  background-color: #1a1a1a;
-  color: #fff;
+.footer.block.minimal img {
+  max-width: 100px;
+  margin: 0;
+}
+
+/* ==========================================================================
+   VARIATION 3: Centered Brand Focus (.centered)
+   ========================================================================== */
+.footer.block.centered {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer.block.centered img {
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   VARIATION 4: Accordion Mobile Layout (.accordion)
+   ========================================================================== */
+.footer.block.accordion {
+  border-left: 4px solid #06c;
+  padding-left: 20px;
+}
+
+.footer.block.accordion .accordion-header {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.footer.block.accordion .accordion-header::after {
+  content: ' ▾';
+  font-size: 12px;
+}
+
+/* ==========================================================================
+   VARIATION 5: Newsletter Split Layout (.newsletter-split)
+   ========================================================================== */
+.footer.block.newsletter-split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (width <= 767px) {
+  .footer.block.newsletter-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   COLOR THEMES
+   ========================================================================== */
+
+/* Dark Theme (.dark) */
+.footer.block.dark {
+  background-color: #121212 !important;
+  color: #fff !important;
+}
+
+.footer.block.dark p,
+.footer.block.dark div,
+.footer.block.dark h1,
+.footer.block.dark h2,
+.footer.block.dark h3,
+.footer.block.dark h4,
+.footer.block.dark a {
+  color: #fff !important;
+}
+
+/* Light Theme (.light) */
+.footer.block.light {
+  background-color: #fff !important;
+  color: #222 !important;
+}
+
+/* Brand Accent Theme (.brand-accent) */
+.footer.block.brand-accent {
+  background-color: var(--link-color, #06c) !important;
+  color: #fff !important;
+}
+
+.footer.block.brand-accent p,
+.footer.block.brand-accent div,
+.footer.block.brand-accent a {
+  color: #fff !important;
 }
