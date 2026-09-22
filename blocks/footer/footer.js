@@ -2,10 +2,34 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
-  // Check if content exists directly in DOM (e.g., when editing /footer directly)
-  const hasAuthoredContent = block.children.length > 0 && block.querySelector('img, p, div');
+  // Check if authored content exists in the current block DOM
+  const authoredImg = block.querySelector('img, picture');
+  const authoredText = block.querySelector('p, div, span, a');
+  const hasAuthoredContent = Boolean(
+    authoredImg || (authoredText && authoredText.textContent.trim()),
+  );
 
-  if (!hasAuthoredContent) {
+  if (hasAuthoredContent) {
+    // 1. Render ONLY the authored logo and copyright text
+    const wrapper = document.createElement('div');
+    wrapper.className = 'footer-content';
+
+    if (authoredImg) {
+      const logoWrapper = authoredImg.closest('picture') || authoredImg;
+      wrapper.append(logoWrapper);
+    }
+
+    if (authoredText) {
+      const textWrapper = authoredText.closest('p') || authoredText;
+      if (textWrapper !== authoredImg) {
+        wrapper.append(textWrapper);
+      }
+    }
+
+    block.textContent = '';
+    block.append(wrapper);
+  } else {
+    // 2. Fetch the central published /footer fragment for all other pages
     const footerMeta = getMetadata('footer');
     let footerPath = footerMeta
       ? new URL(footerMeta, window.location).pathname
@@ -15,7 +39,6 @@ export default async function decorate(block) {
       footerPath = footerPath.slice(0, -5);
     }
 
-    // Attempt standard fragment load
     let fragment = await loadFragment(footerPath);
 
     // Fallback retry if fragment is empty inside Universal Editor canvas
@@ -45,16 +68,9 @@ export default async function decorate(block) {
     }
 
     block.append(footer);
-  } else if (!block.querySelector('.footer-content')) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'footer-content';
-    while (block.firstChild) {
-      wrapper.append(block.firstChild);
-    }
-    block.append(wrapper);
   }
 
-  // Constrain logo sizing
+  // Constrain logo sizing cleanly
   const img = block.querySelector('img');
   if (img) {
     img.style.maxWidth = '100px';
