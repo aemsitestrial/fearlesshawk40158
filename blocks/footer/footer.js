@@ -6,14 +6,19 @@ export default async function decorate(block) {
 
   if (!hasAuthoredContent) {
     const footerMeta = getMetadata('footer');
-    const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+    // Normalize path to fetch /footer or /footer.plain.html correctly
+    let footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+    if (footerPath.endsWith('.html')) {
+      footerPath = footerPath.slice(0, -5);
+    }
+
     const fragment = await loadFragment(footerPath);
 
     block.textContent = '';
     const footer = document.createElement('div');
     footer.className = 'footer-content';
 
-    while (fragment.firstElementChild) {
+    while (fragment && fragment.firstElementChild) {
       footer.append(fragment.firstElementChild);
     }
     block.append(footer);
@@ -26,7 +31,7 @@ export default async function decorate(block) {
     block.append(wrapper);
   }
 
-  // Ensure image size stays small and compact
+  // Constrain logo dimensions
   const img = block.querySelector('img');
   if (img) {
     img.style.maxWidth = '100px';
