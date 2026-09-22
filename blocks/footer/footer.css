@@ -1,3 +1,9 @@
+/* Prevent double footer display when editing in Universal Editor */
+main .footer.block + footer,
+body:has(main .footer.block) > footer {
+  display: none !important;
+}
+
 /* Base Compact Footer Container */
 .footer.block {
   --footer-bg: #0f172a;

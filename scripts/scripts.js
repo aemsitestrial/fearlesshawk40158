@@ -115,12 +115,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
-  let footer = doc.querySelector('footer');
-  if (!footer) {
-    footer = document.createElement('footer');
-    doc.body.append(footer);
-  }
-  loadFooter(footer);
+  loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
