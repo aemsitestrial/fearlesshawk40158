@@ -338,11 +338,11 @@
                   "selector": "div:nth-child(3)>div"
                 },
                 {
-                  "name": "navLinks",
+                  "name": "hqInfo",
                   "selector": "div:nth-child(4)>div"
                 },
                 {
-                  "name": "socialLinks",
+                  "name": "complianceInfo",
                   "selector": "div:nth-child(5)>div"
                 },
                 {

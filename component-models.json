@@ -378,10 +378,6 @@
                 "value": "centered"
               },
               {
-                "name": "Accordion Mobile Layout",
-                "value": "accordion"
-              },
-              {
                 "name": "Newsletter Split Layout",
                 "value": "newsletter-split"
               }
@@ -421,29 +417,29 @@
         "component": "richtext",
         "valueType": "string",
         "name": "description",
-        "label": "Footer Tagline / About",
-        "value": ""
+        "label": "Company Overview & Mission",
+        "value": "<p>Pioneering sustainable technology solutions across global markets. Operating in over 50 countries with a dedicated workforce driving digital transformation.</p>"
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "navLinks",
-        "label": "Navigation Links & Columns",
-        "description": "Add bullet lists or links for Quick Links, Services, Products, etc."
+        "name": "hqInfo",
+        "label": "Headquarters & Contact Details",
+        "value": "<p>100 Innovation Way, Suite 400, CA 94016<br>Phone: +1 (800) 555-0199<br>Email: contact@enterprise.com</p>"
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "socialLinks",
-        "label": "Social Media Links",
-        "description": "Add links for LinkedIn, Twitter, Facebook, YouTube."
+        "name": "complianceInfo",
+        "label": "Compliance & Governance Note",
+        "value": "<p>ISO 27001 Certified • SOC 2 Type II Compliant • GDPR & CCPA Aligned.</p>"
       },
       {
         "component": "richtext",
         "valueType": "string",
         "name": "copyright",
         "label": "Copyright & Legal Text",
-        "value": "© 2026 All Rights Reserved."
+        "value": "<p>© 2026 All Rights Reserved.</p>"
       }
     ]
   },
