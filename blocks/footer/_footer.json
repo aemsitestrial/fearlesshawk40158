@@ -1,0 +1,99 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "da": {
+          "rows": 4,
+          "columns": 1,
+          "fields": [
+            {
+              "name": "classes",
+              "selector": "div:nth-child(1)>div>ul"
+            },
+            {
+              "name": "logo",
+              "selector": "div:nth-child(2)>div>picture>img[src]"
+            },
+            {
+              "name": "description",
+              "selector": "div:nth-child(3)>div"
+            },
+            {
+              "name": "copyright",
+              "selector": "div:nth-child(4)>div"
+            }
+          ]
+        },
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Footer",
+              "model": "footer",
+              "classes": ["dark", "multi-column"]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Footer Variation & Theme",
+          "valueType": "string",
+          "required": true,
+          "maxSize": 3,
+          "options": [
+            {
+              "name": "Layout Variations",
+              "children": [
+                { "name": "Multi-Column Layout", "value": "multi-column" },
+                { "name": "Minimal Single-Row Layout", "value": "minimal" },
+                { "name": "Centered Brand Focus", "value": "centered" },
+                { "name": "Accordion Mobile Layout", "value": "accordion" },
+                { "name": "Newsletter Split Layout", "value": "newsletter-split" }
+              ]
+            },
+            {
+              "name": "Color Themes",
+              "children": [
+                { "name": "Dark Theme", "value": "dark" },
+                { "name": "Light Theme", "value": "light" },
+                { "name": "Brand Accent Theme", "value": "brand-accent" }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "logo",
+          "label": "Footer Logo",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "description",
+          "label": "Footer Tagline / About",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "copyright",
+          "label": "Copyright Text",
+          "value": "© 2026 All Rights Reserved."
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

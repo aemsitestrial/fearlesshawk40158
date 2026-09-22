@@ -353,6 +353,84 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Footer Variation & Theme",
+        "valueType": "string",
+        "required": true,
+        "maxSize": 3,
+        "options": [
+          {
+            "name": "Layout Variations",
+            "children": [
+              {
+                "name": "Multi-Column Layout",
+                "value": "multi-column"
+              },
+              {
+                "name": "Minimal Single-Row Layout",
+                "value": "minimal"
+              },
+              {
+                "name": "Centered Brand Focus",
+                "value": "centered"
+              },
+              {
+                "name": "Accordion Mobile Layout",
+                "value": "accordion"
+              },
+              {
+                "name": "Newsletter Split Layout",
+                "value": "newsletter-split"
+              }
+            ]
+          },
+          {
+            "name": "Color Themes",
+            "children": [
+              {
+                "name": "Dark Theme",
+                "value": "dark"
+              },
+              {
+                "name": "Light Theme",
+                "value": "light"
+              },
+              {
+                "name": "Brand Accent Theme",
+                "value": "brand-accent"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo",
+        "label": "Footer Logo",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "label": "Footer Tagline / About",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "copyright",
+        "label": "Copyright Text",
+        "value": "© 2026 All Rights Reserved."
+      }
+    ]
+  },
+  {
     "id": "form",
     "fields": [
       {
