@@ -5,25 +5,15 @@
       "id": "footer",
       "plugins": {
         "da": {
-          "rows": 4,
+          "rows": 6,
           "columns": 1,
           "fields": [
-            {
-              "name": "classes",
-              "selector": "div:nth-child(1)>div>ul"
-            },
-            {
-              "name": "logo",
-              "selector": "div:nth-child(2)>div>picture>img[src]"
-            },
-            {
-              "name": "description",
-              "selector": "div:nth-child(3)>div"
-            },
-            {
-              "name": "copyright",
-              "selector": "div:nth-child(4)>div"
-            }
+            { "name": "classes", "selector": "div:nth-child(1)>div>ul" },
+            { "name": "logo", "selector": "div:nth-child(2)>div>picture>img[src]" },
+            { "name": "description", "selector": "div:nth-child(3)>div" },
+            { "name": "navLinks", "selector": "div:nth-child(4)>div" },
+            { "name": "socialLinks", "selector": "div:nth-child(5)>div" },
+            { "name": "copyright", "selector": "div:nth-child(6)>div" }
           ]
         },
         "xwalk": {
@@ -48,8 +38,7 @@
           "name": "classes",
           "label": "Footer Variation & Theme",
           "valueType": "string",
-          "required": true,
-          "maxSize": 3,
+          "required": false,
           "options": [
             {
               "name": "Layout Variations",
@@ -66,7 +55,8 @@
               "children": [
                 { "name": "Dark Theme", "value": "dark" },
                 { "name": "Light Theme", "value": "light" },
-                { "name": "Brand Accent Theme", "value": "brand-accent" }
+                { "name": "Brand Accent Theme", "value": "brand-accent" },
+                { "name": "Gradient Glass Theme", "value": "gradient-glass" }
               ]
             }
           ]
@@ -88,8 +78,22 @@
         {
           "component": "richtext",
           "valueType": "string",
+          "name": "navLinks",
+          "label": "Navigation Links & Columns",
+          "description": "Add bullet lists or links for Quick Links, Services, Products, etc."
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "socialLinks",
+          "label": "Social Media Links",
+          "description": "Add links for LinkedIn, Twitter, Facebook, YouTube."
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
           "name": "copyright",
-          "label": "Copyright Text",
+          "label": "Copyright & Legal Text",
           "value": "© 2026 All Rights Reserved."
         }
       ]

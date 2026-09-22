@@ -1,26 +1,27 @@
-/* ==========================================================================
-   GLOBAL FOOTER STYLES & RESET
-   ========================================================================== */
-
+/* Container Reset & CSS Variables */
 .footer.block {
-  --footer-bg: #f8fafc;
-  --footer-text: #334155;
-  --footer-heading: #0f172a;
-  --footer-border: #e2e8f0;
-  --footer-accent: #2563eb;
+  --footer-bg: #0b1329;
+  --footer-text: #94a3b8;
+  --footer-heading: #fff;
+  --footer-border: #1e293b;
+  --footer-accent: #38bdf8;
 
   background-color: var(--footer-bg);
   color: var(--footer-text);
   border-top: 1px solid var(--footer-border);
-  padding: 48px 24px 32px;
+  padding: 56px 24px 32px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .footer.block .footer-content {
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
 }
 
 /* Authored Logo Formatting */
@@ -37,19 +38,21 @@
   transform: scale(1.03);
 }
 
-/* Typography & Headings */
+/* Headings (Ordered to satisfy Stylelint no-descending-specificity) */
 .footer.block h1,
 .footer.block h2,
 .footer.block h3,
-.footer.block h4 {
+.footer.block h4,
+.footer.block .nav-col h4 {
   color: var(--footer-heading);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  margin: 0 0 16px;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px;
 }
 
+/* Paragraphs & Typography */
 .footer.block p,
 .footer.block div {
   font-size: 14px;
@@ -58,52 +61,49 @@
   opacity: 0.9;
 }
 
+/* Navigation Columns Grid */
+.footer.block .footer-nav-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 32px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.footer.block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer.block ul li {
+  margin-bottom: 10px;
+}
+
 .footer.block a {
-  color: inherit;
+  color: var(--footer-text);
   text-decoration: none;
-  transition: color 0.2s ease;
+  font-size: 14px;
+  transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
 .footer.block a:hover {
   color: var(--footer-accent);
+  padding-left: 4px;
 }
 
 /* ==========================================================================
-   VARIATIONS & LAYOUTS
+   LAYOUT VARIATIONS
    ========================================================================== */
 
-/* VARIATION 1: Centered Brand Focus (.centered & .centered-brand-focus) */
-.footer.block.centered,
-.footer.block.centered-brand-focus {
-  text-align: center;
-}
-
-.footer.block.centered .footer-content,
-.footer.block.centered-brand-focus .footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.footer.block.centered img,
-.footer.block.centered-brand-focus img {
-  margin: 0 auto 12px;
-}
-
-.footer.block.centered p,
-.footer.block.centered-brand-focus p {
-  max-width: 500px;
-}
-
-/* VARIATION 2: Multi-Column Grid (.multi-column) */
+/* VARIATION 1: Multi-Column Layout (.multi-column) */
 .footer.block.multi-column .footer-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px;
 }
 
-/* VARIATION 3: Minimal Single-Row (.minimal) */
+/* VARIATION 2: Minimal Single-Row Layout (.minimal) */
 .footer.block.minimal {
   padding: 24px;
 }
@@ -121,7 +121,32 @@
   margin: 0;
 }
 
-/* VARIATION 4: Accordion Mobile (.accordion) */
+/* VARIATION 3: Centered Brand Focus (.centered & .centered-brand-focus) */
+.footer.block.centered,
+.footer.block.centered-brand-focus {
+  text-align: center;
+}
+
+.footer.block.centered .footer-content,
+.footer.block.centered-brand-focus .footer-content {
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer.block.centered img,
+.footer.block.centered-brand-focus img {
+  margin: 0 auto 12px;
+}
+
+.footer.block.centered .footer-nav-columns,
+.footer.block.centered-brand-focus .footer-nav-columns {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+}
+
+/* VARIATION 4: Accordion Mobile Layout (.accordion) */
 .footer.block.accordion .accordion-header {
   cursor: pointer;
   display: flex;
@@ -142,7 +167,7 @@
   content: '−';
 }
 
-/* VARIATION 5: Newsletter Split (.newsletter-split) */
+/* VARIATION 5: Newsletter Split Layout (.newsletter-split) */
 .footer.block.newsletter-split .footer-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -156,7 +181,7 @@
 }
 
 /* ==========================================================================
-   THEMES
+   COLOR THEMES
    ========================================================================== */
 
 /* Dark Theme (.dark) */
@@ -184,4 +209,21 @@
   --footer-heading: #fff;
   --footer-border: #2563eb;
   --footer-accent: #93c5fd;
+}
+
+/* Gradient Glass Theme (.gradient-glass) */
+.footer.block.gradient-glass {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+  color: #e2e8f0;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  backdrop-filter: blur(10px);
+}
+
+.footer.block.gradient-glass h3,
+.footer.block.gradient-glass h4 {
+  color: #fff;
+}
+
+.footer.block.gradient-glass a:hover {
+  color: #a855f7;
 }

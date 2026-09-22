@@ -360,8 +360,7 @@
         "name": "classes",
         "label": "Footer Variation & Theme",
         "valueType": "string",
-        "required": true,
-        "maxSize": 3,
+        "required": false,
         "options": [
           {
             "name": "Layout Variations",
@@ -402,6 +401,10 @@
               {
                 "name": "Brand Accent Theme",
                 "value": "brand-accent"
+              },
+              {
+                "name": "Gradient Glass Theme",
+                "value": "gradient-glass"
               }
             ]
           }
@@ -424,8 +427,22 @@
       {
         "component": "richtext",
         "valueType": "string",
+        "name": "navLinks",
+        "label": "Navigation Links & Columns",
+        "description": "Add bullet lists or links for Quick Links, Services, Products, etc."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "socialLinks",
+        "label": "Social Media Links",
+        "description": "Add links for LinkedIn, Twitter, Facebook, YouTube."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
         "name": "copyright",
-        "label": "Copyright Text",
+        "label": "Copyright & Legal Text",
         "value": "© 2026 All Rights Reserved."
       }
     ]
