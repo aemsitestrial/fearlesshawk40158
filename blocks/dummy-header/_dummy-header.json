@@ -36,7 +36,7 @@
             "template": {
               "name": "Dummy Header",
               "model": "dummy-header",
-              "classes": ["sticky", "light"]
+              "classes": ["light"]
             }
           }
         }
@@ -77,78 +77,27 @@
           "name": "navItems",
           "value": "",
           "label": "Navigation Links",
-          "description": "Add top-level menu items (e.g., Examples, Getting Started, Documentation) as a bulleted list with hyperlinks."
+          "description": "Add top-level menu items as a list."
         },
         {
           "component": "multiselect",
           "name": "classes",
-          "label": "Style & Variations",
+          "label": "Style Variations",
           "valueType": "string",
           "required": false,
-          "maxSize": 4,
           "options": [
             {
               "name": "Theme",
               "children": [
-                {
-                  "name": "Light",
-                  "value": "light"
-                },
-                {
-                  "name": "Dark",
-                  "value": "dark"
-                },
-                {
-                  "name": "Transparent",
-                  "value": "transparent"
-                }
-              ]
-            },
-            {
-              "name": "Positioning",
-              "children": [
-                {
-                  "name": "Sticky Top",
-                  "value": "sticky"
-                },
-                {
-                  "name": "Fixed Top",
-                  "value": "fixed"
-                },
-                {
-                  "name": "Static",
-                  "value": "static"
-                }
-              ]
-            },
-            {
-              "name": "Layout / Alignment",
-              "children": [
-                {
-                  "name": "Centered Nav",
-                  "value": "nav-center"
-                },
-                {
-                  "name": "Left Nav",
-                  "value": "nav-left"
-                },
-                {
-                  "name": "Full Width",
-                  "value": "full-width"
-                }
+                { "name": "Light", "value": "light" },
+                { "name": "Dark", "value": "dark" }
               ]
             },
             {
               "name": "Border Style",
               "children": [
-                {
-                  "name": "Bottom Border",
-                  "value": "has-border"
-                },
-                {
-                  "name": "Shadow",
-                  "value": "has-shadow"
-                }
+                { "name": "Bottom Border", "value": "has-border" },
+                { "name": "Shadow", "value": "has-shadow" }
               ]
             }
           ]

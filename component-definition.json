@@ -324,7 +324,6 @@
                   "name": "Dummy Header",
                   "model": "dummy-header",
                   "classes": [
-                    "sticky",
                     "light"
                   ]
                 }
