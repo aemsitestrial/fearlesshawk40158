@@ -65,7 +65,8 @@
         "title",
 	"teaser",
         "video",
-        "footer"
+        "footer",
+        "dummy-header"
       ]
     }
   ]
