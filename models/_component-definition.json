@@ -33,9 +33,6 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
-        },
-        {
-          "...": "../blocks/dummy-header/_*.json#/definitions"
         }
       ]
     }
