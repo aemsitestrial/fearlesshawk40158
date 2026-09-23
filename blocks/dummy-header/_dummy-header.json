@@ -59,47 +59,26 @@
           "valueType": "string"
         },
         {
-          "component": "multifield",
+          "component": "container",
           "name": "navigationItems",
           "label": "Navigation Items",
-          "valueType": "array",
-          "field": {
-            "component": "container",
-            "name": "item",
-            "label": "Navigation Item",
-            "fields": [
-              {
-                "component": "text",
-                "name": "label",
-                "label": "Label",
-                "value": "",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "name": "link",
-                "label": "Link",
-                "value": "",
-                "valueType": "string"
-              }
-            ]
-          }
-        },
-        {
-          "component": "text",
-          "name": "navigationLabel",
-          "label": "Navigation Label",
-          "value": "",
-          "valueType": "string",
-          "multi": true
-        },
-        {
-          "component": "text",
-          "name": "navigationLink",
-          "label": "Navigation Link",
-          "value": "",
-          "valueType": "string",
-          "multi": true
+          "collapsible": false,
+          "fields": [
+            {
+              "component": "text",
+              "name": "label",
+              "label": "Label",
+              "valueType": "string",
+              "multi": true
+            },
+            {
+              "component": "text",
+              "name": "link",
+              "label": "Link",
+              "valueType": "string",
+              "multi": true
+            }
+          ]
         },
         {
           "component": "text",
