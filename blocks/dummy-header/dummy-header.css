@@ -1,120 +1,121 @@
+/* ==========================================================================
+   Dummy Header Block
+   ========================================================================== */
+
 .dummy-header {
   --dummy-header-bg: #fff;
   --dummy-header-border: #e6e6e6;
   --dummy-header-text: #202124;
   --dummy-header-accent: #464feb;
   --dummy-header-height: 72px;
- 
+
+  position: relative;
+  width: 100%;
   border-bottom: 1px solid var(--dummy-header-border);
-  color: var(--dummy-header-text);
   background: var(--dummy-header-bg);
-
+  color: var(--dummy-header-text);
+  box-sizing: border-box;
 }
- 
-.dummy-header-inner {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  min-height: var(--dummy-header-height);
-  max-width: 1248px;
-  margin: 0 auto;
-  padding: 0 24px;
 
+.dummy-header *,
+.dummy-header *::before,
+.dummy-header *::after {
+  box-sizing: border-box;
 }
- 
+
+/* Base Navigation Container */
 .dummy-header-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 72px;
+  min-height: var(--dummy-header-height);
   max-width: 1248px;
   margin: 0 auto;
   padding: 0 24px;
-
 }
- 
+
+/* --------------------------------------------------------------------------
+   1. Brand Section
+   -------------------------------------------------------------------------- */
 .dummy-header-brand {
   flex: 0 0 auto;
-  color: inherit;
   font-size: 22px;
   font-weight: 700;
+  color: inherit;
   text-decoration: none;
-
 }
- 
+
 .dummy-header-brand-link {
-  color: inherit;
+  display: inline-flex;
+  align-items: center;
   font-size: 22px;
   font-weight: 700;
+  color: inherit;
   text-decoration: none;
-
 }
- 
+
 .dummy-header-brand-link img {
   width: auto;
   max-width: 140px;
   max-height: 40px;
   margin-right: 8px;
-  vertical-align: middle;
-
+  object-fit: contain;
 }
- 
-.dummy-header-menu-button {
-  display: none;
-  width: 40px;
-  height: 40px;
-  margin-left: auto;
-  border: 1px solid var(--dummy-header-border);
-  padding: 8px;
-  color: inherit;
-  background: transparent;
 
-}
- 
-.dummy-header-menu-button span {
-  display: block;
-  height: 2px;
-  margin: 4px 0;
-  background: currentcolor;
-
-}
- 
+/* --------------------------------------------------------------------------
+   2. Navigation Links
+   -------------------------------------------------------------------------- */
 .dummy-header-sections {
   display: flex;
   flex: 1 1 auto;
   justify-content: center;
-  gap: 20px;
-
 }
- 
+
 .dummy-header-sections ul {
   display: flex;
-  gap: 20px;
-  list-style: none;
+  align-items: center;
+  gap: 24px;
   margin: 0;
   padding: 0;
-
+  list-style: none;
 }
- 
+
 .dummy-header-sections a {
+  font-weight: 500;
   color: inherit;
   text-decoration: none;
-
+  transition: color 0.2s ease;
 }
- 
+
+.dummy-header-sections a:hover,
+.dummy-header-sections a:focus-visible {
+  color: var(--dummy-header-accent);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   3. Tools Section
+   -------------------------------------------------------------------------- */
+.dummy-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+/* Search Icon */
 .dummy-header-search {
   position: relative;
-  display: block;
+  display: inline-block;
   width: 24px;
   height: 24px;
-  overflow: hidden;
   color: inherit;
   text-decoration: none;
   text-indent: -9999px;
-
+  overflow: hidden;
 }
- 
+
 .dummy-header-search::before {
   content: '';
   position: absolute;
@@ -124,170 +125,178 @@
   height: 12px;
   border: 2px solid currentcolor;
   border-radius: 50%;
-
 }
- 
+
 .dummy-header-search::after {
   content: '';
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 15px;
+  left: 15px;
   width: 8px;
   height: 2px;
   background: currentcolor;
   transform: rotate(45deg);
   transform-origin: left center;
-
 }
- 
-.dummy-header-sections a:hover,
 
-.dummy-header-sections a:focus-visible {
-  color: var(--dummy-header-accent);
-  text-decoration: underline;
-
-}
- 
 .dummy-header-search:hover,
-
 .dummy-header-search:focus-visible {
   color: var(--dummy-header-accent);
-  text-decoration: underline;
-
+  text-decoration: none; /* Prevents text-underline artifacts */
 }
- 
-.dummy-header-tools {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 0 0 auto;
 
-}
- 
+/* Call To Action Button */
 .dummy-header-cta {
-  padding: 9px 14px;
-  border-radius: 4px;
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-weight: 600;
   background: var(--dummy-header-accent);
+  color: #fff;
   text-decoration: none;
-
+  transition: opacity 0.2s ease;
 }
- 
-/* Variant Modifier Styles */
 
-.dummy-header.sticky .dummy-header-nav {
+.dummy-header-cta:hover {
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+/* Hamburger Menu Button */
+.dummy-header-menu-button {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid var(--dummy-header-border);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dummy-header-menu-button span {
+  display: block;
+  height: 2px;
+  margin: 4px 0;
+  background: currentcolor;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Focus States (Placed before higher specificity variant selectors) */
+.dummy-header-menu-button:focus-visible,
+.dummy-header-search:focus-visible,
+.dummy-header-cta:focus-visible,
+.dummy-header-sections a:focus-visible {
+  outline: 2px solid var(--dummy-header-accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Variant Modifiers
+   -------------------------------------------------------------------------- */
+
+/* Sticky Variant */
+.dummy-header.sticky {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: var(--dummy-header-bg);
-
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
 }
- 
+
+/* Centered Variant */
+.dummy-header.centered .dummy-header-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
 .dummy-header.centered .dummy-header-brand {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-
+  grid-column: 2;
 }
- 
+
+.dummy-header.centered .dummy-header-sections {
+  grid-column: 1;
+  justify-content: flex-start;
+}
+
+.dummy-header.centered .dummy-header-tools {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+/* Dark Variant */
 .dummy-header.dark {
   --dummy-header-bg: #172554;
-  --dummy-header-border: #172554;
+  --dummy-header-border: #1e3a8a;
   --dummy-header-text: #fff;
   --dummy-header-accent: #fbbf24;
-
 }
- 
+
 .dummy-header.dark .dummy-header-cta {
   color: #172554;
   background: var(--dummy-header-accent);
-
 }
- 
-/* Mobile Responsiveness (<900px) */
 
-@media (width < 900px) {
+/* --------------------------------------------------------------------------
+   5. Mobile Responsiveness (<900px)
+   -------------------------------------------------------------------------- */
+@media (width <= 899px) {
   .dummy-header-menu-button {
     display: block;
-
   }
- 
+
   .dummy-header-nav {
     position: relative;
-    flex-wrap: wrap;
     min-height: 64px;
-
   }
- 
+
+  /* Off-canvas Dropdown Drawer */
   .dummy-header-sections {
     display: none;
-    flex-basis: 100%;
-    order: 4;
-    justify-content: flex-start;
-    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     width: 100%;
-    min-height: calc(100dvh - 64px);
-    padding: 16px 0;
+    min-height: calc(100vh - 64px);
+    padding: 24px;
     background: var(--dummy-header-bg);
-
+    border-top: 1px solid var(--dummy-header-border);
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 99;
   }
- 
+
   .dummy-header-nav[aria-expanded='true'] .dummy-header-sections {
     display: flex;
-
   }
- 
+
   .dummy-header-sections ul {
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
-
+    width: 100%;
   }
- 
+
   .dummy-header-sections a {
     display: block;
-    padding: 12px 0;
+    padding: 14px 0;
+    font-size: 1.125rem;
     border-bottom: 1px solid var(--dummy-header-border);
-
-  }
- 
-  .dummy-header-tools {
-    margin-left: auto;
-
-  }
- 
-  .dummy-header.centered .dummy-header-brand {
-    position: static;
-    transform: none;
-
-  }
- 
-  .dummy-header-nav[aria-expanded='true'] {
-    align-items: flex-start;
-
-  }
- 
-  .dummy-header-nav[aria-expanded='true'] .dummy-header-tools {
-    margin-left: auto;
-
-  }
- 
-  .dummy-header-menu-button:focus-visible,
-
-  .dummy-header-search:focus-visible,
-
-  .dummy-header-cta:focus-visible {
-    outline: 3px solid var(--dummy-header-accent);
-    outline-offset: 3px;
-
   }
 
+  /* Reset Grid Layout for Centered Variant on Mobile */
+  .dummy-header.centered .dummy-header-nav {
+    display: flex;
+    grid-template-columns: none;
+  }
+
+  .dummy-header.centered .dummy-header-brand,
+  .dummy-header.centered .dummy-header-sections,
+  .dummy-header.centered .dummy-header-tools {
+    grid-column: auto;
+  }
 }
- 
-@media (width >= 900px) {
-  .dummy-header-menu-button {
-    display: none;
-
-  }
-
-}
- 
