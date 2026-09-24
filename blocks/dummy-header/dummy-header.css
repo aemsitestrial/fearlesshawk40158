@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Dummy Header Block
+   Dummy Header Block Styles
    ========================================================================== */
 
 .dummy-header {
@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 
-/* Base Navigation Container */
+/* Container Layout */
 .dummy-header-nav {
   display: flex;
   align-items: center;
@@ -35,9 +35,7 @@
   padding: 0 24px;
 }
 
-/* --------------------------------------------------------------------------
-   1. Brand Section
-   -------------------------------------------------------------------------- */
+/* 1. Brand Section */
 .dummy-header-brand {
   flex: 0 0 auto;
   font-size: 22px;
@@ -63,9 +61,7 @@
   object-fit: contain;
 }
 
-/* --------------------------------------------------------------------------
-   2. Navigation Links
-   -------------------------------------------------------------------------- */
+/* 2. Navigation Items */
 .dummy-header-sections {
   display: flex;
   flex: 1 1 auto;
@@ -95,9 +91,7 @@
   text-decoration: underline;
 }
 
-/* --------------------------------------------------------------------------
-   3. Tools Section
-   -------------------------------------------------------------------------- */
+/* 3. Tools Section */
 .dummy-header-tools {
   display: flex;
   align-items: center;
@@ -146,7 +140,7 @@
   text-decoration: none;
 }
 
-/* Call To Action Button */
+/* CTA Button */
 .dummy-header-cta {
   display: inline-flex;
   align-items: center;
@@ -165,7 +159,7 @@
   text-decoration: none;
 }
 
-/* Focus States (placed before higher-specificity variants) */
+/* Focus States (before variant specificity rules) */
 .dummy-header-search:focus-visible,
 .dummy-header-cta:focus-visible,
 .dummy-header-sections a:focus-visible {
@@ -173,11 +167,9 @@
   outline-offset: 2px;
 }
 
-/* --------------------------------------------------------------------------
-   4. Variant Modifiers
-   -------------------------------------------------------------------------- */
+/* 4. Variant Modifiers */
 
-/* Sticky Variant */
+/* Sticky */
 .dummy-header.sticky {
   position: sticky;
   top: 0;
@@ -185,7 +177,7 @@
   box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
 }
 
-/* Centered Variant */
+/* Centered */
 .dummy-header.centered .dummy-header-nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -206,7 +198,7 @@
   justify-content: flex-end;
 }
 
-/* Dark Variant */
+/* Dark */
 .dummy-header.dark {
   --dummy-header-bg: #172554;
   --dummy-header-border: #1e3a8a;
