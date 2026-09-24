@@ -14,9 +14,7 @@ function getBoolean(block, name, fallback = false) {
 
 function getFieldValues(block, name) {
   return [...block.querySelectorAll(`[data-aue-prop="${name}"]`)]
-
     .map((field) => field.textContent.trim() || field.dataset.value || '')
-
     .filter(Boolean);
 }
 
@@ -25,50 +23,60 @@ function slugify(value) {
 }
 
 function getNavigationLinks(block) {
-  // Query multi-field labels and links from Universal Editor DOM output
+  const links = [];
 
-  let labels = getFieldValues(block, 'label');
+  // 1. Check for Universal Editor container wrapper
+  const container = block.querySelector('[data-aue-prop="navigationItems"]');
 
-  let links = getFieldValues(block, 'link');
+  if (container) {
+    const itemElements = container.children.length > 0
+      ? Array.from(container.children)
+      : [container];
 
-  // Fallbacks for legacy/alternative field names
+    itemElements.forEach((item) => {
+      const labelEl = item.querySelector('[data-aue-prop="label"]') || item;
+      const linkEl = item.querySelector('[data-aue-prop="link"]');
 
-  if (!labels.length) labels = getFieldValues(block, 'navigationLabel');
+      const text = labelEl.textContent.trim() || labelEl.dataset.value || '';
+      const href = linkEl?.textContent.trim() || linkEl?.dataset.value || slugify(text);
 
-  if (!links.length) links = getFieldValues(block, 'navigationLink');
+      if (text) {
+        links.push({ text, href });
+      }
+    });
 
-  // Match labels and links into structured objects
-
-  if (labels.length || links.length) {
-    const maxLength = Math.max(labels.length, links.length);
-
-    const result = [];
-
-    for (let i = 0; i < maxLength; i += 1) {
-      const text = labels[i] || links[i] || `Link ${i + 1}`;
-
-      const href = links[i] || slugify(text);
-
-      result.push({ text, href });
-    }
-
-    return result;
+    if (links.length > 0) return links;
   }
 
-  // Fallback for plain-text string entries
+  // 2. Direct Query Fallback (flat multi-fields)
+  let labels = getFieldValues(block, 'label');
+  let hrefs = getFieldValues(block, 'link');
 
-  const plainText = block.querySelector('[data-aue-prop="navigationItems"]')?.textContent || '';
+  if (!labels.length) labels = getFieldValues(block, 'navigationLabel');
+  if (!hrefs.length) hrefs = getFieldValues(block, 'navigationLink');
+
+  if (labels.length || hrefs.length) {
+    const maxLength = Math.max(labels.length, hrefs.length);
+
+    for (let i = 0; i < maxLength; i += 1) {
+      const text = labels[i] || hrefs[i] || `Link ${i + 1}`;
+      const href = hrefs[i] || slugify(text);
+
+      links.push({ text, href });
+    }
+
+    return links;
+  }
+
+  // 3. Fallback for plain-text entries
+  const plainText = container?.textContent || '';
 
   if (plainText) {
     return plainText
-
       .split(/\r?\n|,|;/)
-
       .map((text) => text.trim())
-
       .filter(Boolean)
-
-      .map((text) => ({ href: slugify(text), text }));
+      .map((text) => ({ text, href: slugify(text) }));
   }
 
   return [];
@@ -78,7 +86,6 @@ function createLink(href, text, className = '') {
   const link = document.createElement('a');
 
   link.href = href;
-
   link.textContent = text;
 
   if (className) link.className = className;
@@ -88,19 +95,12 @@ function createLink(href, text, className = '') {
 
 export default function decorate(block) {
   const variant = getField(block, 'headerVariant', 'standard').toLowerCase();
-
   const brandName = getField(block, 'brandName', 'Brand');
-
   const brandLink = getField(block, 'brandLink', '/');
-
   const brandLogo = getField(block, 'brandLogo');
-
   const ctaText = getField(block, 'ctaText');
-
   const ctaLink = getField(block, 'ctaLink');
-
   const showSearch = getBoolean(block, 'showSearch', true);
-
   const navigationLinks = getNavigationLinks(block);
 
   if (variant !== 'standard') block.classList.add(variant);
@@ -110,13 +110,10 @@ export default function decorate(block) {
   const nav = document.createElement('nav');
 
   nav.className = 'dummy-header-nav';
-
   nav.setAttribute('aria-label', 'Primary navigation');
-
   nav.setAttribute('aria-expanded', 'false');
 
   // 1. Render Brand Section
-
   const brandSection = document.createElement('div');
 
   brandSection.className = 'dummy-header-brand';
@@ -127,7 +124,6 @@ export default function decorate(block) {
     const logo = document.createElement('img');
 
     logo.src = brandLogo;
-
     logo.alt = brandName;
 
     brand.replaceChildren(logo, document.createTextNode(brandName));
@@ -136,11 +132,9 @@ export default function decorate(block) {
   brandSection.append(brand);
 
   // 2. Render Navigation Items
-
   const sections = document.createElement('div');
 
   sections.className = 'dummy-header-sections';
-
   sections.id = 'dummy-header-sections';
 
   const navigation = document.createElement('ul');
@@ -149,14 +143,12 @@ export default function decorate(block) {
     const item = document.createElement('li');
 
     item.append(createLink(href, text));
-
     navigation.append(item);
   });
 
   sections.append(navigation);
 
   // 3. Render Tools / Actions
-
   const tools = document.createElement('div');
 
   tools.className = 'dummy-header-tools';
@@ -164,15 +156,10 @@ export default function decorate(block) {
   const menuButton = document.createElement('button');
 
   menuButton.type = 'button';
-
   menuButton.className = 'dummy-header-menu-button';
-
   menuButton.setAttribute('aria-controls', 'dummy-header-sections');
-
   menuButton.setAttribute('aria-expanded', 'false');
-
   menuButton.setAttribute('aria-label', 'Open navigation');
-
   menuButton.innerHTML = '<span></span><span></span><span></span>';
 
   tools.append(menuButton);
@@ -181,7 +168,6 @@ export default function decorate(block) {
     const search = createLink('/search', 'Search', 'dummy-header-search');
 
     search.setAttribute('aria-label', 'Search');
-
     tools.append(search);
   }
 
@@ -190,14 +176,10 @@ export default function decorate(block) {
   nav.append(brandSection, sections, tools);
 
   // 4. Accessibility & Mobile Menu Events
-
   const setMenuState = (expanded) => {
     nav.setAttribute('aria-expanded', String(expanded));
-
     menuButton.setAttribute('aria-expanded', String(expanded));
-
     menuButton.setAttribute('aria-label', expanded ? 'Close navigation' : 'Open navigation');
-
     document.body.style.overflow = expanded ? 'hidden' : '';
   };
 
@@ -206,7 +188,6 @@ export default function decorate(block) {
   nav.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       setMenuState(false);
-
       menuButton.focus();
     }
   });
