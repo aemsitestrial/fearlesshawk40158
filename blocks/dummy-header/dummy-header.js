@@ -45,7 +45,7 @@ function getNavigationLinks(block) {
     return links;
   }
 
-  // 2. Query nested container wrapper
+  // 2. Query nested container wrapper (if authored as sub-models)
   const container = block.querySelector('[data-aue-prop="navigationItems"]');
 
   if (container) {
@@ -111,7 +111,6 @@ export default function decorate(block) {
 
   nav.className = 'dummy-header-nav';
   nav.setAttribute('aria-label', 'Primary navigation');
-  nav.setAttribute('aria-expanded', 'false');
 
   // 1. Render Brand Section
   const brandSection = document.createElement('div');
@@ -135,7 +134,6 @@ export default function decorate(block) {
   const sections = document.createElement('div');
 
   sections.className = 'dummy-header-sections';
-  sections.id = 'dummy-header-sections';
 
   const navigation = document.createElement('ul');
 
@@ -148,21 +146,10 @@ export default function decorate(block) {
 
   sections.append(navigation);
 
-  // 3. Render Tools / Actions
+  // 3. Render Tools / Actions (Without Hamburger)
   const tools = document.createElement('div');
 
   tools.className = 'dummy-header-tools';
-
-  const menuButton = document.createElement('button');
-
-  menuButton.type = 'button';
-  menuButton.className = 'dummy-header-menu-button';
-  menuButton.setAttribute('aria-controls', 'dummy-header-sections');
-  menuButton.setAttribute('aria-expanded', 'false');
-  menuButton.setAttribute('aria-label', 'Open navigation');
-  menuButton.innerHTML = '<span></span><span></span><span></span>';
-
-  tools.append(menuButton);
 
   if (showSearch) {
     const search = createLink('/search', 'Search', 'dummy-header-search');
@@ -171,26 +158,11 @@ export default function decorate(block) {
     tools.append(search);
   }
 
-  if (ctaText && ctaLink) tools.append(createLink(ctaLink, ctaText, 'dummy-header-cta'));
+  if (ctaText && ctaLink) {
+    tools.append(createLink(ctaLink, ctaText, 'dummy-header-cta'));
+  }
 
   nav.append(brandSection, sections, tools);
-
-  // 4. Accessibility & Mobile Menu Events
-  const setMenuState = (expanded) => {
-    nav.setAttribute('aria-expanded', String(expanded));
-    menuButton.setAttribute('aria-expanded', String(expanded));
-    menuButton.setAttribute('aria-label', expanded ? 'Close navigation' : 'Open navigation');
-    document.body.style.overflow = expanded ? 'hidden' : '';
-  };
-
-  menuButton.addEventListener('click', () => setMenuState(nav.getAttribute('aria-expanded') !== 'true'));
-
-  nav.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      setMenuState(false);
-      menuButton.focus();
-    }
-  });
 
   block.append(nav);
 }

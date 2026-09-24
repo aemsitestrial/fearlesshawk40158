@@ -75,6 +75,7 @@
 .dummy-header-sections ul {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 24px;
   margin: 0;
   padding: 0;
@@ -142,7 +143,7 @@
 .dummy-header-search:hover,
 .dummy-header-search:focus-visible {
   color: var(--dummy-header-accent);
-  text-decoration: none; /* Prevents text-underline artifacts */
+  text-decoration: none;
 }
 
 /* Call To Action Button */
@@ -164,29 +165,7 @@
   text-decoration: none;
 }
 
-/* Hamburger Menu Button */
-.dummy-header-menu-button {
-  display: none;
-  width: 40px;
-  height: 40px;
-  padding: 8px;
-  border: 1px solid var(--dummy-header-border);
-  border-radius: 4px;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-}
-
-.dummy-header-menu-button span {
-  display: block;
-  height: 2px;
-  margin: 4px 0;
-  background: currentcolor;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-/* Focus States (Placed before higher specificity variant selectors) */
-.dummy-header-menu-button:focus-visible,
+/* Focus States (placed before higher-specificity variants) */
 .dummy-header-search:focus-visible,
 .dummy-header-cta:focus-visible,
 .dummy-header-sections a:focus-visible {
@@ -238,65 +217,4 @@
 .dummy-header.dark .dummy-header-cta {
   color: #172554;
   background: var(--dummy-header-accent);
-}
-
-/* --------------------------------------------------------------------------
-   5. Mobile Responsiveness (<900px)
-   -------------------------------------------------------------------------- */
-@media (width <= 899px) {
-  .dummy-header-menu-button {
-    display: block;
-  }
-
-  .dummy-header-nav {
-    position: relative;
-    min-height: 64px;
-  }
-
-  /* Off-canvas Dropdown Drawer */
-  .dummy-header-sections {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
-    min-height: calc(100vh - 64px);
-    padding: 24px;
-    background: var(--dummy-header-bg);
-    border-top: 1px solid var(--dummy-header-border);
-    flex-direction: column;
-    justify-content: flex-start;
-    z-index: 99;
-  }
-
-  .dummy-header-nav[aria-expanded='true'] .dummy-header-sections {
-    display: flex;
-  }
-
-  .dummy-header-sections ul {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    width: 100%;
-  }
-
-  .dummy-header-sections a {
-    display: block;
-    padding: 14px 0;
-    font-size: 1.125rem;
-    border-bottom: 1px solid var(--dummy-header-border);
-  }
-
-  /* Reset Grid Layout for Centered Variant on Mobile */
-  .dummy-header.centered .dummy-header-nav {
-    display: flex;
-    grid-template-columns: none;
-  }
-
-  .dummy-header.centered .dummy-header-brand,
-  .dummy-header.centered .dummy-header-sections,
-  .dummy-header.centered .dummy-header-tools {
-    grid-column: auto;
-  }
 }
