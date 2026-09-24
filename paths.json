@@ -1,10 +1,10 @@
 {
   "mappings": [
-    "/content/2026/38/fearlesshawk40158/:/",
-    "/content/2026/38/fearlesshawk40158/configuration:/.helix/config.json",
-    "/content/2026/38/fearlesshawk40158/metadata:/metadata.json"
+    "/content/2026/39/fearlesshawk40158/:/",
+    "/content/2026/39/fearlesshawk40158/configuration:/.helix/config.json",
+    "/content/2026/39/fearlesshawk40158/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/2026/38/fearlesshawk40158/"
+    "/content/2026/39/fearlesshawk40158/"
   ]
 }

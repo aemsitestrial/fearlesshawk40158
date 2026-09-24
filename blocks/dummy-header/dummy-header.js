@@ -25,7 +25,27 @@ function slugify(value) {
 function getNavigationLinks(block) {
   const links = [];
 
-  // 1. Check for Universal Editor container wrapper
+  // 1. Query flat multi-field arrays from Universal Editor DOM
+  let labels = getFieldValues(block, 'label');
+  let hrefs = getFieldValues(block, 'link');
+
+  if (!labels.length) labels = getFieldValues(block, 'navigationLabel');
+  if (!hrefs.length) hrefs = getFieldValues(block, 'navigationLink');
+
+  if (labels.length || hrefs.length) {
+    const maxLength = Math.max(labels.length, hrefs.length);
+
+    for (let i = 0; i < maxLength; i += 1) {
+      const text = labels[i] || hrefs[i] || `Link ${i + 1}`;
+      const href = hrefs[i] || slugify(text);
+
+      links.push({ text, href });
+    }
+
+    return links;
+  }
+
+  // 2. Query nested container wrapper
   const container = block.querySelector('[data-aue-prop="navigationItems"]');
 
   if (container) {
@@ -48,28 +68,8 @@ function getNavigationLinks(block) {
     if (links.length > 0) return links;
   }
 
-  // 2. Direct Query Fallback (flat multi-fields)
-  let labels = getFieldValues(block, 'label');
-  let hrefs = getFieldValues(block, 'link');
-
-  if (!labels.length) labels = getFieldValues(block, 'navigationLabel');
-  if (!hrefs.length) hrefs = getFieldValues(block, 'navigationLink');
-
-  if (labels.length || hrefs.length) {
-    const maxLength = Math.max(labels.length, hrefs.length);
-
-    for (let i = 0; i < maxLength; i += 1) {
-      const text = labels[i] || hrefs[i] || `Link ${i + 1}`;
-      const href = hrefs[i] || slugify(text);
-
-      links.push({ text, href });
-    }
-
-    return links;
-  }
-
-  // 3. Fallback for plain-text entries
-  const plainText = container?.textContent || '';
+  // 3. Fallback for plain-text string entries
+  const plainText = container?.textContent || block.querySelector('[data-aue-prop="navigationItems"]')?.textContent || '';
 
   if (plainText) {
     return plainText
