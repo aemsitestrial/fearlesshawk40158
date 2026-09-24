@@ -12,12 +12,6 @@ function getBoolean(block, name, fallback = false) {
   return value === 'true' || value === 'yes' || value === '1';
 }
 
-function getFieldValues(block, name) {
-  return [...block.querySelectorAll(`[data-aue-prop="${name}"]`)]
-    .map((field) => field.textContent.trim() || field.dataset.value || '')
-    .filter(Boolean);
-}
-
 function slugify(value) {
   return `/${value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 }
@@ -25,17 +19,35 @@ function slugify(value) {
 function getNavigationLinks(block) {
   const links = [];
 
-  // 1. Query flat multi-field arrays from Universal Editor DOM
-  let labels = getFieldValues(block, 'label');
-  let hrefs = getFieldValues(block, 'link');
+  // 1. Check for standard AEM Edge Delivery block table rows (div > div structure)
+  const rows = [...block.children];
 
-  if (!labels.length) labels = getFieldValues(block, 'navigationLabel');
-  if (!hrefs.length) hrefs = getFieldValues(block, 'navigationLink');
+  rows.forEach((row) => {
+    const cols = [...row.children];
+
+    if (cols.length >= 2) {
+      const labelText = cols[0].textContent.trim();
+      const linkText = cols[1].textContent.trim() || cols[1].querySelector('a')?.getAttribute('href') || slugify(labelText);
+
+      if (labelText) {
+        links.push({ text: labelText, href: linkText });
+      }
+    }
+  });
+
+  if (links.length > 0) return links;
+
+  // 2. Query data-aue-prop attributes (Universal Editor)
+  const labelNodes = [...block.querySelectorAll('[data-aue-prop="label"], [data-aue-prop="navigationLabel"]')];
+  const linkNodes = [...block.querySelectorAll('[data-aue-prop="link"], [data-aue-prop="navigationLink"]')];
+
+  const labels = labelNodes.map((node) => node.textContent.trim() || node.dataset.value || '').filter(Boolean);
+  const hrefs = linkNodes.map((node) => node.textContent.trim() || node.dataset.value || '').filter(Boolean);
 
   if (labels.length || hrefs.length) {
-    const maxLength = Math.max(labels.length, hrefs.length);
+    const count = Math.max(labels.length, hrefs.length);
 
-    for (let i = 0; i < maxLength; i += 1) {
+    for (let i = 0; i < count; i += 1) {
       const text = labels[i] || hrefs[i] || `Link ${i + 1}`;
       const href = hrefs[i] || slugify(text);
 
@@ -45,34 +57,11 @@ function getNavigationLinks(block) {
     return links;
   }
 
-  // 2. Query nested container wrapper (if authored as sub-models)
-  const container = block.querySelector('[data-aue-prop="navigationItems"]');
+  // 3. Fallback for plain-text string entries inside container wrapper
+  const containerText = block.querySelector('[data-aue-prop="navigationItems"]')?.textContent || '';
 
-  if (container) {
-    const itemElements = container.children.length > 0
-      ? Array.from(container.children)
-      : [container];
-
-    itemElements.forEach((item) => {
-      const labelEl = item.querySelector('[data-aue-prop="label"]') || item;
-      const linkEl = item.querySelector('[data-aue-prop="link"]');
-
-      const text = labelEl.textContent.trim() || labelEl.dataset.value || '';
-      const href = linkEl?.textContent.trim() || linkEl?.dataset.value || slugify(text);
-
-      if (text) {
-        links.push({ text, href });
-      }
-    });
-
-    if (links.length > 0) return links;
-  }
-
-  // 3. Fallback for plain-text string entries
-  const plainText = container?.textContent || block.querySelector('[data-aue-prop="navigationItems"]')?.textContent || '';
-
-  if (plainText) {
-    return plainText
+  if (containerText) {
+    return containerText
       .split(/\r?\n|,|;/)
       .map((text) => text.trim())
       .filter(Boolean)
@@ -94,6 +83,7 @@ function createLink(href, text, className = '') {
 }
 
 export default function decorate(block) {
+  // Extract all values BEFORE wiping block content
   const variant = getField(block, 'headerVariant', 'standard').toLowerCase();
   const brandName = getField(block, 'brandName', 'Brand');
   const brandLink = getField(block, 'brandLink', '/');
@@ -101,10 +91,13 @@ export default function decorate(block) {
   const ctaText = getField(block, 'ctaText');
   const ctaLink = getField(block, 'ctaLink');
   const showSearch = getBoolean(block, 'showSearch', true);
+
+  // Parse links from original DOM before resetting
   const navigationLinks = getNavigationLinks(block);
 
   if (variant !== 'standard') block.classList.add(variant);
 
+  // Clear original authored content
   block.textContent = '';
 
   const nav = document.createElement('nav');
@@ -146,7 +139,7 @@ export default function decorate(block) {
 
   sections.append(navigation);
 
-  // 3. Render Tools / Actions (Without Hamburger)
+  // 3. Render Tools / Actions
   const tools = document.createElement('div');
 
   tools.className = 'dummy-header-tools';
