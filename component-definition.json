@@ -953,11 +953,11 @@
               "fields": [
                 {
                   "name": "classes",
-                  "selector": "div:nth-child(1) > div > ul"
+                  "selector": "div:nth-child(1)>div>ul"
                 },
                 {
                   "name": "navPath",
-                  "selector": "div:nth-child(2) > div"
+                  "selector": "div:nth-child(2)>div>p>a[href]"
                 }
               ]
             },
@@ -967,7 +967,9 @@
                 "template": {
                   "name": "Header",
                   "model": "header",
-                  "classes": [],
+                  "classes": [
+                    "sticky"
+                  ],
                   "navPath": "/nav"
                 }
               }

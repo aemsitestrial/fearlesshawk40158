@@ -99,7 +99,9 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
+    // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
+    // collapse menu on focus lost
     nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
@@ -176,29 +178,6 @@ async function buildBreadcrumbs() {
 }
 
 /**
- * Extract path from block DOM, metadata, or fallback to /nav
- */
-function getNavPath(block) {
-  const link = block.querySelector('a[href]');
-  if (link) return link.getAttribute('href');
-
-  const secondRow = block.children[1];
-  if (secondRow) {
-    const textPath = secondRow.textContent.trim();
-    if (textPath && textPath.startsWith('/')) {
-      return textPath;
-    }
-  }
-
-  const navMeta = getMetadata('nav');
-  if (navMeta) {
-    return new URL(navMeta, window.location).pathname;
-  }
-
-  return '/nav';
-}
-
-/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -206,9 +185,19 @@ export default async function decorate(block) {
   // Capture styled classes chosen via authoring dialog
   const variantClasses = Array.from(block.classList).filter((c) => c !== 'header' && c !== 'block');
 
-  // Determine path to the navigation fragment
-  let navPath = getNavPath(block);
+  // Load nav fragment (checks custom link inside block, page metadata, or defaults to /nav)
+  const customNavLink = block.querySelector('a[href]');
+  const navMeta = getMetadata('nav');
 
+  // Replaced nested ternary to adhere to ESLint no-nested-ternary
+  let navPath = '/nav';
+  if (customNavLink) {
+    navPath = customNavLink.getAttribute('href');
+  } else if (navMeta) {
+    navPath = new URL(navMeta, window.location).pathname;
+  }
+
+  // Sanitize path extension for plain HTML fetch
   if (navPath.endsWith('.plain.html')) {
     navPath = navPath.replace('.plain.html', '');
   }
@@ -216,9 +205,8 @@ export default async function decorate(block) {
   const fragment = await loadFragment(navPath);
   if (!fragment) return;
 
-  // Clear block contents (removes raw dialog properties from DOM)
+  // decorate nav DOM
   block.textContent = '';
-
   const nav = document.createElement('nav');
   nav.id = 'nav';
 
@@ -266,6 +254,7 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
+    // Structural variation: Remove tools section if 'minimal' style is authored
     if (variantClasses.includes('minimal')) {
       navTools.remove();
     } else {
