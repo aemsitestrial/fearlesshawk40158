@@ -5484,59 +5484,6 @@
     ]
   },
   {
-    "id": "header",
-    "fields": [
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Header Style & Variations",
-        "valueType": "string",
-        "required": false,
-        "maxSize": 3,
-        "options": [
-          {
-            "name": "Positioning",
-            "children": [
-              {
-                "name": "Sticky",
-                "value": "sticky"
-              },
-              {
-                "name": "Fixed",
-                "value": "fixed"
-              }
-            ]
-          },
-          {
-            "name": "Appearance",
-            "children": [
-              {
-                "name": "Transparent",
-                "value": "transparent"
-              },
-              {
-                "name": "Dark Theme",
-                "value": "dark"
-              },
-              {
-                "name": "Minimal (Hide Tools)",
-                "value": "minimal"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "navPath",
-        "value": "/nav",
-        "label": "Navigation Fragment Path",
-        "description": "Path to the navigation fragment content (defaults to /nav)."
-      }
-    ]
-  },
-  {
     "id": "hero",
     "fields": [
       {
