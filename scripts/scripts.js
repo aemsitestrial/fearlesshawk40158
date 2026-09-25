@@ -6,13 +6,16 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  buildBlock,
+  decorateBlock,
+  loadBlock,
 } from './aem.js';
 import decorateMain from './decorate-main.js';
 
 export { default as decorateMain } from './decorate-main.js';
 
 /**
- * Moves all the attributes from a given elmenet to another given element.
+ * Moves all the attributes from a given element to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
@@ -73,6 +76,28 @@ function autolinkModals(doc) {
 }
 
 /**
+ * Loads the header block into the top-level <header> container.
+ * Moves an authored header block from <main> if available, or constructs one automatically.
+ * @param {Element} header The target <header> container element
+ */
+async function loadHeaderBlock(header) {
+  if (!header) return null;
+
+  const main = document.querySelector('main');
+  let headerBlock = main ? main.querySelector('.header') : null;
+
+  if (headerBlock) {
+    header.replaceChildren(headerBlock);
+  } else {
+    headerBlock = buildBlock('header', '');
+    header.append(headerBlock);
+  }
+
+  decorateBlock(headerBlock);
+  return loadBlock(headerBlock);
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -107,13 +132,16 @@ async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
+
+  // Load the Header as a decorated block into <header>
+  await loadHeaderBlock(doc.querySelector('header'));
+
   await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  //  loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
