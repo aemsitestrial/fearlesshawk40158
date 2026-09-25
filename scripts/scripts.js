@@ -13,7 +13,7 @@ import decorateMain from './decorate-main.js';
 export { default as decorateMain } from './decorate-main.js';
 
 /**
- * Moves all the attributes from a given element to another given element.
+ * Moves all the attributes from a given elmenet to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
@@ -108,25 +108,13 @@ async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
-
-  // Check if an inline Header block was authored inside main
-  const inlineHeader = main ? main.querySelector('.header') : null;
-  const headerElem = doc.querySelector('header');
-
-  if (inlineHeader && headerElem) {
-    // Relocate the authored block to the global <header> element
-    headerElem.replaceChildren(inlineHeader);
-  } else if (headerElem) {
-    // Fall back to standard auto-load header behavior
-    loadHeader(headerElem);
-  }
-
   await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
+  loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
