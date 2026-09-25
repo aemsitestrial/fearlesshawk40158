@@ -176,29 +176,24 @@ async function buildBreadcrumbs() {
 }
 
 /**
- * Robustly retrieves the path for the nav fragment from:
- * 1. An anchor element inside the block
- * 2. Plain text inside any cell of the authored block
- * 3. Page metadata ('nav')
- * 4. Fallback default ('/nav')
+ * Robust navigation path resolver
  */
 function getNavPath(block) {
-  const customNavLink = block.querySelector('a[href]');
-  if (customNavLink) {
-    return customNavLink.getAttribute('href');
+  const link = block.querySelector('a[href]');
+  if (link && link.getAttribute('href').trim() !== '') {
+    return link.getAttribute('href').trim();
   }
 
-  // Check all block child elements/cells for a relative path string (e.g. /nav)
-  const divs = block.querySelectorAll('div');
-  for (let i = 0; i < divs.length; i += 1) {
-    const text = divs[i].textContent.trim();
-    if (text.startsWith('/')) {
-      return text;
-    }
+  const textNodes = Array.from(block.querySelectorAll('p, div'))
+    .map((el) => el.textContent.trim())
+    .filter((txt) => txt.startsWith('/'));
+
+  if (textNodes.length > 0) {
+    return textNodes[0];
   }
 
   const navMeta = getMetadata('nav');
-  if (navMeta) {
+  if (navMeta && navMeta.trim() !== '') {
     return new URL(navMeta, window.location).pathname;
   }
 
@@ -210,31 +205,50 @@ function getNavPath(block) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // Capture styled classes chosen via authoring dialog
   const variantClasses = Array.from(block.classList).filter((c) => c !== 'header' && c !== 'block');
 
-  // Extract path using the multi-fallback parser
+  // Resolve path safely
   let navPath = getNavPath(block);
-
-  // Sanitize path extension for plain HTML fetch
   if (navPath.endsWith('.plain.html')) {
     navPath = navPath.replace('.plain.html', '');
   }
 
-  const fragment = await loadFragment(navPath);
-  if (!fragment) return;
+  // Load fragment
+  let fragment = await loadFragment(navPath);
 
-  // decorate nav DOM
+  // Direct fetch fallback if loadFragment returned null
+  if (!fragment) {
+    try {
+      const resp = await fetch(`${navPath}.plain.html`);
+      if (resp.ok) {
+        const dummy = document.createElement('div');
+        dummy.innerHTML = await resp.text();
+        fragment = dummy;
+      } else {
+        console.error(`Header decoration: Failed to fetch fragment at ${navPath}.plain.html (Status: ${resp.status})`);
+      }
+    } catch (err) {
+      console.error(`Header decoration: Network error fetching ${navPath}.plain.html`, err);
+    }
+  }
+
+  if (!fragment) {
+    console.warn(`Header decoration: No fragment loaded for path: ${navPath}`);
+    return;
+  }
+
+  // Clear container DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
 
-  // Apply authored style classes to nav element
   if (variantClasses.length > 0) {
     nav.classList.add(...variantClasses);
   }
 
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  while (fragment.firstElementChild) {
+    nav.append(fragment.firstElementChild);
+  }
 
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
@@ -273,7 +287,6 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-    // Structural variation: Remove tools section if 'minimal' style is authored
     if (variantClasses.includes('minimal')) {
       navTools.remove();
     } else {
@@ -284,7 +297,7 @@ export default async function decorate(block) {
     }
   }
 
-  // hamburger for mobile
+  // Hamburger menu for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
@@ -294,7 +307,6 @@ export default async function decorate(block) {
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
 
-  // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
