@@ -10,11 +10,11 @@
           "fields": [
             {
               "name": "classes",
-              "selector": "div:nth-child(1)>div>ul"
+              "selector": "div:nth-child(1) > div > ul"
             },
             {
               "name": "navPath",
-              "selector": "div:nth-child(2)>div>p>a[href]"
+              "selector": "div:nth-child(2) > div"
             }
           ]
         },
@@ -24,7 +24,7 @@
             "template": {
               "name": "Header",
               "model": "header",
-              "classes": ["sticky"],
+              "classes": [],
               "navPath": "/nav"
             }
           }
