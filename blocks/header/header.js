@@ -8,16 +8,17 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
+    const navSections = nav ? nav.querySelector('.nav-sections') : null;
+    const navSectionExpanded = navSections ? navSections.querySelector('[aria-expanded="true"]') : null;
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
       toggleAllNavSections(navSections);
       navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
+    } else if (!isDesktop.matches && nav) {
       // eslint-disable-next-line no-use-before-define
       toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
+      const button = nav.querySelector('button');
+      if (button) button.focus();
     }
   }
 }
@@ -26,7 +27,7 @@ function closeOnFocusLost(e) {
   const nav = e.currentTarget;
   if (!nav.contains(e.relatedTarget)) {
     const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
+    const navSectionExpanded = navSections ? navSections.querySelector('[aria-expanded="true"]') : null;
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
       toggleAllNavSections(navSections, false);
@@ -58,6 +59,7 @@ function focusNavSection() {
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
  */
 function toggleAllNavSections(sections, expanded = false) {
+  if (!sections) return;
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
@@ -75,9 +77,12 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  if (button) {
+    button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  }
+
   // enable nav dropdown keyboard accessibility
-  const navDrops = navSections.querySelectorAll('.nav-drop');
+  const navDrops = navSections ? navSections.querySelectorAll('.nav-drop') : [];
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
@@ -117,8 +122,8 @@ function getDirectTextContent(menuItem) {
 
 async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   const crumbs = [];
-
-  const homeUrl = document.querySelector('.nav-brand a[href]').href;
+  const brandAnchor = document.querySelector('.nav-brand a[href]');
+  const homeUrl = brandAnchor ? brandAnchor.href : window.location.origin;
 
   let menuItem = Array.from(nav.querySelectorAll('a')).find((a) => a.href === currentUrl);
   if (menuItem) {
@@ -148,7 +153,10 @@ async function buildBreadcrumbs() {
   const breadcrumbs = document.createElement('nav');
   breadcrumbs.className = 'breadcrumbs';
 
-  const crumbs = await buildBreadcrumbsFromNavTree(document.querySelector('.nav-sections'), document.location.href);
+  const navSections = document.querySelector('.nav-sections');
+  if (!navSections) return breadcrumbs;
+
+  const crumbs = await buildBreadcrumbsFromNavTree(navSections, document.location.href);
 
   const ol = document.createElement('ol');
   ol.append(...crumbs.map((item) => {
@@ -174,15 +182,39 @@ async function buildBreadcrumbs() {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
+  // Capture styled classes chosen via authoring dialog
+  const variantClasses = Array.from(block.classList).filter((c) => c !== 'header' && c !== 'block');
+
+  // Load nav fragment (checks custom link inside block, page metadata, or defaults to /nav)
+  const customNavLink = block.querySelector('a[href]');
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+
+  // Replaced nested ternary to adhere to ESLint no-nested-ternary
+  let navPath = '/nav';
+  if (customNavLink) {
+    navPath = customNavLink.getAttribute('href');
+  } else if (navMeta) {
+    navPath = new URL(navMeta, window.location).pathname;
+  }
+
+  // Sanitize path extension for plain HTML fetch
+  if (navPath.endsWith('.plain.html')) {
+    navPath = navPath.replace('.plain.html', '');
+  }
+
   const fragment = await loadFragment(navPath);
+  if (!fragment) return;
 
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+
+  // Apply authored style classes to nav element
+  if (variantClasses.length > 0) {
+    nav.classList.add(...variantClasses);
+  }
+
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -192,10 +224,13 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  if (navBrand) {
+    const brandLink = navBrand.querySelector('.button');
+    if (brandLink) {
+      brandLink.className = '';
+      const container = brandLink.closest('.button-container');
+      if (container) container.className = '';
+    }
   }
 
   const navSections = nav.querySelector('.nav-sections');
@@ -212,15 +247,21 @@ export default async function decorate(block) {
     });
     navSections.querySelectorAll('.button-container').forEach((buttonContainer) => {
       buttonContainer.classList.remove('button-container');
-      buttonContainer.querySelector('.button').classList.remove('button');
+      const btn = buttonContainer.querySelector('.button');
+      if (btn) btn.classList.remove('button');
     });
   }
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-    const search = navTools.querySelector('a[href*="search"]');
-    if (search && search.textContent === '') {
-      search.setAttribute('aria-label', 'Search');
+    // Structural variation: Remove tools section if 'minimal' style is authored
+    if (variantClasses.includes('minimal')) {
+      navTools.remove();
+    } else {
+      const search = navTools.querySelector('a[href*="search"]');
+      if (search && search.textContent === '') {
+        search.setAttribute('aria-label', 'Search');
+      }
     }
   }
 
@@ -233,6 +274,7 @@ export default async function decorate(block) {
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
+
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
@@ -242,7 +284,8 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 
-  if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
+  const breadcrumbsMeta = getMetadata('breadcrumbs');
+  if (breadcrumbsMeta && breadcrumbsMeta.toLowerCase() === 'true') {
     navWrapper.append(await buildBreadcrumbs());
   }
 }
