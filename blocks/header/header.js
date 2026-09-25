@@ -99,9 +99,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
     nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
@@ -178,6 +176,36 @@ async function buildBreadcrumbs() {
 }
 
 /**
+ * Robustly retrieves the path for the nav fragment from:
+ * 1. An anchor element inside the block
+ * 2. Plain text inside any cell of the authored block
+ * 3. Page metadata ('nav')
+ * 4. Fallback default ('/nav')
+ */
+function getNavPath(block) {
+  const customNavLink = block.querySelector('a[href]');
+  if (customNavLink) {
+    return customNavLink.getAttribute('href');
+  }
+
+  // Check all block child elements/cells for a relative path string (e.g. /nav)
+  const divs = block.querySelectorAll('div');
+  for (let i = 0; i < divs.length; i += 1) {
+    const text = divs[i].textContent.trim();
+    if (text.startsWith('/')) {
+      return text;
+    }
+  }
+
+  const navMeta = getMetadata('nav');
+  if (navMeta) {
+    return new URL(navMeta, window.location).pathname;
+  }
+
+  return '/nav';
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -185,17 +213,8 @@ export default async function decorate(block) {
   // Capture styled classes chosen via authoring dialog
   const variantClasses = Array.from(block.classList).filter((c) => c !== 'header' && c !== 'block');
 
-  // Load nav fragment (checks custom link inside block, page metadata, or defaults to /nav)
-  const customNavLink = block.querySelector('a[href]');
-  const navMeta = getMetadata('nav');
-
-  // Replaced nested ternary to adhere to ESLint no-nested-ternary
-  let navPath = '/nav';
-  if (customNavLink) {
-    navPath = customNavLink.getAttribute('href');
-  } else if (navMeta) {
-    navPath = new URL(navMeta, window.location).pathname;
-  }
+  // Extract path using the multi-fallback parser
+  let navPath = getNavPath(block);
 
   // Sanitize path extension for plain HTML fetch
   if (navPath.endsWith('.plain.html')) {
