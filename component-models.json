@@ -6,31 +6,53 @@
         "component": "text",
         "valueType": "string",
         "name": "jcr:title",
-        "label": "Title"
+        "label": "Title",
+        "tab": "Basic"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "jcr:description",
-        "label": "Description"
+        "label": "Description",
+        "tab": "Basic"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "keywords",
         "multi": true,
-        "label": "Keywords"
+        "label": "Keywords",
+        "tab": "Basic"
       },
       {
         "component": "reference",
         "name": "image",
-        "label": "Image"
+        "label": "Image",
+        "tab": "Image"
       },
       {
         "component": "text",
         "name": "robots",
         "label": "Robots",
-        "description": "Index control via robots"
+        "description": "Index control via robots",
+        "tab": "Advanced"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "headerStyle",
+        "label": "Header Style Variation",
+        "description": "Style for the header (e.g., sticky, dark, transparent)",
+        "tab": "Custom Settings"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nav",
+        "label": "Navigation Path",
+        "value": "/nav",
+        "description": "Path to the custom navigation fragment",
+        "tab": "Custom Settings"
       }
     ]
   },
