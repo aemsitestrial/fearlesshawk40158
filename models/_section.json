@@ -67,7 +67,8 @@
         "video",
         "footer",
         "dummy-header",
-        "dummy-footer"
+        "dummy-footer",
+        "richtext"
       ]
     }
   ]

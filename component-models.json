@@ -5933,6 +5933,18 @@
     ]
   },
   {
+    "id": "richtext",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Rich Text Content",
+        "description": "Add formatted text, links, lists, or headings."
+      }
+    ]
+  },
+  {
     "id": "search",
     "fields": [
       {
