@@ -1,0 +1,77 @@
+/* Prevent double footer display when editing in Universal Editor */
+main .dummy-footer.block + footer,
+body:has(main .dummy-footer.block) > footer {
+  display: none !important;
+}
+
+/* Base Compact Footer Container */
+.dummy-footer.block {
+  --footer-bg: #0f172a;
+  --footer-text: #fff;
+  --footer-border: #1e293b;
+
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-text) !important;
+  border-top: 1px solid var(--footer-border);
+  padding: 16px 24px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Default Layout: Clean Row (Logo Left, Copyright Right) */
+.dummy-footer.block .dummy-footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Logo Sizing */
+.dummy-footer.block img {
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+
+/* Copyright Text Styling */
+.dummy-footer.block p,
+.dummy-footer.block div,
+.dummy-footer.block span {
+  color: var(--footer-text) !important;
+  font-size: 13px;
+  margin: 0;
+  opacity: 1 !important;
+}
+
+/* ==========================================================================
+   SIMPLE VARIATIONS
+   ========================================================================== */
+
+/* VARIATION 1: Centered Stack (.centered) */
+.dummy-footer.block.centered .dummy-footer-content {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.dummy-footer.block.centered img {
+  margin: 0 auto;
+}
+
+/* VARIATION 2: Light Theme (.light) */
+.dummy-footer.block.light {
+  --footer-bg: #fff;
+  --footer-text: #0f172a;
+  --footer-border: #e2e8f0;
+}
+
+/* VARIATION 3: Brand Blue Theme (.brand) */
+.dummy-footer.block.brand {
+  --footer-bg: #1e40af;
+  --footer-text: #fff;
+  --footer-border: #2563eb;
+}
