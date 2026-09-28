@@ -628,10 +628,23 @@ async function loadHeader(header) {
  * @returns {Promise}
  */
 async function loadFooter(footer) {
-  const footerBlock = buildBlock('dummy-footer', '');
-  footer.append(footerBlock);
-  decorateBlock(footerBlock);
-  return loadBlock(footerBlock);
+  const resp = await fetch('/dummy-footer.plain.html');
+
+  if (!resp.ok) {
+    console.log("Failed to load footer: ", resp.status, resp.statusText);
+    return;
+  }
+
+  const html = await resp.text();
+
+  footer.innerHTML = html;
+
+  const footerBlock = footer.querySelector('.dummy-footer');
+
+  if (footerBlock) {
+    decorateBlock(footerBlock);
+    await loadBlock(footerBlock);
+  }
 }
 
 /**
