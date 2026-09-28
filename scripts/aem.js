@@ -631,7 +631,7 @@ async function loadFooter(footer) {
   const resp = await fetch('/dummy-footer.plain.html');
 
   if (!resp.ok) {
-    console.log("Failed to load footer: ", resp.status, resp.statusText);
+    console.log('Failed to load footer: ', resp.status, resp.statusText);
     return;
   }
 
