@@ -73,20 +73,6 @@
       ]
     },
     {
-      "title": "Page Metadata",
-      "id": "page-metadata",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/page/v1/page",
-            "template": {
-              "model": "page-metadata"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Sections",
       "id": "sections",
       "components": [

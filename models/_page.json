@@ -7,54 +7,32 @@
           "component": "text",
           "valueType": "string",
           "name": "jcr:title",
-          "label": "Title",
-          "tab": "Basic"
+          "label": "Title"
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "jcr:description",
-          "label": "Description",
-          "tab": "Basic"
+          "label": "Description"
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "keywords",
           "multi": true,
-          "label": "Keywords",
-          "tab": "Basic"
+          "label": "Keywords"
         },
-        {
-          "component": "reference",
-          "name": "image",
-          "label": "Image",
-          "tab": "Image"
-        },
-        {
-          "component": "text",
-          "name": "robots",
-          "label": "Robots",
-          "description": "Index control via robots",
-          "tab": "Advanced"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "headerStyle",
-          "label": "Header Style Variation",
-          "description": "Style for the header (e.g., sticky, dark, transparent)",
-          "tab": "Custom Settings"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "nav",
-          "label": "Navigation Path",
-          "value": "/nav",
-          "description": "Path to the custom navigation fragment",
-          "tab": "Custom Settings"
-        }
+            {
+              "component": "reference",
+              "name": "image",
+              "label": "Image"
+            },
+            {
+              "component": "text",
+              "name": "robots",
+              "label": "Robots",
+              "description": "Index control via robots"
+            }
       ]
     }
   ]
