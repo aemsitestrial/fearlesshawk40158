@@ -1080,7 +1080,7 @@
                 "template": {
                   "name": "Rich Text",
                   "model": "richtext",
-                  "text": "<p>Enter your rich text content here...</p>"
+                  "text": "<p>Welcome to Tata Consultancy Services</p>"
                 }
               }
             }

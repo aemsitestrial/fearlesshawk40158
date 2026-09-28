@@ -5940,7 +5940,67 @@
         "valueType": "string",
         "name": "text",
         "label": "Rich Text Content",
-        "description": "Add formatted text, links, lists, or headings."
+        "description": "Formatted text with full editing toolbar",
+        "rte": {
+          "toolbar": [
+            "format",
+            "|",
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "|",
+            "subscript",
+            "superscript",
+            "|",
+            "alignleft",
+            "aligncenter",
+            "alignright",
+            "alignjustify",
+            "|",
+            "unorderedlist",
+            "orderedlist",
+            "|",
+            "link",
+            "unlink",
+            "|",
+            "clearformat"
+          ],
+          "formats": [
+            {
+              "title": "Paragraph",
+              "value": "p"
+            },
+            {
+              "title": "Heading 1",
+              "value": "h1"
+            },
+            {
+              "title": "Heading 2",
+              "value": "h2"
+            },
+            {
+              "title": "Heading 3",
+              "value": "h3"
+            },
+            {
+              "title": "Heading 4",
+              "value": "h4"
+            },
+            {
+              "title": "Heading 5",
+              "value": "h5"
+            },
+            {
+              "title": "Heading 6",
+              "value": "h6"
+            },
+            {
+              "title": "Formatted / Pre",
+              "value": "pre"
+            }
+          ]
+        }
       }
     ]
   },
