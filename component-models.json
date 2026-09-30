@@ -5931,9 +5931,15 @@
         "value": "Ask TCS..."
       },
       {
-        "component": "richtext",
-        "name": "logos",
-        "label": "Brand Logos",
+        "component": "reference",
+        "name": "tcsLogo",
+        "label": "TCS Brand Logo Image",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "tataLogo",
+        "label": "Tata Brand Logo Image",
         "valueType": "string"
       },
       {
