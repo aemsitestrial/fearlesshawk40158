@@ -67,29 +67,40 @@
 }
 
 .footer-sai .search-container {
-  display: flex;
-  align-items: center;
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px;
   width: 100%;
   max-width: 540px;
+  min-height: 56px;
+  border: 1px solid #444;
+  border-radius: 50px;
+  transition: border-color 0.3s ease;
   margin: 0 auto;
+}
+
+.footer-sai .search-container:focus-within {
+  border-color: #fff;
 }
 
 .footer-sai .search-container input {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  padding-right: 56px;
+  height: 54px;
+  padding: 0 0 0 24px;
+  border: 0;
+  border-radius: inherit;
+  outline: none;
+  background: transparent;
 }
 
 .footer-sai .mic-icon {
-  display: block;
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  display: grid;
+  place-items: center;
+  grid-column: 2;
+  grid-row: 1;
+  width: 56px;
+  height: 54px;
   appearance: none;
   padding: 0;
   border: 0;
@@ -97,9 +108,17 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 003-3V6a3 3 0 00-3-3 3 3 0 00-3 3v6.75a3 3 0 003 3z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: 20px 20px;
   color: transparent;
   cursor: pointer;
+}
+
+.footer-sai .search-container.search-voice {
+  grid-template-columns: 1fr;
+}
+
+.footer-sai .search-container.search-voice .mic-icon {
+  grid-column: 1;
 }
 
 /* Microphone Icon inside Search */
