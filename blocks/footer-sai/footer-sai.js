@@ -26,6 +26,107 @@ function createLink(label, href) {
   return link;
 }
 
+function createSearchForm(block, variation, placeholder, action) {
+  const form = document.createElement('form');
+  form.className = `search-container search-${variation}`;
+  form.dataset.searchVariation = variation;
+  form.action = action || '#';
+
+  const input = document.createElement('input');
+  input.type = 'search';
+  input.name = 'q';
+  input.placeholder = placeholder || 'Search';
+  input.setAttribute('aria-label', input.placeholder);
+
+  const category = variation === 'with-filter' ? document.createElement('select') : null;
+  if (category) {
+    category.name = 'category';
+    category.setAttribute('aria-label', 'Search category');
+    [
+      ['all', 'All'],
+      ['services', 'Services'],
+      ['industries', 'Industries'],
+      ['insights', 'Insights'],
+    ].forEach(([value, label]) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = label;
+      category.appendChild(option);
+    });
+    form.appendChild(category);
+  }
+
+  const storeQuery = () => {
+    form.dataset.query = input.value;
+    block.dataset.searchQuery = input.value;
+    block.dispatchEvent(new CustomEvent('footer-sai:querychange', {
+      bubbles: true,
+      detail: { query: input.value, variation },
+    }));
+  };
+  input.addEventListener('input', storeQuery);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    storeQuery();
+    block.dispatchEvent(new CustomEvent('footer-sai:search', {
+      bubbles: true,
+      detail: {
+        query: input.value.trim(),
+        variation,
+        category: category?.value || null,
+      },
+    }));
+  });
+
+  if (variation === 'expandable') {
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'search-toggle';
+    toggle.textContent = 'Search';
+    toggle.setAttribute('aria-expanded', 'false');
+    input.hidden = true;
+    toggle.addEventListener('click', () => {
+      input.hidden = !input.hidden;
+      toggle.setAttribute('aria-expanded', String(!input.hidden));
+      if (!input.hidden) input.focus();
+    });
+    form.append(toggle, input);
+  } else {
+    form.appendChild(input);
+    if (variation !== 'overlay') {
+      const submit = document.createElement('button');
+      submit.type = 'submit';
+      submit.className = 'search-submit';
+      submit.textContent = 'Search';
+      form.appendChild(submit);
+    }
+  }
+
+  return form;
+}
+
+function createSearch(block, variation, placeholder, action) {
+  if (variation !== 'overlay') return createSearchForm(block, variation, placeholder, action);
+
+  const container = document.createElement('div');
+  container.className = 'search-overlay-container';
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'search-overlay-trigger';
+  trigger.textContent = 'Search';
+  const dialog = document.createElement('dialog');
+  dialog.className = 'search-dialog';
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'search-dialog-close';
+  close.textContent = 'Close';
+  close.addEventListener('click', () => dialog.close());
+  trigger.addEventListener('click', () => dialog.showModal());
+  dialog.append(close, createSearchForm(block, variation, placeholder, action));
+  container.append(trigger, dialog);
+  return container;
+}
+
 export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-wrapper';
@@ -60,19 +161,8 @@ export default function decorate(block) {
       if (heading.textContent) heroItem.appendChild(heading);
 
       if (values[1]?.toLowerCase() === 'true') {
-        const form = document.createElement('form');
-        form.className = 'search-container';
-        form.action = values[4] || '#';
-        const input = document.createElement('input');
-        input.type = 'search';
-        input.name = 'q';
-        input.placeholder = values[3] || 'Search';
-        input.setAttribute('aria-label', input.placeholder);
-        const microphone = document.createElement('span');
-        microphone.className = 'mic-icon';
-        microphone.setAttribute('aria-hidden', 'true');
-        form.append(input, microphone);
-        heroItem.appendChild(form);
+        const variation = values[2]?.toLowerCase() || 'default';
+        heroItem.appendChild(createSearch(block, variation, values[3], values[4]));
       }
       moveInstrumentation(row, heroItem);
       heroContainer.appendChild(heroItem);

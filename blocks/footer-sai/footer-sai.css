@@ -66,6 +66,60 @@
   border-color: #fff;
 }
 
+.footer-sai .search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.footer-sai .search-container input {
+  flex: 1;
+  min-width: 0;
+}
+
+.footer-sai .search-container select,
+.footer-sai .search-container button,
+.footer-sai .search-overlay-trigger,
+.footer-sai .search-dialog-close {
+  min-height: 48px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #171717;
+  color: #fff;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.footer-sai .search-container select {
+  max-width: 150px;
+}
+
+.footer-sai .search-overlay-container {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-sai .search-dialog {
+  width: min(540px, calc(100% - 32px));
+  max-width: none;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #0d0d0d;
+  color: #fff;
+  padding: 24px;
+  margin: auto;
+}
+
+.footer-sai .search-dialog::backdrop {
+  background-color: rgb(0 0 0 / 70%);
+}
+
+.footer-sai .search-dialog-close {
+  display: block;
+  margin: 0 0 16px auto;
+}
+
 /* Microphone Icon inside Search */
 .footer-sai-hero .search-icon,
 .footer-sai-hero .mic-icon {
