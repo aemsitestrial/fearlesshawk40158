@@ -71,12 +71,6 @@
     ]
   },
   {
-    "id": "dummyfooter",
-    "components": [
-      "dummyfooter"
-    ]
-  },
-  {
     "id": "form",
     "components": [
       "captcha",
