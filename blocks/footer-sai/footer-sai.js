@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 function getCells(row) {
   let cells = [...row.children];
   while (cells.length === 1 && cells[0].children.length > 1) {
@@ -44,9 +46,11 @@ export default function decorate(block) {
     const values = cells.map(getCellValue);
 
     if (row.classList.contains('footer-sai-hero')) {
+      const heroItem = document.createElement('div');
+      heroItem.className = 'footer-sai-hero-item';
       const heading = document.createElement('h2');
       heading.textContent = values[0] || '';
-      if (heading.textContent) heroContainer.appendChild(heading);
+      if (heading.textContent) heroItem.appendChild(heading);
 
       if (values[1]?.toLowerCase() === 'true') {
         const form = document.createElement('form');
@@ -61,9 +65,13 @@ export default function decorate(block) {
         microphone.className = 'mic-icon';
         microphone.setAttribute('aria-hidden', 'true');
         form.append(input, microphone);
-        heroContainer.appendChild(form);
+        heroItem.appendChild(form);
       }
+      moveInstrumentation(row, heroItem);
+      heroContainer.appendChild(heroItem);
     } else if (row.classList.contains('footer-sai-tcs-logo') || row.classList.contains('footer-sai-tata-logo')) {
+      const logoItem = document.createElement('div');
+      logoItem.className = 'footer-sai-logo-item';
       const [imageCell] = cells;
       const [, logoAlt, logoHref] = values;
       const imageSource = getCellValue(imageCell);
@@ -76,23 +84,42 @@ export default function decorate(block) {
           const link = document.createElement('a');
           link.href = logoHref;
           link.appendChild(image);
-          logosContainer.appendChild(link);
+          logoItem.appendChild(link);
         } else {
-          logosContainer.appendChild(image);
+          logoItem.appendChild(image);
         }
       }
+      moveInstrumentation(row, logoItem);
+      logosContainer.appendChild(logoItem);
     } else if (row.classList.contains('footer-sai-nav-item')) {
+      const navItem = document.createElement('div');
+      navItem.className = 'footer-sai-nav-item';
       const link = createLink(values[0], values[1]);
-      if (link) navContainer.appendChild(link);
+      if (link) navItem.appendChild(link);
+      moveInstrumentation(row, navItem);
+      navContainer.appendChild(navItem);
     } else if (row.classList.contains('footer-sai-legal-item')) {
       const [copyright] = values;
-      if (copyright?.toLowerCase().includes('copyright')) {
-        copyrightTextElement = document.createElement('div');
-        copyrightTextElement.className = 'footer-sai-copyright';
-        copyrightTextElement.textContent = copyright;
+      const copyrightElement = copyright?.toLowerCase().includes('copyright')
+        ? document.createElement('div')
+        : null;
+      if (copyrightElement) {
+        copyrightElement.className = 'footer-sai-copyright';
+        copyrightElement.textContent = copyright;
+        copyrightTextElement = copyrightElement;
       }
       const link = createLink(values[1], values[2]);
-      if (link) legalLinksContainer.appendChild(link);
+      if (link) {
+        moveInstrumentation(row, link);
+        legalLinksContainer.appendChild(link);
+      } else if (copyrightElement) {
+        moveInstrumentation(row, copyrightElement);
+      } else {
+        const legalItem = document.createElement('span');
+        legalItem.className = 'footer-sai-legal-item';
+        moveInstrumentation(row, legalItem);
+        legalLinksContainer.appendChild(legalItem);
+      }
     }
   });
 
