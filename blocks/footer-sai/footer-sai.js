@@ -22,7 +22,7 @@ function createLink(label, href) {
 }
 
 export default function decorate(block) {
-  if (isAuthoringMode()) return;
+  if (isAuthoringMode() || block.hasAttribute('data-aue-resource')) return;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-wrapper';
