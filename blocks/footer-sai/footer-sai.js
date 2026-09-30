@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthoringMode } from '../../scripts/endpointconfig.js';
 
 function getCells(row) {
   let cells = [...row.children];
@@ -21,6 +22,8 @@ function createLink(label, href) {
 }
 
 export default function decorate(block) {
+  if (isAuthoringMode()) return;
+
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-wrapper';
 
