@@ -70,6 +70,14 @@
     ]
   },
   {
+    "id": "dummy-footer",
+    "components": [
+      "dummy-footer-hero",
+      "dummy-footer-nav-item",
+      "dummy-footer-legal-item"
+    ]
+  },
+  {
     "id": "form",
     "components": [
       "captcha",
