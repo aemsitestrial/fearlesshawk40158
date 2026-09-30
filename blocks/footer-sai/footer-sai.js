@@ -13,9 +13,19 @@ function getCellValue(cell) {
 }
 
 function getItemType(row) {
-  return row.dataset.aueComponent
-    || [...row.classList].find((className) => className.startsWith('footer-sai-'))
-    || '';
+  const explicitType = row.dataset.aueComponent
+    || [...row.classList].find((className) => className.startsWith('footer-sai-'));
+  if (explicitType) return explicitType;
+
+  const cells = getCells(row);
+  const values = cells.map((cell) => cell.textContent.trim());
+  if (row.querySelector('img')) return 'footer-sai-tcs-logo';
+  if (cells.length >= 5 && /^(true|false)$/i.test(values[1] || '')) return 'footer-sai-hero';
+  if (values.some((value) => value.toLowerCase().includes('copyright')) || cells.length >= 3) {
+    return 'footer-sai-legal-item';
+  }
+  if (cells.length === 2 && values[0]) return 'footer-sai-nav-item';
+  return '';
 }
 
 function createLink(label, href) {

@@ -628,7 +628,12 @@ async function loadHeader(header) {
  * @returns {Promise}
  */
 async function loadFooter(footer) {
-  const resp = await fetch('/praneeth.plain.html');
+  if (document.querySelector('main .footer-sai')) {
+    footer.replaceChildren();
+    return;
+  }
+
+  const resp = await fetch('/dummy-footer.plain.html');
 
   if (!resp.ok) {
     console.log('Failed to load footer: ', resp.status, resp.statusText);
@@ -639,7 +644,7 @@ async function loadFooter(footer) {
 
   footer.innerHTML = html;
 
-  const footerBlock = footer.querySelector('.footer-sai');
+  const footerBlock = footer.querySelector('.dummy-footer');
 
   if (footerBlock) {
     decorateBlock(footerBlock);
