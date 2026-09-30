@@ -87,7 +87,7 @@ function createSearch(block, mode, placeholder, action) {
 
 export default function decorate(block) {
   const wrapper = document.createElement('div');
-  wrapper.className = 'footer-sai-wrapper';
+  wrapper.className = 'footer-sai-content';
 
   const heroContainer = document.createElement('div');
   heroContainer.className = 'footer-sai-hero';
@@ -183,6 +183,9 @@ export default function decorate(block) {
   mainRowContainer.append(logosContainer, navContainer);
   if (copyrightTextElement) legalRowContainer.appendChild(copyrightTextElement);
   legalRowContainer.appendChild(legalLinksContainer);
-  wrapper.append(heroContainer, mainRowContainer, document.createElement('hr'), legalRowContainer);
+  const mainContentContainer = document.createElement('div');
+  mainContentContainer.className = 'footer-sai-main-content';
+  mainContentContainer.append(mainRowContainer, document.createElement('hr'), legalRowContainer);
+  wrapper.append(heroContainer, mainContentContainer);
   block.replaceChildren(wrapper);
 }
