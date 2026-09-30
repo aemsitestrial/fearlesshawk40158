@@ -14,6 +14,15 @@ export default function decorate(block) {
     return text.replace(/<\/?p[^>]*>/g, '').trim();
   };
 
+  // Extracts image elements safely
+  const extractImages = (el) => {
+    if (!el) return '';
+    const imgs = [...el.querySelectorAll('img, picture')];
+    if (imgs.length === 0) return el.innerHTML;
+    return imgs.map((img) => img.outerHTML).join('');
+  };
+
+  // Extracts links and strips default button classes
   const extractCleanLinks = (el) => {
     if (!el) return '';
     const links = [...el.querySelectorAll('a')];
@@ -26,36 +35,16 @@ export default function decorate(block) {
     }).join('');
   };
 
-  // Default Inline SVG Logos fallback if no images are uploaded by the author
-  const defaultLogosSvg = `
-    <svg height="32" viewBox="0 0 160 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- TCS Logo -->
-      <text x="0" y="22" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold" letter-spacing="1">tcs</text>
-      <text x="42" y="14" fill="#ffffff" font-family="Arial, sans-serif" font-size="8" font-weight="bold" letter-spacing="0.5">TATA</text>
-      <text x="42" y="21" fill="#ffffff" font-family="Arial, sans-serif" font-size="6" letter-spacing="0.2">CONSULTANCY</text>
-      <text x="42" y="27" fill="#ffffff" font-family="Arial, sans-serif" font-size="6" letter-spacing="0.2">SERVICES</text>
-    </svg>
-    <svg height="28" viewBox="0 0 50 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- TATA Logo -->
-      <path d="M10 4 H40 V8 H27 V24 H23 V8 H10 Z" fill="#ffffff"/>
-      <text x="8" y="27" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" font-weight="bold" letter-spacing="2">TATA</text>
-    </svg>
-  `;
-
-  // Map authored fields based on model sequence
+  // Field mapping
   const headingText = extractTitleText(rows[0]?.firstElementChild || rows[0]);
   const placeholderText = extractText(rows[1]?.firstElementChild || rows[1]) || 'Ask TCS...';
-
-  // Extract images or use the fallback SVG logos
-  const authoredLogos = rows[2]?.firstElementChild?.innerHTML || rows[2]?.innerHTML || '';
-  const logosHtml = authoredLogos.trim() !== '' ? authoredLogos : defaultLogosSvg;
-
+  const logosHtml = extractImages(rows[2]?.firstElementChild || rows[2]);
   const primaryNavHtml = extractCleanLinks(rows[3]?.firstElementChild || rows[3]);
   const copyrightText = extractText(rows[4]?.firstElementChild || rows[4])
     || 'COPYRIGHT © 2026 TATA CONSULTANCY SERVICES. ALL RIGHTS RESERVED.';
   const policyNavHtml = extractCleanLinks(rows[5]?.firstElementChild || rows[5]);
 
-  // Tag authoring rows so Universal Editor keeps DOM state without showing duplicates
+  // Tag authoring rows for Universal Editor
   rows.forEach((row) => row.classList.add('ue-raw-row'));
 
   const micIconSvg = `
@@ -67,11 +56,11 @@ export default function decorate(block) {
     </svg>
   `;
 
-  // Remove stale preview container if re-decorating
+  // Clear stale preview if re-decorating
   const existingContainer = block.querySelector('.praneeth-container');
   if (existingContainer) existingContainer.remove();
 
-  // Construct UI Layout
+  // Re-build exact layout structure
   const container = document.createElement('div');
   container.className = 'praneeth-container';
   container.innerHTML = `
