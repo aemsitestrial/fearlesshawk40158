@@ -85,11 +85,12 @@
 .footer-sai .mic-icon {
   display: block;
   position: absolute;
-  right: 16px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
+  appearance: none;
   padding: 0;
   border: 0;
   background-color: transparent;
