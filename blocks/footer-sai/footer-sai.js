@@ -1,5 +1,4 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { isAuthoringMode } from '../../scripts/endpointconfig.js';
 
 function getCells(row) {
   let cells = [...row.children];
@@ -13,6 +12,12 @@ function getCellValue(cell) {
   return cell?.querySelector('a')?.getAttribute('href') || cell?.textContent?.trim() || '';
 }
 
+function getItemType(row) {
+  return row.dataset.aueComponent
+    || [...row.classList].find((className) => className.startsWith('footer-sai-'))
+    || '';
+}
+
 function createLink(label, href) {
   if (!label) return null;
   const link = document.createElement('a');
@@ -22,8 +27,6 @@ function createLink(label, href) {
 }
 
 export default function decorate(block) {
-  if (isAuthoringMode() || block.hasAttribute('data-aue-resource')) return;
-
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-wrapper';
 
@@ -45,10 +48,11 @@ export default function decorate(block) {
   let copyrightTextElement = null;
 
   [...block.children].forEach((row) => {
+    const itemType = getItemType(row);
     const cells = getCells(row);
     const values = cells.map(getCellValue);
 
-    if (row.classList.contains('footer-sai-hero')) {
+    if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
       heroItem.className = 'footer-sai-hero-item';
       const heading = document.createElement('h2');
@@ -72,7 +76,7 @@ export default function decorate(block) {
       }
       moveInstrumentation(row, heroItem);
       heroContainer.appendChild(heroItem);
-    } else if (row.classList.contains('footer-sai-tcs-logo') || row.classList.contains('footer-sai-tata-logo')) {
+    } else if (itemType === 'footer-sai-tcs-logo' || itemType === 'footer-sai-tata-logo') {
       const logoItem = document.createElement('div');
       logoItem.className = 'footer-sai-logo-item';
       const [imageCell] = cells;
@@ -94,14 +98,14 @@ export default function decorate(block) {
       }
       moveInstrumentation(row, logoItem);
       logosContainer.appendChild(logoItem);
-    } else if (row.classList.contains('footer-sai-nav-item')) {
+    } else if (itemType === 'footer-sai-nav-item') {
       const navItem = document.createElement('div');
       navItem.className = 'footer-sai-nav-item';
       const link = createLink(values[0], values[1]);
       if (link) navItem.appendChild(link);
       moveInstrumentation(row, navItem);
       navContainer.appendChild(navItem);
-    } else if (row.classList.contains('footer-sai-legal-item')) {
+    } else if (itemType === 'footer-sai-legal-item') {
       const [copyright] = values;
       const copyrightElement = copyright?.toLowerCase().includes('copyright')
         ? document.createElement('div')
