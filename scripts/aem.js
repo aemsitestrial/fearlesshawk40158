@@ -628,12 +628,15 @@ async function loadHeader(header) {
  * @returns {Promise}
  */
 async function loadFooter(footer) {
-  if (document.querySelector('main .footer-sai')) {
-    footer.replaceChildren();
+  const pageFooterBlock = document.querySelector('main .footer-sai');
+  if (pageFooterBlock) {
+    const pageFooter = pageFooterBlock.closest('.footer-sai-wrapper') || pageFooterBlock;
+    footer.replaceChildren(pageFooter);
     return;
   }
 
-  const resp = await fetch('/dummy-footer.plain.html');
+  const footerPath = (getMetadata('footer') || '/praneeth').replace(/(\.plain)?\.html$/, '');
+  const resp = await fetch(`${footerPath}.plain.html`);
 
   if (!resp.ok) {
     console.log('Failed to load footer: ', resp.status, resp.statusText);
@@ -641,15 +644,26 @@ async function loadFooter(footer) {
   }
 
   const html = await resp.text();
-
-  footer.innerHTML = html;
-
-  const footerBlock = footer.querySelector('.dummy-footer');
-
-  if (footerBlock) {
-    decorateBlock(footerBlock);
-    await loadBlock(footerBlock);
+  const fragment = new DOMParser().parseFromString(html, 'text/html');
+  const footerBlock = fragment.querySelector('.footer-sai');
+  if (!footerBlock) {
+    console.error(`Footer block not found in ${footerPath}`);
+    return;
   }
+  footer.replaceChildren(document.importNode(footerBlock, true));
+
+  const resetMediaPath = (selector, attribute) => {
+    footer.querySelectorAll(`${selector}[${attribute}^="./media_"]`).forEach((element) => {
+      const fragmentUrl = new URL(footerPath, window.location);
+      element[attribute] = new URL(element.getAttribute(attribute), fragmentUrl).href;
+    });
+  };
+  resetMediaPath('img', 'src');
+  resetMediaPath('source', 'srcset');
+
+  const loadedFooterBlock = footer.querySelector('.footer-sai');
+  decorateBlock(loadedFooterBlock);
+  await loadBlock(loadedFooterBlock);
 }
 
 /**
