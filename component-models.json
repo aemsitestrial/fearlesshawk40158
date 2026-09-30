@@ -331,6 +331,24 @@
     ]
   },
   {
+    "id": "dummy-footer-logo",
+    "fields": [
+      {
+        "component": "image",
+        "valueType": "string",
+        "name": "logo",
+        "label": "Logo Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "alt",
+        "label": "Logo Alt Text",
+        "value": "Brand Logo"
+      }
+    ]
+  },
+  {
     "id": "dummy-footer-nav-item",
     "fields": [
       {

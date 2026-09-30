@@ -73,6 +73,7 @@
     "id": "dummy-footer",
     "components": [
       "dummy-footer-hero",
+      "dummy-footer-logo",
       "dummy-footer-nav-item",
       "dummy-footer-legal-item"
     ]

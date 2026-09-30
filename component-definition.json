@@ -318,7 +318,22 @@
           }
         },
         {
-          "title": "Dummy Footer Nav Item",
+          "title": "Dummy Footer Logo Item",
+          "id": "dummy-footer-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Dummy Footer Logo Item",
+                  "model": "dummy-footer-logo"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Dummy Footer Nav Link",
           "id": "dummy-footer-nav-item",
           "plugins": {
             "xwalk": {
