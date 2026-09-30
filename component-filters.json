@@ -34,7 +34,9 @@
       "dummy-header",
       "dummy-footer",
       "richtext",
-      "praneeth"
+      "praneeth",
+      "dummyfooter",
+      "footerv1"
     ]
   },
   {
@@ -71,9 +73,9 @@
     ]
   },
   {
-    "id": "dummyfooter",
+    "id": "footerv1",
     "components": [
-      "dummyfooter"
+      "footerv1"
     ]
   },
   {
