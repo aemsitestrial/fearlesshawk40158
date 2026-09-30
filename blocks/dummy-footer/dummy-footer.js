@@ -35,12 +35,12 @@ export default async function decorate(block) {
   rows.forEach((row) => {
     const cols = [...row.children];
 
-    if (row.querySelector('h1, h2, h3') || row.innerText.includes('build the future')) {
+    if (row.querySelector('h1, h2, h3') || row.innerText.toLowerCase().includes('build the future')) {
       const heading = row.querySelector('h1, h2, h3, p');
       if (heading) {
         const title = document.createElement('h2');
         title.classList.add('dummy-footer-title');
-        title.textContent = heading.textContent;
+        title.textContent = heading.textContent.trim();
         heroSection.appendChild(title);
       }
 
@@ -55,9 +55,10 @@ export default async function decorate(block) {
       const micIcon = document.createElement('span');
       micIcon.classList.add('search-mic-icon');
       micIcon.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" fill="#FFFFFF"/>
-          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" fill="#FFFFFF"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="22"></line>
         </svg>
       `;
 
@@ -65,8 +66,10 @@ export default async function decorate(block) {
       searchBox.appendChild(micIcon);
       heroSection.appendChild(searchBox);
     } else if (row.querySelector('img')) {
-      const img = row.querySelector('img');
-      brandContainer.appendChild(img.cloneNode(true));
+      const imgs = row.querySelectorAll('img');
+      imgs.forEach((img) => {
+        brandContainer.appendChild(img.cloneNode(true));
+      });
     } else if (row.querySelector('a') && !row.innerText.toLowerCase().includes('copyright')) {
       const anchors = row.querySelectorAll('a');
       anchors.forEach((a) => {

@@ -1,5 +1,5 @@
 .dummy-footer-wrapper {
-  background-color: #0c0c0d;
+  background-color: #0b0c0e;
   width: 100%;
 }
 
@@ -7,33 +7,33 @@
   box-sizing: border-box;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 80px 80px;
-  background-color: #0c0c0d;
+  padding: 0 80px 48px;
+  background-color: #0b0c0e;
   color: #fff;
-  font-family: Inter, sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-/* Top Hero Section */
+/* Hero Section */
 .dummy-footer .dummy-footer-hero {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 120px 0 80px;
-  gap: 40px;
+  padding: 100px 0 60px;
+  gap: 36px;
   text-align: center;
 }
 
 .dummy-footer .dummy-footer-title {
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: #fff;
   margin: 0;
-  max-width: 1280px;
+  max-width: 900px;
 }
 
 /* AI Pill Search Box */
@@ -43,47 +43,53 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
+  padding: 0 24px;
   width: 100%;
-  max-width: 540px;
-  height: 58px;
-  background: rgb(12 12 13 / 40%);
-  border: 2px solid #444;
-  border-radius: 58px;
+  max-width: 520px;
+  height: 54px;
+  background-color: transparent;
+  border: 1px solid #3d3e42;
+  border-radius: 27px;
+  transition: border-color 0.2s ease;
+}
+
+.dummy-footer .dummy-footer-search:focus-within {
+  border-color: #777;
 }
 
 .dummy-footer .dummy-footer-search input {
   background: transparent;
   border: none;
   color: #fff;
-  font-family: Inter, sans-serif;
+  font-family: inherit;
   font-weight: 300;
-  font-size: 16px;
-  line-height: 1.4;
-  letter-spacing: -0.005em;
+  font-size: 15px;
   outline: none;
   width: 100%;
 }
 
 .dummy-footer .dummy-footer-search input::placeholder {
-  color: #fff;
-  opacity: 0.8;
+  color: #8e8f93;
 }
 
 .dummy-footer .dummy-footer-search .search-mic-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  color: #8e8f93;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-/* Main Navigation & Footer Rows */
+.dummy-footer .dummy-footer-search .search-mic-icon:hover {
+  color: #fff;
+}
+
+/* Main Navigation Section */
 .dummy-footer .dummy-footer-main {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 28px;
   width: 100%;
 }
 
@@ -92,83 +98,92 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
+}
+
+.dummy-footer .dummy-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .dummy-footer .dummy-footer-brand img {
-  height: 30px;
+  height: 28px;
   width: auto;
+  object-fit: contain;
   display: block;
 }
 
 .dummy-footer .dummy-footer-links {
   display: flex;
   flex-flow: row wrap;
-  gap: 24px;
+  gap: 28px;
 }
 
 .dummy-footer .dummy-footer-links a {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1.4;
   color: #fff;
   text-decoration: none;
+  transition: opacity 0.2s ease;
 }
 
-/* Horizontal Line Separator */
+/* Divider Line */
 .dummy-footer .dummy-footer-divider {
   width: 100%;
-  height: 0;
-  border-top: 1px solid #444;
+  height: 1px;
+  background-color: #242528;
 }
 
-/* Bottom Copyright and Legal Section */
+/* Copyright and Legal Section */
 .dummy-footer .dummy-footer-bottom-row {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
 }
 
 .dummy-footer .dummy-footer-copyright {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #f3f3f3;
+  color: #a0a1a5;
 }
 
 .dummy-footer .dummy-footer-legal-links {
   display: flex;
   flex-flow: row wrap;
-  gap: 12px;
+  gap: 20px;
 }
 
 .dummy-footer .dummy-footer-legal-links a {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #f3f3f3;
+  color: #a0a1a5;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* Link Hover States */
+/* Hover States (placed after base state selectors to resolve Stylelint specificity rules) */
 .dummy-footer .dummy-footer-links a:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .dummy-footer .dummy-footer-legal-links a:hover {
-  text-decoration: underline;
+  color: #fff;
 }
 
 /* Mobile Responsiveness */
 @media (width <= 768px) {
   .dummy-footer {
-    padding: 0 20px 40px;
+    padding: 0 24px 32px;
   }
 
   .dummy-footer .dummy-footer-hero {

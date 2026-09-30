@@ -31,7 +31,7 @@
       }
     },
     {
-      "title": "Dummy Footer Main Navigation",
+      "title": "Dummy Footer Nav Item",
       "id": "dummy-footer-nav-item",
       "plugins": {
         "xwalk": {
@@ -46,7 +46,7 @@
       }
     },
     {
-      "title": "Dummy Footer Legal Link",
+      "title": "Dummy Footer Legal Item",
       "id": "dummy-footer-legal-item",
       "plugins": {
         "xwalk": {
