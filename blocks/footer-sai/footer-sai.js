@@ -26,105 +26,63 @@ function createLink(label, href) {
   return link;
 }
 
-function createSearchForm(block, variation, placeholder, action) {
+function createSearch(block, mode, placeholder, action) {
   const form = document.createElement('form');
-  form.className = `search-container search-${variation}`;
-  form.dataset.searchVariation = variation;
+  form.className = `search-container search-${mode}`;
+  form.dataset.searchMode = mode;
   form.action = action || '#';
 
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.name = 'q';
-  input.placeholder = placeholder || 'Search';
-  input.setAttribute('aria-label', input.placeholder);
+  const hasTextInput = mode !== 'voice';
+  const hasVoiceInput = mode !== 'text';
+  let input;
 
-  const category = variation === 'with-filter' ? document.createElement('select') : null;
-  if (category) {
-    category.name = 'category';
-    category.setAttribute('aria-label', 'Search category');
-    [
-      ['all', 'All'],
-      ['services', 'Services'],
-      ['industries', 'Industries'],
-      ['insights', 'Insights'],
-    ].forEach(([value, label]) => {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = label;
-      category.appendChild(option);
+  if (hasTextInput) {
+    input = document.createElement('input');
+    input.type = 'search';
+    input.name = 'q';
+    input.placeholder = placeholder || 'Ask TCS...';
+    input.setAttribute('aria-label', input.placeholder);
+    input.addEventListener('input', () => {
+      form.dataset.query = input.value;
+      block.dataset.searchQuery = input.value;
+      block.dispatchEvent(new CustomEvent('footer-sai:querychange', {
+        bubbles: true,
+        detail: { query: input.value, mode },
+      }));
     });
-    form.appendChild(category);
+    form.appendChild(input);
   }
 
-  const storeQuery = () => {
-    form.dataset.query = input.value;
-    block.dataset.searchQuery = input.value;
-    block.dispatchEvent(new CustomEvent('footer-sai:querychange', {
-      bubbles: true,
-      detail: { query: input.value, variation },
-    }));
-  };
-  input.addEventListener('input', storeQuery);
+  if (hasVoiceInput) {
+    const microphone = document.createElement('button');
+    microphone.type = 'button';
+    microphone.className = 'mic-icon';
+    microphone.setAttribute('aria-label', 'Search by voice');
+    microphone.title = 'Search by voice';
+    microphone.addEventListener('click', () => {
+      block.dispatchEvent(new CustomEvent('footer-sai:voice-request', {
+        bubbles: true,
+        detail: { query: input?.value || '', mode },
+      }));
+    });
+    form.appendChild(microphone);
+  }
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    storeQuery();
+    const query = input?.value.trim() || '';
+    form.dataset.query = query;
+    block.dataset.searchQuery = query;
     block.dispatchEvent(new CustomEvent('footer-sai:search', {
       bubbles: true,
       detail: {
-        query: input.value.trim(),
-        variation,
-        category: category?.value || null,
+        query,
+        mode,
       },
     }));
   });
 
-  if (variation === 'expandable') {
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'search-toggle';
-    toggle.textContent = 'Search';
-    toggle.setAttribute('aria-expanded', 'false');
-    input.hidden = true;
-    toggle.addEventListener('click', () => {
-      input.hidden = !input.hidden;
-      toggle.setAttribute('aria-expanded', String(!input.hidden));
-      if (!input.hidden) input.focus();
-    });
-    form.append(toggle, input);
-  } else {
-    form.appendChild(input);
-    if (variation !== 'overlay') {
-      const submit = document.createElement('button');
-      submit.type = 'submit';
-      submit.className = 'search-submit';
-      submit.textContent = 'Search';
-      form.appendChild(submit);
-    }
-  }
-
   return form;
-}
-
-function createSearch(block, variation, placeholder, action) {
-  if (variation !== 'overlay') return createSearchForm(block, variation, placeholder, action);
-
-  const container = document.createElement('div');
-  container.className = 'search-overlay-container';
-  const trigger = document.createElement('button');
-  trigger.type = 'button';
-  trigger.className = 'search-overlay-trigger';
-  trigger.textContent = 'Search';
-  const dialog = document.createElement('dialog');
-  dialog.className = 'search-dialog';
-  const close = document.createElement('button');
-  close.type = 'button';
-  close.className = 'search-dialog-close';
-  close.textContent = 'Close';
-  close.addEventListener('click', () => dialog.close());
-  trigger.addEventListener('click', () => dialog.showModal());
-  dialog.append(close, createSearchForm(block, variation, placeholder, action));
-  container.append(trigger, dialog);
-  return container;
 }
 
 export default function decorate(block) {
@@ -161,8 +119,10 @@ export default function decorate(block) {
       if (heading.textContent) heroItem.appendChild(heading);
 
       if (values[1]?.toLowerCase() === 'true') {
-        const variation = values[2]?.toLowerCase() || 'default';
-        heroItem.appendChild(createSearch(block, variation, values[3], values[4]));
+        const mode = ['text', 'voice', 'text-and-voice'].includes(values[2]?.toLowerCase())
+          ? values[2].toLowerCase()
+          : 'text-and-voice';
+        heroItem.appendChild(createSearch(block, mode, values[3], values[4]));
       }
       moveInstrumentation(row, heroItem);
       heroContainer.appendChild(heroItem);

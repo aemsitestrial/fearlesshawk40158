@@ -69,66 +69,40 @@
 .footer-sai .search-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  position: relative;
   width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
 }
 
 .footer-sai .search-container input {
-  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
   min-width: 0;
+  padding-right: 56px;
 }
 
-.footer-sai .search-container select,
-.footer-sai .search-container button,
-.footer-sai .search-overlay-trigger,
-.footer-sai .search-dialog-close {
-  min-height: 48px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background-color: #171717;
-  color: #fff;
-  padding: 0 16px;
+.footer-sai .mic-icon {
+  display: block;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 003-3V6a3 3 0 00-3-3 3 3 0 00-3 3v6.75a3 3 0 003 3z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  color: transparent;
   cursor: pointer;
 }
 
-.footer-sai .search-container select {
-  max-width: 150px;
-}
-
-.footer-sai .search-overlay-container {
-  display: flex;
-  justify-content: center;
-}
-
-.footer-sai .search-dialog {
-  width: min(540px, calc(100% - 32px));
-  max-width: none;
-  border: 1px solid #444;
-  border-radius: 8px;
-  background-color: #0d0d0d;
-  color: #fff;
-  padding: 24px;
-  margin: auto;
-}
-
-.footer-sai .search-dialog::backdrop {
-  background-color: rgb(0 0 0 / 70%);
-}
-
-.footer-sai .search-dialog-close {
-  display: block;
-  margin: 0 0 16px auto;
-}
-
 /* Microphone Icon inside Search */
-.footer-sai-hero .search-icon,
-.footer-sai-hero .mic-icon {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+.footer-sai-hero .search-icon {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 003-3V6a3 3 0 00-3-3 3 3 0 00-3 3v6.75a3 3 0 003 3z'/%3E%3C/svg%3E") no-repeat center center;
   cursor: pointer;
 }

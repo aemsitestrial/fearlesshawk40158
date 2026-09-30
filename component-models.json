@@ -513,25 +513,21 @@
       },
       {
         "component": "select",
-        "name": "searchVariation",
-        "label": "Search Variation",
-        "value": "default",
+        "name": "searchMode",
+        "label": "AI Search Input Mode",
+        "value": "text-and-voice",
         "options": [
           {
-            "name": "Default (Standard Input)",
-            "value": "default"
+            "name": "Text",
+            "value": "text"
           },
           {
-            "name": "Overlay / Modal Search",
-            "value": "overlay"
+            "name": "Voice",
+            "value": "voice"
           },
           {
-            "name": "Expandable Search Bar",
-            "value": "expandable"
-          },
-          {
-            "name": "Search with Category Filter Dropdown",
-            "value": "with-filter"
+            "name": "Text and Voice",
+            "value": "text-and-voice"
           }
         ]
       },
