@@ -14,15 +14,7 @@ export default function decorate(block) {
     return text.replace(/<\/?p[^>]*>/g, '').trim();
   };
 
-  // Extracts image elements safely
-  const extractImages = (el) => {
-    if (!el) return '';
-    const imgs = [...el.querySelectorAll('img, picture')];
-    if (imgs.length === 0) return el.innerHTML;
-    return imgs.map((img) => img.outerHTML).join('');
-  };
-
-  // Extracts links and strips default button classes
+  // Extracts links and strips default button classes from them
   const extractCleanLinks = (el) => {
     if (!el) return '';
     const links = [...el.querySelectorAll('a')];
@@ -35,16 +27,16 @@ export default function decorate(block) {
     }).join('');
   };
 
-  // Field mapping
+  // Map authored fields based on model sequence
   const headingText = extractTitleText(rows[0]?.firstElementChild || rows[0]);
   const placeholderText = extractText(rows[1]?.firstElementChild || rows[1]) || 'Ask TCS...';
-  const logosHtml = extractImages(rows[2]?.firstElementChild || rows[2]);
+  const logosHtml = rows[2]?.firstElementChild?.innerHTML || rows[2]?.innerHTML || '';
   const primaryNavHtml = extractCleanLinks(rows[3]?.firstElementChild || rows[3]);
   const copyrightText = extractText(rows[4]?.firstElementChild || rows[4])
     || 'COPYRIGHT © 2026 TATA CONSULTANCY SERVICES. ALL RIGHTS RESERVED.';
   const policyNavHtml = extractCleanLinks(rows[5]?.firstElementChild || rows[5]);
 
-  // Tag authoring rows for Universal Editor
+  // Tag authoring rows so Universal Editor keeps DOM state without showing duplicates
   rows.forEach((row) => row.classList.add('ue-raw-row'));
 
   const micIconSvg = `
@@ -56,11 +48,11 @@ export default function decorate(block) {
     </svg>
   `;
 
-  // Clear stale preview if re-decorating
+  // Remove stale preview container if re-decorating
   const existingContainer = block.querySelector('.praneeth-container');
   if (existingContainer) existingContainer.remove();
 
-  // Re-build exact layout structure
+  // Construct UI Layout
   const container = document.createElement('div');
   container.className = 'praneeth-container';
   container.innerHTML = `

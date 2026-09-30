@@ -111,36 +111,23 @@
   margin-bottom: 24px;
 }
 
-/* Strict Logo Caps to Stop Image Overflow */
+/* Logos Styling for SVGs and Images */
 .praneeth .praneeth-logos {
   display: flex;
   align-items: center;
   gap: 24px;
 }
 
-.praneeth .praneeth-logos p,
-.praneeth .praneeth-logos div {
-  margin: 0;
-  padding: 0;
-}
-
 .praneeth .praneeth-logos img,
-.praneeth .praneeth-logos picture {
-  display: block;
-  width: auto !important;
-  max-width: 140px !important;
-  height: 32px !important;
-  max-height: 32px !important;
-  object-fit: contain !important;
-}
-
+.praneeth .praneeth-logos picture,
 .praneeth .praneeth-logos svg {
   display: block;
-  width: auto !important;
-  height: 32px !important;
+  width: auto;
+  height: 32px;
+  object-fit: contain;
 }
 
-/* Primary Nav Links Layout */
+/* Base Primary Nav Links (Overrides Global Blue Button Rules) */
 .praneeth .praneeth-primary-nav {
   display: flex;
   flex-flow: row wrap;
@@ -217,7 +204,7 @@
   transition: color 0.2s ease;
 }
 
-/* Mobile Responsive Adjustments */
+/* Responsive Mobile Layout */
 @media (width <= 899px) {
   .praneeth-wrapper,
   .praneeth {
