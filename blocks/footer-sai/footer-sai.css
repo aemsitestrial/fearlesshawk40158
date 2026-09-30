@@ -272,12 +272,12 @@
 /* Responsive adjustments */
 @media (width <= 900px) {
   .footer-sai .footer-sai-hero {
-    min-height: 420px;
-    padding: 80px 24px;
+    min-height: 0;
+    padding: 72px 24px;
   }
 
   .footer-sai-hero-item {
-    gap: 56px;
+    gap: 40px;
   }
 
   .footer-sai .footer-sai-hero h2,
@@ -287,45 +287,54 @@
 
   .footer-sai-main-content {
     min-height: 0;
-    padding: 48px 24px;
-    gap: 32px;
+    padding: 40px 24px;
+    gap: 28px;
   }
 
   .footer-sai-main-row {
     flex-direction: column;
-    gap: 30px;
+    align-items: stretch;
+    gap: 28px;
   }
 
-  .footer-sai-logos,
-  .footer-sai-nav {
+  .footer-sai-logos {
     flex-basis: auto;
     min-width: 0;
+    justify-content: center;
+  }
+
+  .footer-sai-nav {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+    gap: 16px 24px;
   }
 
   .footer-sai-legal-row {
-    gap: 20px;
+    gap: 16px 24px;
   }
 }
 
 @media (width <= 540px) {
   .footer-sai .footer-sai-hero {
-    min-height: 360px;
-    padding: 64px 20px;
+    padding: 64px 20px 56px;
   }
 
   .footer-sai .footer-sai-hero h2,
   .footer-sai .footer-sai-hero h1 {
-    font-size: 30px;
+    font-size: 28px;
+    line-height: 1.2;
   }
 
   .footer-sai .search-container {
     height: 64px;
-    padding: 8px 10px;
+    padding: 6px 8px;
   }
 
   .footer-sai .search-container input {
     height: 44px;
-    padding-left: 8px;
+    padding-left: 12px;
+    font-size: 15px;
   }
 
   .footer-sai .mic-icon {
@@ -333,11 +342,52 @@
   }
 
   .footer-sai-main-content {
-    padding: 40px 20px;
+    padding: 32px 20px 36px;
+    gap: 24px;
+  }
+
+  .footer-sai-main-row {
+    gap: 24px;
+  }
+
+  .footer-sai-logos {
+    gap: 24px;
+  }
+
+  .footer-sai-logos img {
+    height: 28px;
+  }
+
+  .footer-sai-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 16px 12px;
+  }
+
+  .footer-sai-nav a {
+    font-size: 13px;
   }
 
   .footer-sai-legal-row {
     flex-direction: column;
     gap: 16px;
+  }
+
+  .footer-sai-copyright {
+    flex: none;
+    font-size: 9px;
+  }
+
+  .footer-sai-legal-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: none;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .footer-sai-legal-links a {
+    font-size: 9px;
   }
 }
