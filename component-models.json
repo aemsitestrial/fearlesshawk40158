@@ -312,84 +312,51 @@
     ]
   },
   {
-    "id": "dummy-footer-hero",
+    "id": "dummy-footer",
     "fields": [
       {
-        "component": "text",
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Footer Style & Theme",
         "valueType": "string",
-        "name": "heading",
-        "label": "Heading",
-        "value": "Let’s build the future together"
+        "required": false,
+        "options": [
+          {
+            "name": "Layout & Theme Options",
+            "children": [
+              {
+                "name": "Centered Layout",
+                "value": "centered"
+              },
+              {
+                "name": "Dark Theme",
+                "value": "dark"
+              },
+              {
+                "name": "Light Theme",
+                "value": "light"
+              },
+              {
+                "name": "Brand Blue Theme",
+                "value": "brand"
+              }
+            ]
+          }
+        ]
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "searchPlaceholder",
-        "label": "Search Placeholder Text",
-        "value": "Ask TCS..."
-      }
-    ]
-  },
-  {
-    "id": "dummy-footer-logo",
-    "fields": [
-      {
-        "component": "image",
+        "component": "reference",
         "valueType": "string",
         "name": "logo",
-        "label": "Logo Image"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "alt",
-        "label": "Logo Alt Text",
-        "value": "Brand Logo"
-      }
-    ]
-  },
-  {
-    "id": "dummy-footer-nav-item",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "label",
-        "label": "Link Label",
-        "value": ""
+        "label": "Footer Logo",
+        "multi": false
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "link",
-        "label": "Link URL",
-        "value": ""
-      }
-    ]
-  },
-  {
-    "id": "dummy-footer-legal-item",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "copyrightText",
+        "name": "copyright",
         "label": "Copyright Text",
-        "value": "COPYRIGHT © 2026 TATA CONSULTANCY SERVICES. ALL RIGHTS RESERVED."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "label",
-        "label": "Legal Link Label",
-        "value": ""
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "link",
-        "label": "Legal Link URL",
-        "value": ""
+        "value": "<p>© 2026 All Rights Reserved.</p>"
       }
     ]
   },

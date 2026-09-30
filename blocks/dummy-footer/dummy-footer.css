@@ -1,199 +1,77 @@
-.dummy-footer-wrapper {
-  background-color: #0c0c0d;
-  width: 100%;
+/* Prevent double footer display when editing in Universal Editor */
+main .dummy-footer.block + footer,
+body:has(main .dummy-footer.block) > footer {
+  display: none !important;
 }
 
-.dummy-footer {
+/* Base Compact Footer Container */
+.dummy-footer.block {
+  --footer-bg: #0f172a;
+  --footer-text: #fff;
+  --footer-border: #1e293b;
+
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-text) !important;
+  border-top: 1px solid var(--footer-border);
+  padding: 16px 24px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
-  max-width: 1440px;
+}
+
+/* Default Layout: Clean Row (Logo Left, Copyright Right) */
+.dummy-footer.block .dummy-footer-content {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 80px 80px;
-  background-color: #0c0c0d;
-  color: #fff;
-  font-family: Inter, sans-serif;
   display: flex;
-  flex-direction: column;
-}
-
-/* Hero Section */
-.dummy-footer .dummy-footer-hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 120px 0 80px;
-  gap: 40px;
-  text-align: center;
-}
-
-.dummy-footer .dummy-footer-title {
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: #fff;
-  margin: 0;
-  max-width: 1280px;
-}
-
-.dummy-footer .dummy-footer-search {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  width: 100%;
-  max-width: 540px;
-  height: 58px;
-  background: rgb(12 12 13 / 40%);
-  border: 2px solid #444;
-  border-radius: 58px;
+  gap: 16px;
 }
 
-.dummy-footer .dummy-footer-search input {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-family: Inter, sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.4;
-  letter-spacing: -0.005em;
-  outline: none;
-  width: 100%;
-}
-
-.dummy-footer .dummy-footer-search input::placeholder {
-  color: #fff;
-  opacity: 0.8;
-}
-
-.dummy-footer .dummy-footer-search .search-mic-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-/* Footer Main Rows */
-.dummy-footer .dummy-footer-main {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  width: 100%;
-}
-
-.dummy-footer .dummy-footer-top-row {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-}
-
-/* Logos Container */
-.dummy-footer .dummy-footer-brand {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 24px;
-}
-
-.dummy-footer .dummy-footer-brand .logo-item img,
-.dummy-footer .dummy-footer-brand .logo-item picture {
-  height: 30px;
-  width: auto;
+/* Logo Sizing */
+.dummy-footer.block img {
+  max-width: 100px;
+  height: auto;
   display: block;
-}
-
-/* Links */
-.dummy-footer .dummy-footer-links {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 24px;
-}
-
-.dummy-footer .dummy-footer-links a {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: #fff;
-  text-decoration: none;
-}
-
-/* Divider Line */
-.dummy-footer .dummy-footer-divider {
-  width: 100%;
-  height: 0;
   margin: 0;
-  border: none;
-  border-top: 1px solid #444;
 }
 
-/* Bottom Copyright & Policy Links */
-.dummy-footer .dummy-footer-bottom-row {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
+/* Copyright Text Styling */
+.dummy-footer.block p,
+.dummy-footer.block div,
+.dummy-footer.block span {
+  color: var(--footer-text) !important;
+  font-size: 13px;
+  margin: 0;
+  opacity: 1 !important;
 }
 
-.dummy-footer .dummy-footer-copyright {
-  font-size: 8px;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #f3f3f3;
+/* ==========================================================================
+   SIMPLE VARIATIONS
+   ========================================================================== */
+
+/* VARIATION 1: Centered Stack (.centered) */
+.dummy-footer.block.centered .dummy-footer-content {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
 }
 
-.dummy-footer .dummy-footer-legal-links {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 12px;
+.dummy-footer.block.centered img {
+  margin: 0 auto;
 }
 
-.dummy-footer .dummy-footer-legal-links a {
-  font-size: 8px;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #f3f3f3;
-  text-decoration: none;
+/* VARIATION 2: Light Theme (.light) */
+.dummy-footer.block.light {
+  --footer-bg: #fff;
+  --footer-text: #0f172a;
+  --footer-border: #e2e8f0;
 }
 
-/* Hover States (grouped for Stylelint rule) */
-.dummy-footer .dummy-footer-links a:hover {
-  opacity: 0.8;
-}
-
-.dummy-footer .dummy-footer-legal-links a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive Styles */
-@media (width <= 768px) {
-  .dummy-footer {
-    padding: 0 20px 40px;
-  }
-
-  .dummy-footer .dummy-footer-hero {
-    padding: 60px 0 40px;
-  }
-
-  .dummy-footer .dummy-footer-title {
-    font-size: 32px;
-  }
-
-  .dummy-footer .dummy-footer-top-row,
-  .dummy-footer .dummy-footer-bottom-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
+/* VARIATION 3: Brand Blue Theme (.brand) */
+.dummy-footer.block.brand {
+  --footer-bg: #1e40af;
+  --footer-text: #fff;
+  --footer-border: #2563eb;
 }

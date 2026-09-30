@@ -1,75 +1,25 @@
 {
   "definitions": [
     {
-      "title": "Dummy Footer Block",
+      "title": "Dummy Footer",
       "id": "dummy-footer",
       "plugins": {
+        "da": {
+          "rows": 3,
+          "columns": 1,
+          "fields": [
+            { "name": "classes", "selector": "div:nth-child(1)>div>ul" },
+            { "name": "logo", "selector": "div:nth-child(2)>div>picture>img[src]" },
+            { "name": "copyright", "selector": "div:nth-child(3)>div" }
+          ]
+        },
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Dummy Footer Block",
-              "filter": "dummy-footer"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Dummy Footer Hero",
-      "id": "dummy-footer-hero",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Dummy Footer Hero",
-              "model": "dummy-footer-hero"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Dummy Footer Logo Item",
-      "id": "dummy-footer-logo",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Dummy Footer Logo Item",
-              "model": "dummy-footer-logo"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Dummy Footer Nav Link",
-      "id": "dummy-footer-nav-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Dummy Footer Nav Item",
-              "model": "dummy-footer-nav-item"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Dummy Footer Legal Item",
-      "id": "dummy-footer-legal-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Dummy Footer Legal Item",
-              "model": "dummy-footer-legal-item"
+              "name": "Dummy Footer",
+              "model": "dummy-footer",
+              "classes": ["dark"]
             }
           }
         }
@@ -78,97 +28,42 @@
   ],
   "models": [
     {
-      "id": "dummy-footer-hero",
+      "id": "dummy-footer",
       "fields": [
         {
-          "component": "text",
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Footer Style & Theme",
           "valueType": "string",
-          "name": "heading",
-          "label": "Heading",
-          "value": "Let’s build the future together"
+          "required": false,
+          "options": [
+            {
+              "name": "Layout & Theme Options",
+              "children": [
+                { "name": "Centered Layout", "value": "centered" },
+                { "name": "Dark Theme", "value": "dark" },
+                { "name": "Light Theme", "value": "light" },
+                { "name": "Brand Blue Theme", "value": "brand" }
+              ]
+            }
+          ]
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "searchPlaceholder",
-          "label": "Search Placeholder Text",
-          "value": "Ask TCS..."
-        }
-      ]
-    },
-    {
-      "id": "dummy-footer-logo",
-      "fields": [
-        {
-          "component": "image",
+          "component": "reference",
           "valueType": "string",
           "name": "logo",
-          "label": "Logo Image"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "alt",
-          "label": "Logo Alt Text",
-          "value": "Brand Logo"
-        }
-      ]
-    },
-    {
-      "id": "dummy-footer-nav-item",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "label",
-          "label": "Link Label",
-          "value": ""
+          "label": "Footer Logo",
+          "multi": false
         },
         {
           "component": "richtext",
           "valueType": "string",
-          "name": "link",
-          "label": "Link URL",
-          "value": ""
-        }
-      ]
-    },
-    {
-      "id": "dummy-footer-legal-item",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "copyrightText",
+          "name": "copyright",
           "label": "Copyright Text",
-          "value": "COPYRIGHT © 2026 TATA CONSULTANCY SERVICES. ALL RIGHTS RESERVED."
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "label",
-          "label": "Legal Link Label",
-          "value": ""
-        },
-        {
-          "component": "richtext",
-          "valueType": "string",
-          "name": "link",
-          "label": "Legal Link URL",
-          "value": ""
+          "value": "<p>© 2026 All Rights Reserved.</p>"
         }
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "dummy-footer",
-      "components": [
-        "dummy-footer-hero",
-        "dummy-footer-logo",
-        "dummy-footer-nav-item",
-        "dummy-footer-legal-item"
-      ]
-    }
-  ]
+  "filters": []
 }
