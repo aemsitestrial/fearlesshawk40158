@@ -1,0 +1,240 @@
+.praneeth-wrapper,
+.praneeth {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 80px 24px 40px;
+  background-color: #0c0c0d;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Hide raw Universal Editor authoring DOM elements */
+.praneeth .ue-raw-row {
+  display: none !important;
+}
+
+.praneeth .praneeth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  min-height: 520px;
+  margin: 0 auto;
+}
+
+/* --- HERO SEARCH SECTION --- */
+.praneeth .praneeth-hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.praneeth h2.praneeth-heading,
+.praneeth .praneeth-heading {
+  margin: 0 0 40px !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  font-size: 44px !important;
+  font-weight: 300 !important;
+  letter-spacing: -0.6px !important;
+  line-height: 1.2 !important;
+  text-transform: none !important;
+}
+
+.praneeth .praneeth-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+}
+
+.praneeth .praneeth-search-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 54px;
+  padding: 14px 50px 14px 24px;
+  border: 1px solid #3d3d42;
+  border-radius: 50px;
+  background-color: #0c0c0d;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.praneeth .praneeth-search-input::placeholder {
+  color: #8e8e93;
+}
+
+.praneeth .praneeth-search-input:focus {
+  border-color: #6e6e73;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 10%);
+}
+
+.praneeth .praneeth-mic-btn {
+  position: absolute;
+  right: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  color: #b0b0b5;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.praneeth .praneeth-mic-btn:hover {
+  color: #fff;
+}
+
+/* --- NAVIGATION & FOOTER SECTION --- */
+.praneeth .praneeth-nav-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.praneeth .praneeth-top-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.praneeth .praneeth-logos {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.praneeth .praneeth-logos img,
+.praneeth .praneeth-logos picture {
+  display: block;
+  width: auto;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Base Primary Nav Links */
+.praneeth .praneeth-primary-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+
+.praneeth .praneeth-primary-nav a {
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: none !important;
+  transition: opacity 0.2s ease;
+}
+
+/* Horizontal Divider */
+.praneeth .praneeth-divider {
+  height: 1px;
+  margin: 0 0 24px;
+  border: 0;
+  background-color: #27272a;
+}
+
+/* Bottom Policy & Copyright Row */
+.praneeth .praneeth-bottom-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.praneeth .praneeth-copyright {
+  margin: 0;
+  color: #8e8e93;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.praneeth .praneeth-policy-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.praneeth .praneeth-policy-nav a {
+  color: #8e8e93;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  line-height: 1.4;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+/* --- DESKTOP BREAKPOINT --- */
+@media (width >= 900px) {
+  .praneeth-wrapper,
+  .praneeth {
+    padding: 100px 48px 48px;
+  }
+
+  .praneeth h2.praneeth-heading,
+  .praneeth .praneeth-heading {
+    font-size: 52px !important;
+  }
+
+  .praneeth .praneeth-top-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .praneeth .praneeth-bottom-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .praneeth .praneeth-primary-nav {
+    gap: 0 32px;
+  }
+}
+
+/* --- PSEUDO-STATES GROUPED AT BOTTOM FOR STYLELINT --- */
+.praneeth .praneeth-primary-nav a:link,
+.praneeth .praneeth-primary-nav a:visited {
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.praneeth .praneeth-policy-nav a:link,
+.praneeth .praneeth-policy-nav a:visited {
+  color: #8e8e93;
+  text-decoration: none !important;
+}
+
+.praneeth .praneeth-primary-nav a:hover,
+.praneeth .praneeth-primary-nav a:focus {
+  opacity: 0.75;
+  text-decoration: none !important;
+}
+
+.praneeth .praneeth-policy-nav a:hover,
+.praneeth .praneeth-policy-nav a:focus {
+  color: #fff;
+  text-decoration: none !important;
+}

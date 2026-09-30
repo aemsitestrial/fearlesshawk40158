@@ -5914,6 +5914,50 @@
     ]
   },
   {
+    "id": "praneeth",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading Title",
+        "valueType": "string",
+        "value": "Let’s build the future together"
+      },
+      {
+        "component": "text",
+        "name": "searchPlaceholder",
+        "label": "Search Input Placeholder",
+        "valueType": "string",
+        "value": "Ask TCS..."
+      },
+      {
+        "component": "richtext",
+        "name": "logos",
+        "label": "Brand Logos",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "primaryNav",
+        "label": "Primary Nav Links (Home, About TCS, etc.)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "copyright",
+        "label": "Copyright Text",
+        "valueType": "string",
+        "value": "COPYRIGHT © 2026 TATA CONSULTANCY SERVICES. ALL RIGHTS RESERVED."
+      },
+      {
+        "component": "richtext",
+        "name": "policyNav",
+        "label": "Policy Nav Links (Privacy Notice, Cookie Policy, etc.)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "quote",
     "fields": [
       {

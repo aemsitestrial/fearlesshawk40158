@@ -33,7 +33,8 @@
       "footer",
       "dummy-header",
       "dummy-footer",
-      "richtext"
+      "richtext",
+      "praneeth"
     ]
   },
   {
@@ -97,6 +98,12 @@
       "text-input",
       "tnc",
       "wizard"
+    ]
+  },
+  {
+    "id": "praneeth",
+    "components": [
+      "praneeth"
     ]
   },
   {
