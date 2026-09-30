@@ -373,6 +373,96 @@
           }
         },
         {
+          "title": "Footer Sai Block",
+          "id": "footer-sai",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Sai Block",
+                  "filter": "footer-sai"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Sai Hero",
+          "id": "footer-sai-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai Hero",
+                  "model": "footer-sai-hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Sai Nav Item",
+          "id": "footer-sai-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai Nav Item",
+                  "model": "footer-sai-nav-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Sai Legal Item",
+          "id": "footer-sai-legal-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai Legal Item",
+                  "model": "footer-sai-legal-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Sai TCS Logo",
+          "id": "footer-sai-tcs-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai TCS Logo",
+                  "model": "footer-sai-tcs-logo"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Sai Tata Logo",
+          "id": "footer-sai-tata-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai Tata Logo",
+                  "model": "footer-sai-tata-logo"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer",
           "id": "footer",
           "plugins": {

@@ -1,0 +1,173 @@
+/* Base Footer Block Styling */
+.footer-sai-wrapper {
+  background-color: #0d0d0d;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  padding: 80px 60px 40px;
+}
+
+.footer-sai {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero Section: Heading & Search Input */
+.footer-sai .footer-sai-hero {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 120px;
+}
+
+.footer-sai .footer-sai-hero h2,
+.footer-sai .footer-sai-hero h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+/* Oval Search Bar */
+.footer-sai .search-container,
+.footer-sai-hero form,
+.footer-sai-hero .input-wrapper {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.footer-sai-hero input[type="text"],
+.footer-sai-hero input[type="search"] {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #444;
+  border-radius: 50px;
+  padding: 16px 50px 16px 24px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.footer-sai-hero input::placeholder {
+  color: #888;
+}
+
+.footer-sai-hero input:focus {
+  border-color: #fff;
+}
+
+/* Microphone Icon inside Search */
+.footer-sai-hero .search-icon,
+.footer-sai-hero .mic-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 003-3V6a3 3 0 00-3-3 3 3 0 00-3 3v6.75a3 3 0 003 3z'/%3E%3C/svg%3E") no-repeat center center;
+  cursor: pointer;
+}
+
+/* Main Navigation & Logos Row */
+.footer-sai-main-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.footer-sai-logos {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer-sai-logos img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-sai-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.footer-sai-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+/* Separator Line */
+.footer-sai hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #222;
+  margin: 0 0 24px;
+}
+
+/* Bottom Legal & Copyright Row */
+.footer-sai-legal-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+.footer-sai-copyright {
+  text-transform: uppercase;
+}
+
+.footer-sai-legal-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-sai-legal-links a {
+  color: #888;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.footer-sai-legal-links a:hover {
+  color: #fff;
+}
+
+.footer-sai-nav a:hover {
+  opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (width <= 900px) {
+  .footer-sai-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .footer-sai-legal-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-sai-hero h2,
+  .footer-sai-hero h1 {
+    font-size: 2rem;
+  }
+}

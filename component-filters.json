@@ -36,7 +36,8 @@
       "richtext",
       "praneeth",
       "dummyfooter",
-      "footerv1"
+      "footerv1",
+      "footer-sai"
     ]
   },
   {
@@ -70,6 +71,16 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "footer-sai",
+    "components": [
+      "footer-sai-hero",
+      "footer-sai-nav-item",
+      "footer-sai-legal-item",
+      "footer-sai-tcs-logo",
+      "footer-sai-tata-logo"
     ]
   },
   {
