@@ -1,14 +1,16 @@
-/* Dummy Footer Block Base Styles */
-footer {
+.dummy-footer-wrapper {
   background-color: #0c0c0d;
-  color: #fff;
-  font-family: Inter, sans-serif;
   width: 100%;
 }
 
 .dummy-footer {
+  box-sizing: border-box;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 0 80px 80px;
+  background-color: #0c0c0d;
+  color: #fff;
+  font-family: Inter, sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -19,13 +21,12 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 120px 80px 80px;
+  padding: 120px 0 80px;
   gap: 40px;
   text-align: center;
 }
 
-.dummy-footer .dummy-footer-hero h1,
-.dummy-footer .dummy-footer-hero h2 {
+.dummy-footer .dummy-footer-title {
   font-size: 48px;
   font-weight: 400;
   line-height: 1.2;
@@ -35,7 +36,7 @@ footer {
   max-width: 1280px;
 }
 
-/* AI Input Container */
+/* AI Pill Search Box */
 .dummy-footer .dummy-footer-search {
   box-sizing: border-box;
   display: flex;
@@ -78,12 +79,12 @@ footer {
   cursor: pointer;
 }
 
-/* Main Navigation & Brand Section */
+/* Main Navigation & Footer Rows */
 .dummy-footer .dummy-footer-main {
   display: flex;
   flex-direction: column;
-  padding: 0 80px 80px;
   gap: 40px;
+  width: 100%;
 }
 
 .dummy-footer .dummy-footer-top-row {
@@ -97,15 +98,13 @@ footer {
 .dummy-footer .dummy-footer-brand img {
   height: 30px;
   width: auto;
+  display: block;
 }
 
 .dummy-footer .dummy-footer-links {
   display: flex;
   flex-flow: row wrap;
   gap: 24px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .dummy-footer .dummy-footer-links a {
@@ -114,17 +113,16 @@ footer {
   line-height: 1.4;
   color: #fff;
   text-decoration: none;
-  transition: opacity 0.2s ease;
 }
 
-/* Divider Line */
+/* Horizontal Line Separator */
 .dummy-footer .dummy-footer-divider {
   width: 100%;
   height: 0;
   border-top: 1px solid #444;
 }
 
-/* Bottom Legal & Copyright Section */
+/* Bottom Copyright and Legal Section */
 .dummy-footer .dummy-footer-bottom-row {
   display: flex;
   flex-flow: row wrap;
@@ -146,9 +144,6 @@ footer {
   display: flex;
   flex-flow: row wrap;
   gap: 12px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .dummy-footer .dummy-footer-legal-links a {
@@ -170,19 +165,18 @@ footer {
   text-decoration: underline;
 }
 
-/* Responsive adjustments */
+/* Mobile Responsiveness */
 @media (width <= 768px) {
-  .dummy-footer .dummy-footer-hero {
-    padding: 60px 20px 40px;
-  }
-
-  .dummy-footer .dummy-footer-hero h1,
-  .dummy-footer .dummy-footer-hero h2 {
-    font-size: 33px;
-  }
-
-  .dummy-footer .dummy-footer-main {
+  .dummy-footer {
     padding: 0 20px 40px;
+  }
+
+  .dummy-footer .dummy-footer-hero {
+    padding: 60px 0 40px;
+  }
+
+  .dummy-footer .dummy-footer-title {
+    font-size: 32px;
   }
 
   .dummy-footer .dummy-footer-top-row,

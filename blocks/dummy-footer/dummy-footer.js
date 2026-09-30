@@ -3,10 +3,8 @@
  * @param {Element} block The dummy-footer block element
  */
 export default async function decorate(block) {
-  // Extract all child rows/items rendered by Franklin
   const rows = [...block.children];
 
-  // Create containers for structured sections
   const heroSection = document.createElement('div');
   heroSection.classList.add('dummy-footer-hero');
 
@@ -19,8 +17,8 @@ export default async function decorate(block) {
   const brandContainer = document.createElement('div');
   brandContainer.classList.add('dummy-footer-brand');
 
-  const navLinksList = document.createElement('ul');
-  navLinksList.classList.add('dummy-footer-links');
+  const navLinksContainer = document.createElement('div');
+  navLinksContainer.classList.add('dummy-footer-links');
 
   const divider = document.createElement('div');
   divider.classList.add('dummy-footer-divider');
@@ -31,33 +29,30 @@ export default async function decorate(block) {
   const copyrightEl = document.createElement('div');
   copyrightEl.classList.add('dummy-footer-copyright');
 
-  const legalLinksList = document.createElement('ul');
-  legalLinksList.classList.add('dummy-footer-legal-links');
+  const legalLinksContainer = document.createElement('div');
+  legalLinksContainer.classList.add('dummy-footer-legal-links');
 
-  // Process authored rows
   rows.forEach((row) => {
-    const firstCol = row.children[0];
-    const secondCol = row.children[1];
+    const cols = [...row.children];
 
-    // 1. Hero / Search Row
-    if (row.querySelector('h1, h2, h3') || row.classList.contains('dummy-footer-hero')) {
+    if (row.querySelector('h1, h2, h3') || row.innerText.includes('build the future')) {
       const heading = row.querySelector('h1, h2, h3, p');
       if (heading) {
-        const h2 = document.createElement('h2');
-        h2.textContent = heading.textContent;
-        heroSection.appendChild(h2);
+        const title = document.createElement('h2');
+        title.classList.add('dummy-footer-title');
+        title.textContent = heading.textContent;
+        heroSection.appendChild(title);
       }
 
-      // Search Box Construction
       const searchBox = document.createElement('div');
       searchBox.classList.add('dummy-footer-search');
 
       const input = document.createElement('input');
       input.type = 'text';
-      input.placeholder = secondCol ? secondCol.textContent.trim() : 'Ask TCS...';
+      input.placeholder = cols[1] ? cols[1].textContent.trim() : 'Ask TCS...';
       input.setAttribute('aria-label', 'Search');
 
-      const micIcon = document.createElement('div');
+      const micIcon = document.createElement('span');
       micIcon.classList.add('search-mic-icon');
       micIcon.innerHTML = `
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,43 +65,34 @@ export default async function decorate(block) {
       searchBox.appendChild(micIcon);
       heroSection.appendChild(searchBox);
     } else if (row.querySelector('img')) {
-      // 2. Brand Logo Row
       const img = row.querySelector('img');
       brandContainer.appendChild(img.cloneNode(true));
-    } else if (row.querySelector('a') && !row.classList.contains('legal')) {
-      // 3. Navigation Links Row
-      const link = row.querySelector('a');
-      const li = document.createElement('li');
-      li.appendChild(link.cloneNode(true));
-      navLinksList.appendChild(li);
-    } else if (secondCol || row.textContent.toLowerCase().includes('copyright')) {
-      // 4. Copyright & Legal Links Row
-      if (firstCol && firstCol.textContent.trim()) {
-        copyrightEl.textContent = firstCol.textContent.trim();
+    } else if (row.querySelector('a') && !row.innerText.toLowerCase().includes('copyright')) {
+      const anchors = row.querySelectorAll('a');
+      anchors.forEach((a) => {
+        navLinksContainer.appendChild(a.cloneNode(true));
+      });
+    } else if (cols.length >= 2 || row.innerText.toLowerCase().includes('copyright')) {
+      if (cols[0] && cols[0].textContent.trim()) {
+        copyrightEl.textContent = cols[0].textContent.trim();
       }
-      const legalLinks = row.querySelectorAll('a');
-      legalLinks.forEach((link) => {
-        const li = document.createElement('li');
-        li.appendChild(link.cloneNode(true));
-        legalLinksList.appendChild(li);
+      const legalAnchors = row.querySelectorAll('a');
+      legalAnchors.forEach((a) => {
+        legalLinksContainer.appendChild(a.cloneNode(true));
       });
     }
   });
 
-  // Assemble Top Row (Brand + Main Nav Links)
   topRow.appendChild(brandContainer);
-  topRow.appendChild(navLinksList);
+  topRow.appendChild(navLinksContainer);
 
-  // Assemble Bottom Row (Copyright + Legal Links)
   bottomRow.appendChild(copyrightEl);
-  bottomRow.appendChild(legalLinksList);
+  bottomRow.appendChild(legalLinksContainer);
 
-  // Assemble Main Section
   mainSection.appendChild(topRow);
   mainSection.appendChild(divider);
   mainSection.appendChild(bottomRow);
 
-  // Clear original authored content and replace with structured markup
   block.textContent = '';
   block.appendChild(heroSection);
   block.appendChild(mainSection);
