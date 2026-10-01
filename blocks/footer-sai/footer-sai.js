@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import decorateCanvasSearchHero from '../canvas-search-hero/canvas-search-hero.js';
 
 function getCells(row) {
   let cells = [...row.children];
@@ -14,7 +15,9 @@ function getCellValue(cell) {
 
 function getItemType(row) {
   const explicitType = row.dataset.aueComponent
-    || [...row.classList].find((className) => className.startsWith('footer-sai-'));
+    || [...row.classList].find((className) => (
+      className.startsWith('footer-sai-') || className.startsWith('canvas-search-hero-')
+    ));
   if (explicitType) return explicitType;
 
   const cells = getCells(row);
@@ -113,6 +116,7 @@ export default function decorate(block) {
   const legalLinksContainer = document.createElement('nav');
   legalLinksContainer.className = 'footer-sai-legal-links';
   legalLinksContainer.setAttribute('aria-label', 'Legal');
+  const canvasHeroRows = [];
 
   let copyrightTextElement = null;
 
@@ -121,7 +125,9 @@ export default function decorate(block) {
     const cells = getCells(row);
     const values = cells.map(getCellValue);
 
-    if (itemType === 'footer-sai-hero') {
+    if (itemType === 'canvas-search-hero-settings' || itemType === 'canvas-search-hero-cta') {
+      canvasHeroRows.push(row);
+    } else if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
       heroItem.className = 'footer-sai-hero-item';
       const heading = document.createElement('h2');
@@ -196,6 +202,13 @@ export default function decorate(block) {
   const mainContentContainer = document.createElement('div');
   mainContentContainer.className = 'footer-sai-main-content';
   mainContentContainer.append(mainRowContainer, document.createElement('hr'), legalRowContainer);
+  if (canvasHeroRows.length) {
+    const canvasHeroBlock = document.createElement('div');
+    canvasHeroBlock.className = 'canvas-search-hero';
+    canvasHeroBlock.append(...canvasHeroRows);
+    decorateCanvasSearchHero(canvasHeroBlock);
+    wrapper.append(canvasHeroBlock);
+  }
   wrapper.append(heroContainer, mainContentContainer);
   block.replaceChildren(wrapper);
 }
