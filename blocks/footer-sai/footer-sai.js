@@ -22,6 +22,10 @@ function getItemType(row) {
 
   const cells = getCells(row);
   const values = cells.map((cell) => cell.textContent.trim());
+  if (row.querySelector('[data-aue-prop="heading"], [data-aue-prop="backgroundStyle"]')
+    || cells.length >= 8) {
+    return 'canvas-search-hero-settings';
+  }
   if (row.querySelector('img')) return 'footer-sai-tcs-logo';
   if (cells.length >= 5 && /^(true|false)$/i.test(values[1] || '')) return 'footer-sai-hero';
   if (values.some((value) => value.toLowerCase().includes('copyright')) || cells.length >= 3) {
