@@ -39,6 +39,11 @@
   margin: 0;
 }
 
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas {
+  min-height: 0;
+  padding: 0;
+}
+
 .footer-sai-hero-item {
   display: flex;
   flex-direction: column;

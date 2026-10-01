@@ -207,7 +207,8 @@ export default function decorate(block) {
     canvasHeroBlock.className = 'canvas-search-hero';
     canvasHeroBlock.append(...canvasHeroRows);
     decorateCanvasSearchHero(canvasHeroBlock);
-    wrapper.append(canvasHeroBlock);
+    heroContainer.classList.add('footer-sai-hero-canvas');
+    heroContainer.replaceChildren(canvasHeroBlock);
   }
   wrapper.append(heroContainer, mainContentContainer);
   block.replaceChildren(wrapper);
