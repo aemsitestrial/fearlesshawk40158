@@ -629,7 +629,7 @@
         "component": "select",
         "name": "backgroundColor",
         "label": "Background Color",
-        "value": "soft-white",
+        "value": "dark",
         "options": [
           {
             "name": "Soft White",

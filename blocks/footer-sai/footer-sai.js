@@ -22,7 +22,9 @@ function getItemType(row) {
 
   const cells = getCells(row);
   const values = cells.map((cell) => cell.textContent.trim());
-  if (row.querySelector('[data-aue-prop="backgroundColor"]')) return 'footer-sai-settings';
+  const explicitSettings = row.dataset.aueComponent === 'footer-sai-settings'
+    || [...row.classList].includes('footer-sai-settings');
+  if (explicitSettings || row.querySelector('[data-aue-prop="backgroundColor"]')) return 'footer-sai-settings';
   if (row.querySelector('[data-aue-prop="heading"], [data-aue-prop="backgroundStyle"]')
     || cells.length >= 8) {
     return 'canvas-search-hero-settings';
@@ -108,7 +110,7 @@ export default function decorate(block) {
   wrapper.className = 'footer-sai-content';
 
   const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream', 'dark'];
-  let selectedTheme = 'soft-white';
+  let selectedTheme = 'dark';
 
   const heroContainer = document.createElement('div');
   heroContainer.className = 'footer-sai-hero';
