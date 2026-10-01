@@ -170,7 +170,7 @@ export default function decorate(block) {
       ctaList.appendChild(cta);
     }
   });
-  content.appendChild(ctaList);
+  if (ctaList.childElementCount) content.appendChild(ctaList);
   wrapper.appendChild(content);
   block.replaceChildren(wrapper);
 }

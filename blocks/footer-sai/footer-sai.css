@@ -52,6 +52,15 @@
   margin: 0;
 }
 
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-content {
+  min-height: 0;
+  padding: 64px 80px;
+}
+
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-inner {
+  gap: 0;
+}
+
 .footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-content:not(.theme-image) {
   color: #fff;
   background: #0c0c0d;
@@ -308,6 +317,10 @@
 
 /* Responsive adjustments */
 @media (width <= 900px) {
+  .footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-content {
+    padding: 64px 24px;
+  }
+
   .footer-sai .footer-sai-hero {
     min-height: 0;
     padding: 72px 24px;
