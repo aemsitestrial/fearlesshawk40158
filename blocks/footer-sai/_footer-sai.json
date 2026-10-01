@@ -16,6 +16,21 @@
       }
     },
     {
+      "title": "Footer Sai Theme",
+      "id": "footer-sai-theme",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Sai Theme",
+              "model": "footer-sai-theme"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "Footer Sai Hero",
       "id": "footer-sai-hero",
       "plugins": {
@@ -93,7 +108,7 @@
   ],
   "models": [
     {
-      "id": "footer-sai",
+      "id": "footer-sai-theme",
       "fields": [
         {
           "component": "select",
@@ -283,6 +298,7 @@
     {
       "id": "footer-sai",
       "components": [
+        "footer-sai-theme",
         "footer-sai-hero",
         "footer-sai-nav-item",
         "footer-sai-legal-item",

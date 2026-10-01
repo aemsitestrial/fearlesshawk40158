@@ -22,9 +22,9 @@ function getItemType(row) {
 
   const cells = getCells(row);
   const values = cells.map((cell) => cell.textContent.trim());
-  const explicitSettings = row.dataset.aueComponent === 'footer-sai-settings'
-    || [...row.classList].includes('footer-sai-settings');
-  if (explicitSettings || row.querySelector('[data-aue-prop="backgroundColor"]')) return 'footer-sai-settings';
+  const explicitSettings = row.dataset.aueComponent === 'footer-sai-theme'
+    || [...row.classList].includes('footer-sai-theme');
+  if (explicitSettings || row.querySelector('[data-aue-prop="backgroundColor"]')) return 'footer-sai-theme';
   if (row.querySelector('[data-aue-prop="heading"], [data-aue-prop="backgroundStyle"]')
     || cells.length >= 8) {
     return 'canvas-search-hero-settings';
@@ -150,7 +150,7 @@ export default function decorate(block) {
     const cells = getCells(row);
     const values = cells.map(getCellValue);
 
-    if (itemType === 'footer-sai-settings') {
+    if (itemType === 'footer-sai-theme') {
       const themeValue = getThemeValueFromBlock(row);
       if (themeOptions.includes(themeValue)) selectedTheme = themeValue;
     } else if (itemType === 'canvas-search-hero-settings') {

@@ -623,7 +623,7 @@
     ]
   },
   {
-    "id": "footer-sai",
+    "id": "footer-sai-theme",
     "fields": [
       {
         "component": "select",

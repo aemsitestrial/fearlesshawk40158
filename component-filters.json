@@ -84,6 +84,7 @@
   {
     "id": "footer-sai",
     "components": [
+      "footer-sai-theme",
       "footer-sai-hero",
       "footer-sai-nav-item",
       "footer-sai-legal-item",
