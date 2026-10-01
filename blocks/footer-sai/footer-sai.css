@@ -40,8 +40,20 @@
 }
 
 .footer-sai .footer-sai-hero.footer-sai-hero-canvas {
+  display: block;
   min-height: 0;
   padding: 0;
+}
+
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas > .canvas-search-hero {
+  align-self: stretch;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-heading {
+  color: inherit;
 }
 
 .footer-sai-hero-item {
@@ -156,6 +168,19 @@
 
 .footer-sai .search-container.search-voice .mic-icon {
   flex-basis: 40px;
+}
+
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-search input {
+  border: 0;
+  border-radius: 0;
+  padding: 4px 12px;
+  background: transparent;
+  color: inherit;
+  outline: 0;
+}
+
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-search input:focus {
+  border: 0;
 }
 
 /* Microphone Icon inside Search */

@@ -125,7 +125,7 @@ export default function decorate(block) {
     const cells = getCells(row);
     const values = cells.map(getCellValue);
 
-    if (itemType === 'canvas-search-hero-settings' || itemType === 'canvas-search-hero-cta') {
+    if (itemType === 'canvas-search-hero-settings') {
       canvasHeroRows.push(row);
     } else if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
