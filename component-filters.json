@@ -37,13 +37,21 @@
       "praneeth",
       "dummyfooter",
       "footerv1",
-      "footer-sai"
+      "footer-sai",
+      "canvas-search-hero"
     ]
   },
   {
     "id": "accordion",
     "components": [
       "accordion-item"
+    ]
+  },
+  {
+    "id": "canvas-search-hero",
+    "components": [
+      "canvas-search-hero-settings",
+      "canvas-search-hero-cta"
     ]
   },
   {

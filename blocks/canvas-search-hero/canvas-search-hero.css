@@ -1,0 +1,186 @@
+.canvas-search-hero-content {
+  position: relative;
+  display: grid;
+  min-height: 470px;
+  box-sizing: border-box;
+  place-items: center;
+  overflow: hidden;
+  padding: 88px 24px;
+  color: #171717;
+  background:
+    radial-gradient(ellipse at 28% 56%, rgb(250 237 194 / 58%), transparent 42%),
+    radial-gradient(ellipse at 75% 48%, rgb(218 229 252 / 68%), transparent 48%),
+    #fff;
+}
+
+.canvas-search-hero-content.theme-dark {
+  color: #fff;
+  background: #17191d;
+}
+
+.canvas-search-hero-content.theme-image {
+  color: #fff;
+  background: #202124;
+}
+
+.canvas-search-hero-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.canvas-search-hero-content.theme-image::after {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 35%);
+  content: '';
+}
+
+.canvas-search-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 720px);
+  gap: 24px;
+  text-align: center;
+}
+
+.canvas-search-hero-heading {
+  margin: 0;
+  font-family: roboto, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.canvas-search-hero-heading.font-roboto-condensed {
+  font-family: roboto-condensed, roboto, Arial, sans-serif;
+}
+
+.canvas-search-hero-description {
+  max-width: 500px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.canvas-search-hero-search {
+  display: flex;
+  align-items: center;
+  width: min(100%, 344px);
+  height: 44px;
+  box-sizing: border-box;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgb(80 80 80 / 14%);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 72%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+}
+
+.canvas-search-hero-content.theme-dark .canvas-search-hero-search,
+.canvas-search-hero-content.theme-image .canvas-search-hero-search {
+  border-color: rgb(255 255 255 / 32%);
+  background: rgb(0 0 0 / 24%);
+}
+
+.canvas-search-hero-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 2px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+}
+
+.canvas-search-hero-search input::placeholder {
+  color: currentcolor;
+  opacity: 0.72;
+}
+
+.canvas-search-hero-mic {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.canvas-search-hero-mic::before {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  background: currentcolor;
+  content: '';
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='2' width='6' height='12' rx='3'/%3E%3Cpath d='M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.canvas-search-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.canvas-search-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  box-sizing: border-box;
+  padding: 5px 14px;
+  border: 1px solid rgb(70 70 70 / 8%);
+  border-radius: 18px;
+  background: #fff;
+  color: #171717;
+  font-size: 12px;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.canvas-search-hero-cta:hover,
+.canvas-search-hero-cta:focus-visible {
+  border-color: rgb(70 70 70 / 24%);
+  background: #f7f7f7;
+}
+
+.theme-dark .canvas-search-hero-cta,
+.theme-image .canvas-search-hero-cta {
+  border-color: rgb(255 255 255 / 26%);
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+}
+
+.theme-dark .canvas-search-hero-cta:hover,
+.theme-image .canvas-search-hero-cta:hover {
+  background: rgb(255 255 255 / 22%);
+}
+
+@media (width <= 600px) {
+  .canvas-search-hero-content {
+    min-height: 430px;
+    padding: 72px 20px;
+  }
+
+  .canvas-search-hero-inner {
+    gap: 20px;
+  }
+
+  .canvas-search-hero-heading {
+    font-size: 28px;
+  }
+}
