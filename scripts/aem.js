@@ -629,11 +629,7 @@ async function loadHeader(header) {
  */
 async function loadFooter(footer) {
   const pageFooterBlock = document.querySelector('main .footer-sai');
-  if (pageFooterBlock) {
-    const pageFooter = pageFooterBlock.closest('.footer-sai-wrapper') || pageFooterBlock;
-    footer.replaceChildren(pageFooter);
-    return;
-  }
+  if (pageFooterBlock) return;
 
   const footerPath = (getMetadata('footer') || '/praneeth').replace(/(\.plain)?\.html$/, '');
   const resp = await fetch(`${footerPath}.plain.html`);
