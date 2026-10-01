@@ -52,6 +52,11 @@
   margin: 0;
 }
 
+.footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-content:not(.theme-image) {
+  color: #fff;
+  background: #0c0c0d;
+}
+
 .footer-sai .footer-sai-hero.footer-sai-hero-canvas .canvas-search-hero-heading {
   color: inherit;
 }
