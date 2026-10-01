@@ -106,6 +106,9 @@ export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-content';
 
+  const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream'];
+  let selectedTheme = 'soft-white';
+
   const heroContainer = document.createElement('div');
   heroContainer.className = 'footer-sai-hero';
   const mainRowContainer = document.createElement('div');
@@ -129,7 +132,10 @@ export default function decorate(block) {
     const cells = getCells(row);
     const values = cells.map(getCellValue);
 
-    if (itemType === 'canvas-search-hero-settings') {
+    if (itemType === 'footer-sai-settings') {
+      const themeValue = (values[0] || '').toLowerCase();
+      if (themeOptions.includes(themeValue)) selectedTheme = themeValue;
+    } else if (itemType === 'canvas-search-hero-settings') {
       canvasHeroRows.push(row);
     } else if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
@@ -214,6 +220,7 @@ export default function decorate(block) {
     heroContainer.classList.add('footer-sai-hero-canvas');
     heroContainer.replaceChildren(canvasHeroBlock);
   }
+  block.classList.add('footer-sai-wrapper', `footer-sai-theme-${selectedTheme}`);
   wrapper.append(heroContainer, mainContentContainer);
   block.replaceChildren(wrapper);
 }

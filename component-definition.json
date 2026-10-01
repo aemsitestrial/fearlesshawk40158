@@ -433,6 +433,21 @@
           }
         },
         {
+          "title": "Footer Sai Settings",
+          "id": "footer-sai-settings",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Sai Settings",
+                  "model": "footer-sai-settings"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Footer Sai Hero",
           "id": "footer-sai-hero",
           "plugins": {
