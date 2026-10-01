@@ -144,7 +144,7 @@
   width: min(100%, 900px);
 }
 
-.canvas-search-hero-cta {
+.canvas-search-hero-content .canvas-search-hero-cta:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -161,24 +161,29 @@
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
-.canvas-search-hero-cta:hover,
-.canvas-search-hero-cta:focus-visible {
+.theme-dark .canvas-search-hero-cta:any-link {
+  border-color: rgb(255 255 255 / 26%);
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+}
+
+.canvas-search-hero-content .canvas-search-hero-cta:any-link:hover,
+.canvas-search-hero-content .canvas-search-hero-cta:any-link:focus-visible {
   border-color: rgb(70 70 70 / 24%);
   background: #f7f7f7;
+  color: #0c0c0d;
+  text-decoration: none;
 }
 
 .canvas-search-hero-cta.is-empty {
   border-style: dashed;
 }
 
-.theme-dark .canvas-search-hero-cta {
-  border-color: rgb(255 255 255 / 26%);
-  background: rgb(255 255 255 / 12%);
-  color: #fff;
-}
-
-.theme-dark .canvas-search-hero-cta:hover {
+.theme-dark .canvas-search-hero-cta:any-link:hover,
+.theme-dark .canvas-search-hero-cta:any-link:focus-visible {
   background: rgb(255 255 255 / 22%);
+  color: #fff;
+  text-decoration: none;
 }
 
 @media (width <= 600px) {
@@ -203,7 +208,7 @@
     font-size: 16px;
   }
 
-  .canvas-search-hero-cta {
+  .canvas-search-hero-content .canvas-search-hero-cta:any-link {
     min-height: 44px;
     padding: 6px 18px;
     font-size: 16px;
