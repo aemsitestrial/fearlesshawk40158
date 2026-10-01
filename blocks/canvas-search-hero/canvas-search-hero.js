@@ -74,17 +74,21 @@ function createSearch(block, mode, placeholder, action) {
   return form;
 }
 
-function createCta(label, href) {
-  if (!label) return null;
+function createCta(label, href, row) {
+  const isAuthoringItem = [...row.attributes]
+    .some(({ name }) => name.startsWith('data-aue-'));
+  if (!label && !isAuthoringItem) return null;
   const link = document.createElement('a');
   link.className = 'canvas-search-hero-cta';
-  link.textContent = label;
+  link.textContent = label || 'Add CTA label';
   link.href = href || '#';
+  if (!label) link.classList.add('is-empty');
   return link;
 }
 
 export default function decorate(block) {
   const settings = {};
+  let settingsRow;
   const ctas = [];
 
   [...block.children].forEach((row) => {
@@ -92,6 +96,7 @@ export default function decorate(block) {
     const values = cells.map(getCellValue);
     const itemType = getItemType(row, cells);
     if (itemType === 'canvas-search-hero-settings') {
+      settingsRow = row;
       [
         settings.heading,
         settings.description,
@@ -129,6 +134,7 @@ export default function decorate(block) {
 
   const content = document.createElement('div');
   content.className = 'canvas-search-hero-inner';
+  if (settingsRow) moveInstrumentation(settingsRow, content);
   const heading = document.createElement('h1');
   heading.className = `canvas-search-hero-heading font-${settings.headingFont === 'roboto-condensed' ? 'roboto-condensed' : 'roboto'}`;
   heading.textContent = settings.heading || '';
@@ -155,7 +161,7 @@ export default function decorate(block) {
   const ctaList = document.createElement('div');
   ctaList.className = 'canvas-search-hero-ctas';
   ctas.forEach(({ label, href, row }) => {
-    const cta = createCta(label, href);
+    const cta = createCta(label, href, row);
     if (cta) {
       moveInstrumentation(row, cta);
       ctaList.appendChild(cta);

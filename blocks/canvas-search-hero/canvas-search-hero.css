@@ -158,6 +158,10 @@
   background: #f7f7f7;
 }
 
+.canvas-search-hero-cta.is-empty {
+  border-style: dashed;
+}
+
 .theme-dark .canvas-search-hero-cta,
 .theme-image .canvas-search-hero-cta {
   border-color: rgb(255 255 255 / 26%);
