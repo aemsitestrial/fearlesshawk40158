@@ -38,6 +38,19 @@ function getItemType(row) {
   return '';
 }
 
+function getThemeValueFromBlock(block) {
+  const directValue = block.dataset.backgroundColor
+    || block.getAttribute('data-backgroundColor')
+    || block.getAttribute('data-backgroundcolor')
+    || [...block.classList].find((className) => className.startsWith('footer-sai-theme-'))?.replace('footer-sai-theme-', '')
+    || '';
+
+  const propNode = block.querySelector('[data-aue-prop="backgroundColor"]');
+  const propValue = propNode?.textContent?.trim() || propNode?.dataset?.value || '';
+
+  return (propValue || directValue || '').trim().toLowerCase();
+}
+
 function createLink(label, href) {
   if (!label) return null;
   const link = document.createElement('a');
@@ -111,8 +124,7 @@ export default function decorate(block) {
 
   const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream', 'dark'];
   let selectedTheme = 'dark';
-  const blockThemeValue = (block.querySelector('[data-aue-prop="backgroundColor"]')?.textContent
-    || block.dataset.backgroundColor || '').trim().toLowerCase();
+  const blockThemeValue = getThemeValueFromBlock(block);
   if (themeOptions.includes(blockThemeValue)) selectedTheme = blockThemeValue;
 
   const heroContainer = document.createElement('div');
@@ -139,9 +151,7 @@ export default function decorate(block) {
     const values = cells.map(getCellValue);
 
     if (itemType === 'footer-sai-settings') {
-      const themeValue = (values[0]
-        || row.querySelector('[data-aue-prop="backgroundColor"]')?.textContent
-        || '').trim().toLowerCase();
+      const themeValue = getThemeValueFromBlock(row);
       if (themeOptions.includes(themeValue)) selectedTheme = themeValue;
     } else if (itemType === 'canvas-search-hero-settings') {
       canvasHeroRows.push(row);
