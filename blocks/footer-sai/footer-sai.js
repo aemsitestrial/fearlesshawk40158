@@ -12,14 +12,6 @@ function getCellValue(cell) {
   return cell?.querySelector('a')?.getAttribute('href') || cell?.textContent?.trim() || '';
 }
 
-function getImageSource(cell) {
-  const image = cell?.querySelector('img');
-  return image?.getAttribute('src')
-    || cell?.querySelector('a')?.getAttribute('href')
-    || cell?.textContent?.trim()
-    || '';
-}
-
 function getItemType(row) {
   const explicitType = row.dataset.aueComponent
     || [...row.classList].find((className) => className.startsWith('footer-sai-'));
@@ -132,55 +124,15 @@ export default function decorate(block) {
     if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
       heroItem.className = 'footer-sai-hero-item';
-      const [, , , , , backgroundImageCell] = cells;
-      const [
-        headingText,
-        searchEnabled,
-        selectedMode,
-        searchPlaceholder,
-        searchAction,
-        backgroundImageValue,
-        descriptionText,
-        ctaLabel,
-        ctaHref,
-        selectedHeadingFont,
-      ] = values;
-      const backgroundImage = getImageSource(backgroundImageCell) || backgroundImageValue;
-      if (backgroundImage) {
-        const background = document.createElement('img');
-        background.className = 'footer-sai-hero-background';
-        background.src = backgroundImage;
-        background.alt = '';
-        background.setAttribute('aria-hidden', 'true');
-        heroContainer.appendChild(background);
-      }
       const heading = document.createElement('h2');
-      heading.textContent = headingText || '';
-      const headingFonts = ['roboto', 'roboto-condensed'];
-      const headingFont = headingFonts.includes(selectedHeadingFont?.toLowerCase())
-        ? selectedHeadingFont.toLowerCase()
-        : 'roboto';
-      heading.classList.add(`footer-sai-heading-font-${headingFont}`);
+      heading.textContent = values[0] || '';
       if (heading.textContent) heroItem.appendChild(heading);
 
-      if (descriptionText) {
-        const description = document.createElement('p');
-        description.className = 'footer-sai-hero-description';
-        description.textContent = descriptionText;
-        heroItem.appendChild(description);
-      }
-
-      const cta = createLink(ctaLabel, ctaHref);
-      if (cta) {
-        cta.className = 'footer-sai-hero-cta';
-        heroItem.appendChild(cta);
-      }
-
-      if (searchEnabled?.toLowerCase() === 'true') {
-        const mode = ['text', 'voice', 'text-and-voice'].includes(selectedMode?.toLowerCase())
-          ? selectedMode.toLowerCase()
+      if (values[1]?.toLowerCase() === 'true') {
+        const mode = ['text', 'voice', 'text-and-voice'].includes(values[2]?.toLowerCase())
+          ? values[2].toLowerCase()
           : 'text-and-voice';
-        heroItem.appendChild(createSearch(block, mode, searchPlaceholder, searchAction));
+        heroItem.appendChild(createSearch(block, mode, values[3], values[4]));
       }
       moveInstrumentation(row, heroItem);
       heroContainer.appendChild(heroItem);
