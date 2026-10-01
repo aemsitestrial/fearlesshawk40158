@@ -22,6 +22,7 @@ function getItemType(row) {
 
   const cells = getCells(row);
   const values = cells.map((cell) => cell.textContent.trim());
+  if (row.querySelector('[data-aue-prop="backgroundColor"]')) return 'footer-sai-settings';
   if (row.querySelector('[data-aue-prop="heading"], [data-aue-prop="backgroundStyle"]')
     || cells.length >= 8) {
     return 'canvas-search-hero-settings';
@@ -106,7 +107,7 @@ export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'footer-sai-content';
 
-  const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream'];
+  const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream', 'dark'];
   let selectedTheme = 'soft-white';
 
   const heroContainer = document.createElement('div');
@@ -133,7 +134,9 @@ export default function decorate(block) {
     const values = cells.map(getCellValue);
 
     if (itemType === 'footer-sai-settings') {
-      const themeValue = (values[0] || '').toLowerCase();
+      const themeValue = (values[0]
+        || row.querySelector('[data-aue-prop="backgroundColor"]')?.textContent
+        || '').trim().toLowerCase();
       if (themeOptions.includes(themeValue)) selectedTheme = themeValue;
     } else if (itemType === 'canvas-search-hero-settings') {
       canvasHeroRows.push(row);

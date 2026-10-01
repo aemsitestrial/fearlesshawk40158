@@ -76,6 +76,17 @@
   --footer-search-bg: rgb(255 255 255 / 72%);
 }
 
+.footer-sai-wrapper.footer-sai-theme-dark {
+  --footer-bg: #111827;
+  --footer-surface: #1f2937;
+  --footer-text: #f9fafb;
+  --footer-muted: #cbd5e1;
+  --footer-border: rgb(148 163 184 / 28%);
+  --footer-search-bg: rgb(17 24 39 / 55%);
+  --footer-link: #f9fafb;
+  --footer-link-hover: #dbeafe;
+}
+
 .footer-sai {
   width: 100%;
   max-width: none;

@@ -654,6 +654,10 @@
           {
             "name": "Warm Cream",
             "value": "warm-cream"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
           }
         ]
       }
