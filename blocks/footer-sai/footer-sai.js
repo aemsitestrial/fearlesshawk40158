@@ -12,6 +12,14 @@ function getCellValue(cell) {
   return cell?.querySelector('a')?.getAttribute('href') || cell?.textContent?.trim() || '';
 }
 
+function getImageSource(cell) {
+  const image = cell?.querySelector('img');
+  return image?.getAttribute('src')
+    || cell?.querySelector('a')?.getAttribute('href')
+    || cell?.textContent?.trim()
+    || '';
+}
+
 function getItemType(row) {
   const explicitType = row.dataset.aueComponent
     || [...row.classList].find((className) => className.startsWith('footer-sai-'));
@@ -124,9 +132,39 @@ export default function decorate(block) {
     if (itemType === 'footer-sai-hero') {
       const heroItem = document.createElement('div');
       heroItem.className = 'footer-sai-hero-item';
+      const [, , , , , backgroundImageCell] = cells;
+      const backgroundImage = getImageSource(backgroundImageCell);
+      if (backgroundImage) {
+        const background = document.createElement('img');
+        background.className = 'footer-sai-hero-background';
+        background.src = backgroundImage;
+        background.alt = '';
+        background.setAttribute('aria-hidden', 'true');
+        heroContainer.appendChild(background);
+      }
       const heading = document.createElement('h2');
-      heading.textContent = values[0] || '';
+      const [headingText] = values;
+      heading.textContent = headingText || '';
+      const headingFonts = ['roboto', 'roboto-condensed'];
+      const [, , , , , , , , , selectedHeadingFont] = values;
+      const headingFont = headingFonts.includes(selectedHeadingFont?.toLowerCase())
+        ? selectedHeadingFont.toLowerCase()
+        : 'roboto';
+      heading.classList.add(`footer-sai-heading-font-${headingFont}`);
       if (heading.textContent) heroItem.appendChild(heading);
+
+      if (values[6]) {
+        const description = document.createElement('p');
+        description.className = 'footer-sai-hero-description';
+        description.textContent = values[6];
+        heroItem.appendChild(description);
+      }
+
+      const cta = createLink(values[7], values[8]);
+      if (cta) {
+        cta.className = 'footer-sai-hero-cta';
+        heroItem.appendChild(cta);
+      }
 
       if (values[1]?.toLowerCase() === 'true') {
         const mode = ['text', 'voice', 'text-and-voice'].includes(values[2]?.toLowerCase())
