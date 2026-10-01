@@ -134,29 +134,32 @@ export default function decorate(block) {
 
   const content = document.createElement('div');
   content.className = 'canvas-search-hero-inner';
-  if (settingsRow) moveInstrumentation(settingsRow, content);
+  const settingsContent = document.createElement('div');
+  settingsContent.className = 'canvas-search-hero-settings';
+  if (settingsRow) moveInstrumentation(settingsRow, settingsContent);
   const heading = document.createElement('h1');
   heading.className = `canvas-search-hero-heading font-${settings.headingFont === 'roboto-condensed' ? 'roboto-condensed' : 'roboto'}`;
   heading.textContent = settings.heading || '';
-  content.appendChild(heading);
+  settingsContent.appendChild(heading);
 
   if (settings.description) {
     const description = document.createElement('p');
     description.className = 'canvas-search-hero-description';
     description.textContent = settings.description;
-    content.appendChild(description);
+    settingsContent.appendChild(description);
   }
 
   const searchModes = ['text', 'voice', 'text-and-voice'];
   const searchMode = searchModes.includes(settings.searchMode) ? settings.searchMode : 'text-and-voice';
   if (settings.enableSearch?.toLowerCase() !== 'false') {
-    content.appendChild(createSearch(
+    settingsContent.appendChild(createSearch(
       block,
       searchMode,
       settings.searchPlaceholder,
       settings.searchActionUrl,
     ));
   }
+  content.appendChild(settingsContent);
 
   const ctaList = document.createElement('div');
   ctaList.className = 'canvas-search-hero-ctas';

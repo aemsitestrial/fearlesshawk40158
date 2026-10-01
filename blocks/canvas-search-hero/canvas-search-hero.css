@@ -19,8 +19,8 @@
 }
 
 .canvas-search-hero-content.theme-image {
-  color: #fff;
-  background: #202124;
+  color: #171717;
+  background: #fff;
 }
 
 .canvas-search-hero-background {
@@ -34,7 +34,7 @@
 .canvas-search-hero-content.theme-image::after {
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 35%);
+  background: rgb(255 255 255 / 58%);
   content: '';
 }
 
@@ -45,6 +45,15 @@
   flex-direction: column;
   align-items: center;
   width: min(100%, 720px);
+  gap: 24px;
+  text-align: center;
+}
+
+.canvas-search-hero-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   gap: 24px;
   text-align: center;
 }
@@ -82,8 +91,7 @@
   box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
 }
 
-.canvas-search-hero-content.theme-dark .canvas-search-hero-search,
-.canvas-search-hero-content.theme-image .canvas-search-hero-search {
+.canvas-search-hero-content.theme-dark .canvas-search-hero-search {
   border-color: rgb(255 255 255 / 32%);
   background: rgb(0 0 0 / 24%);
 }
@@ -162,15 +170,13 @@
   border-style: dashed;
 }
 
-.theme-dark .canvas-search-hero-cta,
-.theme-image .canvas-search-hero-cta {
+.theme-dark .canvas-search-hero-cta {
   border-color: rgb(255 255 255 / 26%);
   background: rgb(255 255 255 / 12%);
   color: #fff;
 }
 
-.theme-dark .canvas-search-hero-cta:hover,
-.theme-image .canvas-search-hero-cta:hover {
+.theme-dark .canvas-search-hero-cta:hover {
   background: rgb(255 255 255 / 22%);
 }
 
@@ -181,6 +187,10 @@
   }
 
   .canvas-search-hero-inner {
+    gap: 20px;
+  }
+
+  .canvas-search-hero-settings {
     gap: 20px;
   }
 
