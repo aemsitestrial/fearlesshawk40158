@@ -623,14 +623,18 @@
     ]
   },
   {
-    "id": "footer-sai-settings",
+    "id": "footer-sai",
     "fields": [
       {
         "component": "select",
         "name": "backgroundColor",
-        "label": "Background Color",
+        "label": "Theme",
         "value": "dark",
         "options": [
+          {
+            "name": "Dark",
+            "value": "dark"
+          },
           {
             "name": "Soft White",
             "value": "soft-white"
@@ -654,10 +658,6 @@
           {
             "name": "Warm Cream",
             "value": "warm-cream"
-          },
-          {
-            "name": "Dark",
-            "value": "dark"
           }
         ]
       }

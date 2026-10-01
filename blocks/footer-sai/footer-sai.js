@@ -111,6 +111,9 @@ export default function decorate(block) {
 
   const themeOptions = ['soft-white', 'powder-blue', 'sage-green', 'blush-pink', 'lavender', 'warm-cream', 'dark'];
   let selectedTheme = 'dark';
+  const blockThemeValue = (block.querySelector('[data-aue-prop="backgroundColor"]')?.textContent
+    || block.dataset.backgroundColor || '').trim().toLowerCase();
+  if (themeOptions.includes(blockThemeValue)) selectedTheme = blockThemeValue;
 
   const heroContainer = document.createElement('div');
   heroContainer.className = 'footer-sai-hero';
