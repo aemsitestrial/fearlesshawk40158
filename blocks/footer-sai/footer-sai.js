@@ -133,7 +133,19 @@ export default function decorate(block) {
       const heroItem = document.createElement('div');
       heroItem.className = 'footer-sai-hero-item';
       const [, , , , , backgroundImageCell] = cells;
-      const backgroundImage = getImageSource(backgroundImageCell);
+      const [
+        headingText,
+        searchEnabled,
+        selectedMode,
+        searchPlaceholder,
+        searchAction,
+        backgroundImageValue,
+        descriptionText,
+        ctaLabel,
+        ctaHref,
+        selectedHeadingFont,
+      ] = values;
+      const backgroundImage = getImageSource(backgroundImageCell) || backgroundImageValue;
       if (backgroundImage) {
         const background = document.createElement('img');
         background.className = 'footer-sai-hero-background';
@@ -143,34 +155,32 @@ export default function decorate(block) {
         heroContainer.appendChild(background);
       }
       const heading = document.createElement('h2');
-      const [headingText] = values;
       heading.textContent = headingText || '';
       const headingFonts = ['roboto', 'roboto-condensed'];
-      const [, , , , , , , , , selectedHeadingFont] = values;
       const headingFont = headingFonts.includes(selectedHeadingFont?.toLowerCase())
         ? selectedHeadingFont.toLowerCase()
         : 'roboto';
       heading.classList.add(`footer-sai-heading-font-${headingFont}`);
       if (heading.textContent) heroItem.appendChild(heading);
 
-      if (values[6]) {
+      if (descriptionText) {
         const description = document.createElement('p');
         description.className = 'footer-sai-hero-description';
-        description.textContent = values[6];
+        description.textContent = descriptionText;
         heroItem.appendChild(description);
       }
 
-      const cta = createLink(values[7], values[8]);
+      const cta = createLink(ctaLabel, ctaHref);
       if (cta) {
         cta.className = 'footer-sai-hero-cta';
         heroItem.appendChild(cta);
       }
 
-      if (values[1]?.toLowerCase() === 'true') {
-        const mode = ['text', 'voice', 'text-and-voice'].includes(values[2]?.toLowerCase())
-          ? values[2].toLowerCase()
+      if (searchEnabled?.toLowerCase() === 'true') {
+        const mode = ['text', 'voice', 'text-and-voice'].includes(selectedMode?.toLowerCase())
+          ? selectedMode.toLowerCase()
           : 'text-and-voice';
-        heroItem.appendChild(createSearch(block, mode, values[3], values[4]));
+        heroItem.appendChild(createSearch(block, mode, searchPlaceholder, searchAction));
       }
       moveInstrumentation(row, heroItem);
       heroContainer.appendChild(heroItem);
