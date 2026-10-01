@@ -1,15 +1,15 @@
 .canvas-search-hero-content {
   position: relative;
   display: grid;
-  min-height: 470px;
+  min-height: 774px;
   box-sizing: border-box;
   place-items: center;
   overflow: hidden;
-  padding: 88px 24px;
-  color: #171717;
+  padding: 160px 80px;
+  color: #0c0c0d;
   background:
-    radial-gradient(ellipse at 28% 56%, rgb(250 237 194 / 58%), transparent 42%),
-    radial-gradient(ellipse at 75% 48%, rgb(218 229 252 / 68%), transparent 48%),
+    radial-gradient(ellipse 225px 161px at 25% 24%, rgb(232 185 49 / 40%), transparent 100%),
+    radial-gradient(ellipse 182px 130px at 63% 43%, rgb(70 115 219 / 40%), transparent 100%),
     #fff;
 }
 
@@ -44,8 +44,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 720px);
-  gap: 24px;
+  width: min(100%, 1280px);
+  gap: 40px;
   text-align: center;
 }
 
@@ -54,16 +54,17 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 24px;
+  gap: 40px;
   text-align: center;
 }
 
 .canvas-search-hero-heading {
+  width: min(100%, 880px);
   margin: 0;
   font-family: roboto, Arial, sans-serif;
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 400;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .canvas-search-hero-heading.font-roboto-condensed {
@@ -71,42 +72,42 @@
 }
 
 .canvas-search-hero-description {
-  max-width: 500px;
+  width: min(100%, 812px);
   margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 1.6;
 }
 
 .canvas-search-hero-search {
   display: flex;
   align-items: center;
-  width: min(100%, 344px);
-  height: 44px;
+  width: min(100%, 566px);
+  height: 72px;
   box-sizing: border-box;
-  gap: 8px;
-  padding: 4px 12px;
-  border: 1px solid rgb(80 80 80 / 14%);
-  border-radius: 24px;
-  background: rgb(255 255 255 / 72%);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  gap: 16px;
+  padding: 12px;
+  border: 2px solid #e6e6e6;
+  border-radius: 58px;
+  background: rgb(255 255 255 / 40%);
 }
 
 .canvas-search-hero-content.theme-dark .canvas-search-hero-search {
-  border-color: rgb(255 255 255 / 32%);
+  border-color: rgb(255 255 255 / 40%);
   background: rgb(0 0 0 / 24%);
 }
 
 .canvas-search-hero-search input {
   flex: 1;
   min-width: 0;
-  height: 100%;
-  padding: 0 2px;
+  height: 48px;
+  padding: 4px 12px;
   border: 0;
   outline: 0;
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: 11px;
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .canvas-search-hero-search input::placeholder {
@@ -115,10 +116,10 @@
 }
 
 .canvas-search-hero-mic {
-  flex: 0 0 24px;
-  width: 24px;
-  height: 28px;
-  padding: 0;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
   border: 0;
   background: transparent;
   color: inherit;
@@ -127,8 +128,8 @@
 
 .canvas-search-hero-mic::before {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin: auto;
   background: currentcolor;
   content: '';
@@ -138,24 +139,24 @@
 .canvas-search-hero-ctas {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
+  place-content: center;
+  gap: 12px;
+  width: min(100%, 900px);
 }
 
 .canvas-search-hero-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 30px;
+  min-height: 48px;
   box-sizing: border-box;
-  padding: 5px 14px;
-  border: 1px solid rgb(70 70 70 / 8%);
-  border-radius: 18px;
+  padding: 8px 24px;
+  border: 1px solid #e6e6e6;
+  border-radius: 9999px;
   background: #fff;
-  color: #171717;
-  font-size: 12px;
-  line-height: 1.2;
+  color: #0c0c0d;
+  font-size: 20px;
+  line-height: 1.6;
   text-decoration: none;
   transition: background-color 160ms ease, border-color 160ms ease;
 }
@@ -182,19 +183,29 @@
 
 @media (width <= 600px) {
   .canvas-search-hero-content {
-    min-height: 430px;
-    padding: 72px 20px;
+    min-height: 580px;
+    padding: 88px 20px;
   }
 
   .canvas-search-hero-inner {
-    gap: 20px;
+    gap: 32px;
   }
 
   .canvas-search-hero-settings {
-    gap: 20px;
+    gap: 28px;
   }
 
   .canvas-search-hero-heading {
-    font-size: 28px;
+    font-size: 34px;
+  }
+
+  .canvas-search-hero-description {
+    font-size: 16px;
+  }
+
+  .canvas-search-hero-cta {
+    min-height: 44px;
+    padding: 6px 18px;
+    font-size: 16px;
   }
 }
